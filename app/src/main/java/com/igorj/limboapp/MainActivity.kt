@@ -11,10 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.igorj.auth_presentation.login.LoginScreen
 import com.igorj.auth_presentation.welcome.WelcomeScreen
 import com.igorj.limboapp.navigation.Route
 import com.igorj.limboapp.ui.theme.LimboAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +45,18 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Route.LOGIN) {
-
+                            LoginScreen(
+                                scaffoldState = scaffoldState,
+                                onLoginClick = {
+                                    navController.navigate(Route.HOME)
+                                },
+                                onRegisterClick = {
+                                    navController.navigate(Route.REGISTER)
+                                },
+                                onForgotPasswordClick = {
+                                    navController.navigate(Route.FORGOT_PASSWORD)
+                                }
+                            )
                         }
                         composable(Route.REGISTER) {
 
