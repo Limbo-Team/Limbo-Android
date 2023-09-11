@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="limbo">Limbo</string>
+    <string name="welcome_app_desc">Learn C coding with e-learning app from Lodz University of Technology</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+</resources>
