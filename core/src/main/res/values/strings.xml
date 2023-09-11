@@ -10,4 +10,11 @@
     <string name="dont_have_account">Don\'t have account yet?</string>
     <string name="failed_to_log_in">Failed to log in, please try again...</string>
     <string name="empty_credentials">Empty credentials, please enter login and password.</string>
+    <string name="function_not_implemented">Function not implemented yet.</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="are_you_tul_student">Are you TUL (PŁ) student?</string>
+    <string name="student_id">Student ID</string>
+    <string name="have_account_already">Have account already?</string>
 </resources>

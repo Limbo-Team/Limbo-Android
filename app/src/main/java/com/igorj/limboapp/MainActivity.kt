@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.igorj.auth_presentation.login.LoginScreen
+import com.igorj.auth_presentation.register.RegisterScreen
 import com.igorj.auth_presentation.welcome.WelcomeScreen
 import com.igorj.limboapp.navigation.Route
 import com.igorj.limboapp.ui.theme.LimboAppTheme
@@ -59,7 +60,12 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Route.REGISTER) {
-
+                            RegisterScreen(
+                                scaffoldState = scaffoldState,
+                                onNavigation = {
+                                    navController.navigate(Route.LOGIN)
+                                }
+                            )
                         }
                         composable(Route.FORGOT_PASSWORD) {
 

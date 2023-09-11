@@ -1,4 +1,4 @@
-package com.igorj.auth_presentation.login
+package com.igorj.auth_presentation.register
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
@@ -31,6 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
@@ -38,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.igorj.auth_presentation.components.CustomTextField
+import com.igorj.auth_presentation.register.model.RegisterUserInfo
 import com.igorj.core.R
 import com.igorj.core.util.UiEvent
 import com.igorj.core_ui.BrightOrange
@@ -47,12 +51,10 @@ import com.igorj.core_ui.components.GradientButton
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
     scaffoldState: ScaffoldState,
-    onLoginClick: () -> Unit,
-    onRegisterClick: () -> Unit,
-    onForgotPasswordClick: () -> Unit,
-    viewModel: LoginViewModel = hiltViewModel()
+    onNavigation: () -> Unit,
+    viewModel: RegisterViewModel = hiltViewModel()
 ) {
     val spacing = LocalSpacing.current
     val state = viewModel.state
@@ -68,9 +70,11 @@ fun LoginScreen(
                     )
                     keyboardController?.hide()
                 }
+
                 is UiEvent.OnNavigate -> {
-                    onLoginClick()
+                    onNavigation()
                 }
+
                 else -> Unit
             }
         }
@@ -101,6 +105,7 @@ fun LoginScreen(
                 color = BrightOrange,
             )
         }
+
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -109,7 +114,7 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(id = R.string.sign_in),
+                text = stringResource(id = R.string.sign_up),
                 style = MaterialTheme.typography.h2,
                 fontWeight = FontWeight.SemiBold,
                 color = TextWhite,
@@ -119,23 +124,39 @@ fun LoginScreen(
             CustomTextField(
                 value = state.email,
                 onValueChange = {
-                    viewModel.onEvent(LoginEvent.OnEmailChange(it))
+                    viewModel.onEvent(RegisterEvent.OnEmailChange(it))
                 },
                 hint = stringResource(id = R.string.email),
                 trailingIconId = R.drawable.ic_gradient_user,
             )
             Spacer(modifier = Modifier.height(10.dp))
             CustomTextField(
+                value = state.name,
+                onValueChange = {
+                    viewModel.onEvent(RegisterEvent.OnNameChange(it))
+                },
+                hint = stringResource(id = R.string.name)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            CustomTextField(
+                value = state.surname,
+                onValueChange = {
+                    viewModel.onEvent(RegisterEvent.OnSurnameChange(it))
+                },
+                hint = stringResource(id = R.string.surname)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            CustomTextField(
                 value = state.password,
                 onValueChange = {
-                    viewModel.onEvent(LoginEvent.OnPasswordChange(it))
+                    viewModel.onEvent(RegisterEvent.OnPasswordChange(it))
                 },
                 hint = stringResource(id = R.string.password),
                 trailingIconId = state.passwordTextFieldIconId,
                 onTrailingIconClick = {
-                    viewModel.onEvent(LoginEvent.OnTogglePasswordVisibility)
+                    viewModel.onEvent(RegisterEvent.OnTogglePasswordVisibility)
                 },
-                isTrailingIconEnabled = !state.isTryingToLogin,
+                isTrailingIconEnabled = !state.isTryingToRegister,
                 visualTransformation = if (state.shouldHidePassword) {
                     VisualTransformation {
                         TransformedText(
@@ -145,55 +166,103 @@ fun LoginScreen(
                     }
                 } else VisualTransformation.None
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = stringResource(id = R.string.forgot_password),
-                color = BrightOrange,
-                style = MaterialTheme.typography.h1,
-                fontWeight = FontWeight.Light,
-                fontSize = 12.sp,
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .clickable(
-                        enabled = !state.isTryingToLogin,
-                        onClick = {
-                            onForgotPasswordClick()
-                        }
-                    )
+            Spacer(modifier = Modifier.height(10.dp))
+            CustomTextField(
+                value = state.repeatPassword,
+                onValueChange = {
+                    viewModel.onEvent(RegisterEvent.OnRepeatPasswordChange(it))
+                },
+                hint = stringResource(id = R.string.repeat_password)
             )
+            Spacer(modifier = Modifier.height(10.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(
+                    checked = state.isStudent,
+                    onCheckedChange = {
+                        viewModel.onEvent(RegisterEvent.OnToggleIsStudent(it))
+                    },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = BrightOrange,
+                        uncheckedColor = Color.Gray,
+                        checkmarkColor = TextWhite
+                    )
+                )
+                Text(
+                    text = stringResource(id = R.string.are_you_tul_student),
+                    color = TextWhite,
+                    style = MaterialTheme.typography.body1,
+                    fontWeight = FontWeight.Light,
+                    fontSize = 16.sp,
+                    modifier = Modifier
+                        .clickable(
+                            enabled = !state.isTryingToRegister,
+                            onClick = {
+                                viewModel.onEvent(
+                                    RegisterEvent.OnToggleIsStudent(
+                                        !state.isStudent
+                                    )
+                                )
+                            }
+                        )
+                )
+            }
+            if (state.isStudent) {
+                CustomTextField(
+                    value = state.studentId,
+                    onValueChange = {
+                        viewModel.onEvent(RegisterEvent.OnStudentIdChange(it))
+                    },
+                    hint = stringResource(id = R.string.student_id),
+                    keyboardType = KeyboardType.Number
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+            }
         }
+
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             GradientButton(
-                text = stringResource(id = R.string.sign_in),
-                isEnabled = !state.isTryingToLogin,
+                text = stringResource(id = R.string.sign_up),
+                isEnabled = !state.isTryingToRegister,
                 onClick = {
-                    viewModel.onEvent(LoginEvent.OnLoginClick(
-                        state.email, state.password
-                    ))
+                    viewModel.onEvent(
+                        RegisterEvent.OnRegisterClick(
+                            RegisterUserInfo(
+                                name = state.name,
+                                surname = state.surname,
+                                email = state.email,
+                                password = state.password,
+                                studentId = if (state.isStudent && state.studentId.isNotBlank()) {
+                                    state.studentId
+                                } else null
+                            )
+                        )
+                    )
                 }
             )
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = stringResource(id = R.string.dont_have_account) + " ",
+                    text = stringResource(id = R.string.have_account_already) + " ",
                     color = TextWhite,
                     style = MaterialTheme.typography.h1,
                     fontWeight = FontWeight.Light,
                     fontSize = 15.sp
                 )
                 Text(
-                    text = stringResource(id = R.string.sign_up),
+                    text = stringResource(id = R.string.sign_in),
                     color = BrightOrange,
                     style = MaterialTheme.typography.h1,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 15.sp,
                     modifier = Modifier.clickable(
-                        enabled = !state.isTryingToLogin,
+                        enabled = !state.isTryingToRegister,
                         onClick = {
-                            onRegisterClick()
+                            onNavigation()
                         }
                     )
                 )
@@ -201,7 +270,7 @@ fun LoginScreen(
         }
     }
 
-    if (state.isTryingToLogin) {
+    if (state.isTryingToRegister) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
