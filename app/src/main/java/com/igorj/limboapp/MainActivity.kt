@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.igorj.auth_presentation.login.LoginScreen
 import com.igorj.auth_presentation.register.RegisterScreen
 import com.igorj.auth_presentation.welcome.WelcomeScreen
+import com.igorj.dashboard_presentation.home.HomeScreen
 import com.igorj.limboapp.navigation.Route
 import com.igorj.limboapp.ui.theme.LimboAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,7 +73,19 @@ class MainActivity : ComponentActivity() {
 
                         }
                         composable(Route.HOME) {
-
+                            HomeScreen(
+                                onNavigation = { route ->
+                                    navController.navigate(
+                                        route = route,
+                                        navOptions = NavOptions.Builder()
+                                            .setPopUpTo(
+                                                route = Route.HOME,
+                                                inclusive = true
+                                            )
+                                            .build()
+                                    )
+                                }
+                            )
                         }
                         composable(Route.CHAPTERS) {
 
