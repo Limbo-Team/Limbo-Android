@@ -1,4 +1,4 @@
-package com.igorj.core_ui
+package com.igorj.core
 
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.unit.Dp

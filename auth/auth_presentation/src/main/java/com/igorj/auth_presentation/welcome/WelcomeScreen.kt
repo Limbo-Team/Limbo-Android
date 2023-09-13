@@ -23,11 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.igorj.core_ui.LocalSpacing
+import com.igorj.core.LocalSpacing
 import com.igorj.core.R
-import com.igorj.core_ui.BlackGradient
-import com.igorj.core_ui.TextWhite
-import com.igorj.core_ui.components.GradientButton
+import com.igorj.core.BlackGradient
+import com.igorj.core.TextWhite
+import com.igorj.core.components.GradientButton
 
 @Composable
 fun WelcomeScreen(

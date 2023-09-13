@@ -26,9 +26,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.igorj.core.R
-import com.igorj.core_ui.DarkGray
-import com.igorj.core_ui.LightGray
-import com.igorj.core_ui.TextWhite
+import com.igorj.core.DarkGray
+import com.igorj.core.LightGray
+import com.igorj.core.TextWhite
 
 @Composable
 fun CustomTextField(

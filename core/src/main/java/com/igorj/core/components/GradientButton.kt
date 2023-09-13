@@ -1,4 +1,4 @@
-package com.igorj.core_ui.components
+package com.igorj.core.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,16 +13,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.igorj.core_ui.LocalSpacing
-import com.igorj.core_ui.OrangeGradient
+import com.igorj.core.LocalSpacing
+import com.igorj.core.OrangeGradient
 
 @Composable
 fun GradientButton(

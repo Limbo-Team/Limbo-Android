@@ -40,10 +40,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.igorj.auth_presentation.components.CustomTextField
 import com.igorj.core.R
 import com.igorj.core.util.UiEvent
-import com.igorj.core_ui.BrightOrange
-import com.igorj.core_ui.LocalSpacing
-import com.igorj.core_ui.TextWhite
-import com.igorj.core_ui.components.GradientButton
+import com.igorj.core.BrightOrange
+import com.igorj.core.LocalSpacing
+import com.igorj.core.TextWhite
+import com.igorj.core.components.GradientButton
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
