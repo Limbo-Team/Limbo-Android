@@ -64,7 +64,8 @@ fun LoginScreen(
             when (event) {
                 is UiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
-                        message = event.message.asString(context)
+                        message = event.message.asString(context),
+                        actionLabel = "OK"
                     )
                     keyboardController?.hide()
                 }

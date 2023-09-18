@@ -18,7 +18,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val statsRepository: StatsRepository,
     private val chaptersRepository: ChaptersRepository
-): ViewModel() {
+) : ViewModel() {
 
     var state by mutableStateOf(HomeState())
         private set
@@ -30,7 +30,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val bestPeopleInGroupResult = statsRepository.getBestPeopleInGroup(0, 4)
                 .getOrElse {
-                    return@launch
+                    return@launch  // fix, so that miniChapters get loaded if this fails
                 }
             state = state.copy(bestPeopleList = bestPeopleInGroupResult)
 
@@ -47,15 +47,19 @@ class HomeViewModel @Inject constructor(
             is HomeEvent.OnBestPersonClick -> {
 
             }
+
             is HomeEvent.OnBestPersonLongPress -> {
 
             }
+
             is HomeEvent.OnChapterClick -> {
 
             }
+
             is HomeEvent.OnChapterLongPress -> {
 
             }
+
             is HomeEvent.OnBottomNavBarClick -> {
                 state = state.copy(
                     selectedScreen = event.route
@@ -64,9 +68,11 @@ class HomeViewModel @Inject constructor(
                     _uiEvent.send(UiEvent.OnNavigate)
                 }
             }
+
             is HomeEvent.OnFlickersClick -> {
 
             }
+
             is HomeEvent.OnProfileClick -> {
 
             }

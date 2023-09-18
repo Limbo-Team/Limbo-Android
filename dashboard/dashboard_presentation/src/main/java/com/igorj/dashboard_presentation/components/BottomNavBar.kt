@@ -61,8 +61,8 @@ val bottomNavBarItems = listOf(
         selectedIconId = R.drawable.ic_selected_chapters
     ),
     BottomNavItem(
-        name = "Statistics",
-        route = "statistics",
+        name = "Stats",
+        route = "stats",
         iconId = R.drawable.ic_stats,
         selectedIconId = R.drawable.ic_selected_stats
     ),

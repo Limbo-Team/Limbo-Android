@@ -8,7 +8,7 @@ object Route {
 
     const val HOME = "home"
     const val CHAPTERS = "chapters"
-    const val STATISTICS = "statistics"
+    const val STATS = "stats"
     const val PROFILE = "profile"
     const val REDEEM_FLICKERS = "redeem_flickers"
 

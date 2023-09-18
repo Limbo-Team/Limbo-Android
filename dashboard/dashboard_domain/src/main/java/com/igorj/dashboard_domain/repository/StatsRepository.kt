@@ -1,6 +1,7 @@
 package com.igorj.dashboard_domain.repository
 
 import com.igorj.dashboard_domain.model.Person
+import com.igorj.dashboard_domain.model.UserStats
 
 interface StatsRepository {
 
@@ -11,5 +12,5 @@ interface StatsRepository {
 
     suspend fun getUserStats(
         userId: Int
-    )
+    ): Result<UserStats>
 }
