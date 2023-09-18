@@ -1,6 +1,7 @@
 package com.igorj.dashboard_data.repository
 
 import com.igorj.dashboard_domain.model.Person
+import com.igorj.dashboard_domain.model.UserStats
 import com.igorj.dashboard_domain.repository.StatsRepository
 
 class StatsRepositoryImpl(): StatsRepository {
@@ -39,7 +40,15 @@ class StatsRepositoryImpl(): StatsRepository {
         return Result.success(result)
     }
 
-    override suspend fun getUserStats(userId: Int) {
-        TODO("Not yet implemented")
+    override suspend fun getUserStats(userId: Int): Result<UserStats> {
+        val userStats = UserStats(
+            questionSolved = 57,
+            chaptersFinished = 5,
+            averageAnswerTime = 8.2,
+            mostAnswersInDay = 12,
+            examBonus = 2,
+            danteBonus = 1
+        )
+        return Result.success(userStats)
     }
 }

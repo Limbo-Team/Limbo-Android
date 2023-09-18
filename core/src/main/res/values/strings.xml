@@ -10,7 +10,7 @@
     <string name="dont_have_account">Don\'t have account yet?</string>
     <string name="failed_to_log_in">Failed to log in, please try again...</string>
     <string name="empty_credentials">Empty credentials, please enter login and password.</string>
-    <string name="function_not_implemented">Function not implemented yet.</string>
+    <string name="function_not_implemented">Function not implemented</string>
     <string name="name">Name</string>
     <string name="surname">Surname</string>
     <string name="repeat_password">Repeat password</string>
@@ -25,4 +25,12 @@
     <string name="manual_memory_management">Manual memory management</string>
     <string name="pointers_and_arrays">Pointers and arrays</string>
     <string name="flow_od_control">Flow of control</string>
+    <string name="total_questions_answered">Total questions answered</string>
+    <string name="finished_chapters">Finished chapters</string>
+    <string name="average_answer_time">Answer time on average</string>
+    <string name="most_questions_answered_in_day">Most questions answered in a day</string>
+    <string name="bonus_exam_points">Bonus points on exam</string>
+    <string name="bonus_dante_points">Bonus points in Dante</string>
+    <string name="your_statistics">Your statistics</string>
+    <string name="ok">OK</string>
 </resources>

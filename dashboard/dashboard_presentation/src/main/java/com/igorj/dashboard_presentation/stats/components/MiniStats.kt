@@ -1,4 +1,4 @@
-package com.igorj.dashboard_presentation.components
+package com.igorj.dashboard_presentation.stats.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -15,83 +15,57 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.igorj.core.BrightOrangeGradient
 import com.igorj.core.DarkBlackGradient
-import com.igorj.core.GreenGradient
-import com.igorj.core.LightGreenGradient
-import com.igorj.core.OrangeGradient
-import com.igorj.core.RedGradient
 import com.igorj.core.TextWhite
-import com.igorj.core.components.CircularProgressBar
-import com.igorj.dashboard_domain.model.Chapter
 
 @Composable
-fun MiniChapter(
-    chapter: Chapter,
+fun MiniStats(
+    text: String,
+    value: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     borderWidth: Dp = 2.dp,
+    borderGradient: Brush = BrightOrangeGradient,
+    textSize: TextUnit = 16.sp,
+    valueSize: TextUnit = 30.sp
 ) {
-    val borderGradient =
-        if (chapter.isCompleted) {
-            GreenGradient
-        } else if (chapter.isUnlocked) {
-            OrangeGradient
-        } else {
-            RedGradient
-        }
-
-    val progressBarColor =
-        if (chapter.isCompleted) {
-            LightGreenGradient
-        } else if (chapter.isUnlocked) {
-            BrightOrangeGradient
-        } else {
-            RedGradient
-        }
-
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(25.dp))
-            .clickable(
-                enabled = chapter.isUnlocked,
-                onClick = onClick
-            )
+            .clickable { onClick() }
             .background(DarkBlackGradient)
             .border(
-                width = if (chapter.isUnlocked) {
-                    borderWidth
-                } else 1.dp,
+                width = borderWidth,
                 brush = borderGradient,
                 shape = RoundedCornerShape(25.dp)
             )
-            .padding(top = 14.dp, bottom = 10.dp)
-            .padding(horizontal = 8.dp),
+            .padding(vertical = 14.dp)
+            .padding(horizontal = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        CircularProgressBar(
-            percentage = (chapter.gainedPoints / chapter.maxPoints.toFloat()),
-            radius = 30.dp,
-            progressGradient = progressBarColor,
-            strokeWidth = 5.5.dp,
-            isUnlocked = chapter.isUnlocked
+        Text(
+            text = value,
+            color = TextWhite,
+            style = MaterialTheme.typography.body1,
+            fontWeight = FontWeight.Bold,
+            fontSize = valueSize,
+            textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-                .padding(horizontal = 6.dp),
-            text = chapter.title,
+            text = text,
             color = TextWhite,
             style = MaterialTheme.typography.body1,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 14.sp,
+            fontSize = textSize,
             textAlign = TextAlign.Center
         )
     }
