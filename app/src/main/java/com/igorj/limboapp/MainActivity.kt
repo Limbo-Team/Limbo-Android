@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.igorj.auth_presentation.login.LoginScreen
 import com.igorj.auth_presentation.register.RegisterScreen
 import com.igorj.auth_presentation.welcome.WelcomeScreen
+import com.igorj.dashboard_presentation.chapters.ChaptersScreen
 import com.igorj.dashboard_presentation.home.HomeScreen
 import com.igorj.dashboard_presentation.stats.StatsScreen
 import com.igorj.limboapp.navigation.Route
@@ -89,7 +90,19 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Route.CHAPTERS) {
-
+                            ChaptersScreen(
+                                onNavigation = { route ->
+                                    navController.navigate(
+                                        route = route,
+                                        navOptions = NavOptions.Builder()
+                                            .setPopUpTo(
+                                                route = Route.CHAPTERS,
+                                                inclusive = true
+                                            )
+                                            .build()
+                                    )
+                                }
+                            )
                         }
                         composable(Route.STATS) {
                             StatsScreen(
