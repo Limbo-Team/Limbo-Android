@@ -105,7 +105,7 @@ fun ProfileScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
-                        text = "Zmień hasło",
+                        text = stringResource(id = R.string.change_password),
                         color = TextWhite,
                         fontWeight = FontWeight.Medium,
                         fontSize = 14.sp,
@@ -117,7 +117,7 @@ fun ProfileScreen(
                         onValueChange = {
                             viewModel.onEvent(ProfileEvent.OnOldPasswordChange(it))
                         },
-                        hint = "Stare hasło",
+                        hint = stringResource(id = R.string.old_password),
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
                     ) {
@@ -129,7 +129,7 @@ fun ProfileScreen(
                         onValueChange = {
                             viewModel.onEvent(ProfileEvent.OnNewPasswordChange(it))
                         },
-                        hint = "Nowe hasło",
+                        hint = stringResource(id = R.string.new_password),
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
                     ) {
@@ -141,7 +141,7 @@ fun ProfileScreen(
                         onValueChange = {
                             viewModel.onEvent(ProfileEvent.OnNewPasswordConfirmationChange(it))
                         },
-                        hint = "Powtórz nowe hasło",
+                        hint = stringResource(id = R.string.repeat_new_password),
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
                     ) {
@@ -149,7 +149,7 @@ fun ProfileScreen(
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     GradientButton(
-                        text = "Zmień hasło",
+                        text = stringResource(id = R.string.change_password),
                         gradient = OrangeGradient,
                         width = 0.6f,
                         fontSize = 14.sp,

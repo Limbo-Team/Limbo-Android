@@ -42,4 +42,5 @@
     <string name="confirm">Potwierdź</string>
     <string name="new_password">Nowe hasło</string>
     <string name="repeat_new_password">Powtórz nowe hasło</string>
+    <string name="old_password">Stare hasło</string>
 </resources>
