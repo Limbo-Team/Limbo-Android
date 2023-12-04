@@ -130,7 +130,6 @@ fun VerificationCodeScreen(
                     viewModel.onEvent(VerificationCodeEvent.OnVerificationCodeChange(it))
                 },
                 hint = stringResource(id = R.string.verification_code),
-                trailingIconId = R.drawable.ic_gradient_user,
             )
         }
 

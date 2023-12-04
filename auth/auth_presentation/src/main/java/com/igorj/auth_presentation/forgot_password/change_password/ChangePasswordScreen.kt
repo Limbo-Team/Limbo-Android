@@ -1,4 +1,4 @@
-package com.igorj.auth_presentation.forgot_password.enter_email
+package com.igorj.auth_presentation.forgot_password.change_password
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,12 +29,10 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.igorj.core.BrightOrange
-import com.igorj.core.LightGray
 import com.igorj.core.LocalSpacing
 import com.igorj.core.R
 import com.igorj.core.TextWhite
@@ -44,10 +42,10 @@ import com.igorj.core.util.UiEvent
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ForgotPasswordScreen(
+fun ChangePasswordScreen(
     scaffoldState: ScaffoldState,
     onNavigation: () -> Unit,
-    viewModel: ForgotPasswordViewModel = hiltViewModel()
+    viewModel: ChangePasswordViewModel = hiltViewModel()
 ) {
     val spacing = LocalSpacing.current
     val state = viewModel.state
@@ -108,36 +106,35 @@ fun ForgotPasswordScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(id = R.string.forgot_password),
+                text = stringResource(id = R.string.change_password),
                 style = MaterialTheme.typography.h2,
                 fontWeight = FontWeight.SemiBold,
                 color = TextWhite,
                 fontSize = 32.sp
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = stringResource(id = R.string.please_enter_email),
-                style = MaterialTheme.typography.body1,
-                color = LightGray,
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp,
-            )
-
             Spacer(modifier = Modifier.height(26.dp))
             CustomTextField(
-                value = state.email,
+                value = state.newPassword,
                 onValueChange = {
-                    viewModel.onEvent(ForgotPasswordEvent.OnEmailChange(it))
+                    viewModel.onEvent(ChangePasswordEvent.OnNewPasswordChange(it))
                 },
-                hint = stringResource(id = R.string.email),
+                hint = stringResource(id = R.string.new_password)
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            CustomTextField(
+                value = state.confirmNewPassword,
+                onValueChange = {
+                    viewModel.onEvent(ChangePasswordEvent.OnConfirmNewPasswordChange(it))
+                },
+                hint = stringResource(id = R.string.repeat_new_password)
             )
         }
 
         GradientButton(
-            text = stringResource(id = R.string.send_verification_code),
+            text = stringResource(id = R.string.confirm),
             fontSize = 15.sp,
-            width = 0.8f,
-            onClick = { viewModel.onEvent(ForgotPasswordEvent.OnButtonClick) }
+            width = 0.6f,
+            onClick = { viewModel.onEvent(ChangePasswordEvent.OnButtonClick) }
         )
     }
 

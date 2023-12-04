@@ -12,6 +12,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.igorj.auth_presentation.forgot_password.change_password.ChangePasswordScreen
 import com.igorj.auth_presentation.forgot_password.enter_email.ForgotPasswordScreen
 import com.igorj.auth_presentation.forgot_password.enter_verification_code.VerificationCodeScreen
 import com.igorj.auth_presentation.login.LoginScreen
@@ -84,6 +85,14 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(Route.VERIFICATION_CODE) {
                             VerificationCodeScreen(
+                                scaffoldState = scaffoldState,
+                                onNavigation = {
+                                    navController.navigate(Route.CHANGE_PASSWORD)
+                                }
+                            )
+                        }
+                        composable(Route.CHANGE_PASSWORD) {
+                            ChangePasswordScreen(
                                 scaffoldState = scaffoldState,
                                 onNavigation = {
 

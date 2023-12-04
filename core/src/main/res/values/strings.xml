@@ -38,4 +38,8 @@
     <string name="verification_code">Verification code</string>
     <string name="please_enter_verification_code">Please enter verification code that should be sent to your email address.</string>
     <string name="check_verification_code">Check verification code</string>
+    <string name="change_password">Change password</string>
+    <string name="confirm">Confirm</string>
+    <string name="new_password">New password</string>
+    <string name="repeat_new_password">Repeat new password</string>
 </resources>
