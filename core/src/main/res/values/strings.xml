@@ -35,4 +35,7 @@
     <string name="ok">OK</string>
     <string name="send_verification_code">Send verification code</string>
     <string name="please_enter_email">Please enter your e-mail address that you used to register and after receiving an e-mail with a verification code, enter it on the next page to change your password.</string>
+    <string name="verification_code">Verification code</string>
+    <string name="please_enter_verification_code">Please enter verification code that should be sent to your email address.</string>
+    <string name="check_verification_code">Check verification code</string>
 </resources>

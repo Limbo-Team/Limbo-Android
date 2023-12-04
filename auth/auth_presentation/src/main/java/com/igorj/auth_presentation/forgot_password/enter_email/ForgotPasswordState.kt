@@ -1,4 +1,4 @@
-package com.igorj.auth_presentation.forgot_password
+package com.igorj.auth_presentation.forgot_password.enter_email
 
 data class ForgotPasswordState(
     val email: String = "",

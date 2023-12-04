@@ -1,4 +1,4 @@
-package com.igorj.auth_presentation.forgot_password
+package com.igorj.auth_presentation.forgot_password.enter_verification_code
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -44,10 +44,10 @@ import com.igorj.core.util.UiEvent
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun ForgotPasswordScreen(
+fun VerificationCodeScreen(
     scaffoldState: ScaffoldState,
     onNavigation: () -> Unit,
-    viewModel: ForgotPasswordViewModel = hiltViewModel()
+    viewModel: VerificationCodeViewModel = hiltViewModel()
 ) {
     val spacing = LocalSpacing.current
     val state = viewModel.state
@@ -108,7 +108,7 @@ fun ForgotPasswordScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(id = R.string.forgot_password),
+                text = stringResource(id = R.string.verification_code),
                 style = MaterialTheme.typography.h2,
                 fontWeight = FontWeight.SemiBold,
                 color = TextWhite,
@@ -116,7 +116,7 @@ fun ForgotPasswordScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = stringResource(id = R.string.please_enter_email),
+                text = stringResource(id = R.string.please_enter_verification_code),
                 style = MaterialTheme.typography.body1,
                 color = LightGray,
                 textAlign = TextAlign.Center,
@@ -125,20 +125,20 @@ fun ForgotPasswordScreen(
 
             Spacer(modifier = Modifier.height(26.dp))
             CustomTextField(
-                value = state.email,
+                value = state.verificationCode,
                 onValueChange = {
-                    viewModel.onEvent(ForgotPasswordEvent.OnEmailChange(it))
+                    viewModel.onEvent(VerificationCodeEvent.OnVerificationCodeChange(it))
                 },
-                hint = stringResource(id = R.string.email),
+                hint = stringResource(id = R.string.verification_code),
                 trailingIconId = R.drawable.ic_gradient_user,
             )
         }
 
         GradientButton(
-            text = stringResource(id = R.string.send_verification_code),
+            text = stringResource(id = R.string.check_verification_code),
             fontSize = 15.sp,
             width = 0.8f,
-            onClick = { viewModel.onEvent(ForgotPasswordEvent.OnButtonClick) }
+            onClick = { viewModel.onEvent(VerificationCodeEvent.OnButtonClick) }
         )
     }
 

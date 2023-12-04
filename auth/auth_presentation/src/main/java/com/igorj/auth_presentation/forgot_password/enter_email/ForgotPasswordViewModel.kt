@@ -1,4 +1,4 @@
-package com.igorj.auth_presentation.forgot_password
+package com.igorj.auth_presentation.forgot_password.enter_email
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,11 +37,12 @@ class ForgotPasswordViewModel @Inject constructor(
                     val result = authAPI.forgotPassword(state.email)
                     delay(1000)
                     if (result) {
-                        _uiEvent.send(UiEvent.ShowSnackbar(UiText.DynamicString("Email sent")))
+                        state = state.copy(isLoading = false)
+                        _uiEvent.send(UiEvent.OnNavigate)
                     } else {
+                        state = state.copy(isLoading = false)
                         _uiEvent.send(UiEvent.ShowSnackbar(UiText.DynamicString("Error, couldn't send email")))
                     }
-                    state = state.copy(isLoading = false)
                 }
             }
         }
