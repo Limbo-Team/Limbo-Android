@@ -12,6 +12,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.igorj.auth_presentation.forgot_password.ForgotPasswordScreen
 import com.igorj.auth_presentation.login.LoginScreen
 import com.igorj.auth_presentation.register.RegisterScreen
 import com.igorj.auth_presentation.welcome.WelcomeScreen
@@ -73,7 +74,12 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Route.FORGOT_PASSWORD) {
+                            ForgotPasswordScreen(
+                                scaffoldState = scaffoldState,
+                                onNavigation = {
 
+                                }
+                            )
                         }
                         composable(Route.HOME) {
                             HomeScreen(

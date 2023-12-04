@@ -33,4 +33,6 @@
     <string name="bonus_dante_points">Bonus points in Dante</string>
     <string name="your_statistics">Your statistics</string>
     <string name="ok">OK</string>
+    <string name="send_verification_code">Send verification code</string>
+    <string name="please_enter_email">Please enter your e-mail address that you used to register and after receiving an e-mail with a verification code, enter it on the next page to change your password.</string>
 </resources>
