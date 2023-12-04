@@ -17,6 +17,7 @@ import com.igorj.auth_presentation.register.RegisterScreen
 import com.igorj.auth_presentation.welcome.WelcomeScreen
 import com.igorj.dashboard_presentation.chapters.ChaptersScreen
 import com.igorj.dashboard_presentation.home.HomeScreen
+import com.igorj.dashboard_presentation.profile.ProfileScreen
 import com.igorj.dashboard_presentation.stats.StatsScreen
 import com.igorj.limboapp.navigation.Route
 import com.igorj.limboapp.ui.theme.LimboAppTheme
@@ -121,7 +122,18 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Route.PROFILE) {
-
+                            ProfileScreen(onNavigation = { route ->
+                                navController.navigate(
+                                    route = route,
+                                    navOptions = NavOptions.Builder()
+                                        .setPopUpTo(
+                                            route = Route.PROFILE,
+                                            inclusive = true
+                                        )
+                                        .build()
+                                    )
+                                }
+                            )
                         }
                         composable(Route.REDEEM_FLICKERS) {
 

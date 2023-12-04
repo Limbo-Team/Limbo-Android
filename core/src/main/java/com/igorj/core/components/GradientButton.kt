@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.igorj.core.LocalSpacing
@@ -30,7 +31,8 @@ fun GradientButton(
     gradient: Brush = OrangeGradient,
     textStyle: TextStyle = MaterialTheme.typography.button,
     isEnabled: Boolean = true,
-    width: Float = 0.65f
+    width: Float = 0.65f,
+    fontSize: TextUnit = 16.sp
 ) {
     val spacing = LocalSpacing.current
 
@@ -57,7 +59,8 @@ fun GradientButton(
                 style = textStyle,
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 1.sp,
-                modifier = Modifier
+                modifier = Modifier.align(Alignment.Center),
+                fontSize = fontSize
             )
         }
     }
