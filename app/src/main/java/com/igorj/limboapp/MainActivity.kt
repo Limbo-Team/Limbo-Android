@@ -12,10 +12,15 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.igorj.auth_presentation.forgot_password.change_password.ChangePasswordScreen
+import com.igorj.auth_presentation.forgot_password.enter_email.ForgotPasswordScreen
+import com.igorj.auth_presentation.forgot_password.enter_verification_code.VerificationCodeScreen
 import com.igorj.auth_presentation.login.LoginScreen
 import com.igorj.auth_presentation.register.RegisterScreen
 import com.igorj.auth_presentation.welcome.WelcomeScreen
+import com.igorj.dashboard_presentation.chapters.ChaptersScreen
 import com.igorj.dashboard_presentation.home.HomeScreen
+import com.igorj.dashboard_presentation.profile.ProfileScreen
 import com.igorj.dashboard_presentation.stats.StatsScreen
 import com.igorj.limboapp.navigation.Route
 import com.igorj.limboapp.ui.theme.LimboAppTheme
@@ -71,7 +76,28 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Route.FORGOT_PASSWORD) {
+                            ForgotPasswordScreen(
+                                scaffoldState = scaffoldState,
+                                onNavigation = {
+                                    navController.navigate(Route.VERIFICATION_CODE)
+                                }
+                            )
+                        }
+                        composable(Route.VERIFICATION_CODE) {
+                            VerificationCodeScreen(
+                                scaffoldState = scaffoldState,
+                                onNavigation = {
+                                    navController.navigate(Route.CHANGE_PASSWORD)
+                                }
+                            )
+                        }
+                        composable(Route.CHANGE_PASSWORD) {
+                            ChangePasswordScreen(
+                                scaffoldState = scaffoldState,
+                                onNavigation = {
 
+                                }
+                            )
                         }
                         composable(Route.HOME) {
                             HomeScreen(
@@ -89,7 +115,19 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Route.CHAPTERS) {
-
+                            ChaptersScreen(
+                                onNavigation = { route ->
+                                    navController.navigate(
+                                        route = route,
+                                        navOptions = NavOptions.Builder()
+                                            .setPopUpTo(
+                                                route = Route.CHAPTERS,
+                                                inclusive = true
+                                            )
+                                            .build()
+                                    )
+                                }
+                            )
                         }
                         composable(Route.STATS) {
                             StatsScreen(
@@ -108,7 +146,18 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Route.PROFILE) {
-
+                            ProfileScreen(onNavigation = { route ->
+                                navController.navigate(
+                                    route = route,
+                                    navOptions = NavOptions.Builder()
+                                        .setPopUpTo(
+                                            route = Route.PROFILE,
+                                            inclusive = true
+                                        )
+                                        .build()
+                                    )
+                                }
+                            )
                         }
                         composable(Route.REDEEM_FLICKERS) {
 

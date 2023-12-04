@@ -5,6 +5,7 @@ interface AuthAPI {
     fun register(login: String, password: String)
     fun changePasswordViaOldPassword(oldPassword: String, newPassword: String)
     fun changePasswordViaVerificationCode(codeFromEmail: String, newPassword: String)
+    fun forgotPassword(email: String): Boolean
 
     // TODO safe necessary data in encrypted shared preferences (token, credentials)
 }

@@ -1,0 +1,44 @@
+package com.igorj.auth_presentation.forgot_password.change_password
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.igorj.core.domain.auth.AuthAPI
+import com.igorj.core.util.UiEvent
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class ChangePasswordViewModel @Inject constructor(
+    private val authAPI: AuthAPI
+): ViewModel() {
+    var state by mutableStateOf(ChangePasswordState())
+        private set
+
+    private val _uiEvent = Channel<UiEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
+
+    fun onEvent(event: ChangePasswordEvent) {
+        when (event) {
+            is ChangePasswordEvent.OnNewPasswordChange -> {
+                state = state.copy(newPassword = event.newPassword)
+            }
+            is ChangePasswordEvent.OnConfirmNewPasswordChange -> {
+                state = state.copy(confirmNewPassword = event.confirmNewPassword)
+            }
+            is ChangePasswordEvent.OnButtonClick -> {
+                state = state.copy(isLoading = true)
+                viewModelScope.launch {
+                    delay(1000)
+                    state = state.copy(isLoading = false)
+                }
+            }
+        }
+    }
+}

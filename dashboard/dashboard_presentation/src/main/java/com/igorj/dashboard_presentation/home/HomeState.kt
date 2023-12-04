@@ -1,11 +1,11 @@
 package com.igorj.dashboard_presentation.home
 
 import com.igorj.dashboard_domain.model.Chapter
-import com.igorj.dashboard_domain.model.Person
+import com.igorj.dashboard_domain.model.User
 
 data class HomeState(
-    val bestPeopleList: List<Person> = emptyList(),
-    val miniChaptersList: List<Chapter> = emptyList(),
+    val bestPeople: List<User> = emptyList(),
+    val miniChapters: List<Chapter> = emptyList(),
     val selectedScreen: String = "home",
     val flickers: Int = 0
 )

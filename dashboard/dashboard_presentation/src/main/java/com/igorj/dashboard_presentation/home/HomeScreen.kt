@@ -112,7 +112,7 @@ fun HomeScreen(
                         contentPadding = PaddingValues(horizontal = 20.dp),
                         horizontalArrangement = Arrangement.spacedBy(spacing.spaceSmall)
                     ) {
-                        items(state.bestPeopleList) { person ->
+                        items(state.bestPeople) { person ->
                             BestPersonItem(
                                 name = person.name,
                                 imageUrl = person.imageUrl,
@@ -138,7 +138,7 @@ fun HomeScreen(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                         verticalItemSpacing = 16.dp,
                         content = {
-                            items(state.miniChaptersList) { item ->
+                            items(state.miniChapters) { item ->
                                 MiniChapter(
                                     modifier = Modifier.fillMaxSize(),
                                     onClick = {},

@@ -1,4 +1,4 @@
-package com.igorj.auth_presentation.components
+package com.igorj.core.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

@@ -23,4 +23,8 @@ class DefaultAuthAPI: AuthAPI {
     override fun changePasswordViaVerificationCode(codeFromEmail: String, newPassword: String) {
         TODO("Not yet implemented")
     }
+
+    override fun forgotPassword(email: String): Boolean {
+        return true
+    }
 }

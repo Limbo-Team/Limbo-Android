@@ -1,4 +1,4 @@
-package com.igorj.dashboard_presentation.home
+package com.igorj.dashboard_presentation.chapters
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.igorj.core.util.UiEvent
 import com.igorj.dashboard_domain.repository.ChaptersRepository
-import com.igorj.dashboard_domain.repository.StatsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -15,12 +14,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val statsRepository: StatsRepository,
+class ChaptersViewModel @Inject constructor(
     private val chaptersRepository: ChaptersRepository
-) : ViewModel() {
-
-    var state by mutableStateOf(HomeState())
+): ViewModel() {
+    var state by mutableStateOf(ChaptersState())
         private set
 
     private val _uiEvent = Channel<UiEvent>()
@@ -28,39 +25,25 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val bestPeopleInGroupResult = statsRepository.getBestPeopleInGroup(0, 4)
-                .getOrElse {
-                    return@launch  // fix, so that miniChapters get loaded if this fails
-                }
-            state = state.copy(bestPeople = bestPeopleInGroupResult)
-
-            val miniChaptersListResult = chaptersRepository.getChapters(4)
+            val chaptersListResult = chaptersRepository.getChapters(4)
                 .getOrElse {
                     return@launch
                 }
-            state = state.copy(miniChapters = miniChaptersListResult)
+            state = state.copy(chapters = chaptersListResult)
         }
     }
 
-    fun onEvent(event: HomeEvent) {
+    fun onEvent(event: ChaptersEvent) {
         when (event) {
-            is HomeEvent.OnBestPersonClick -> {
+            is ChaptersEvent.OnChapterClick -> {
 
             }
 
-            is HomeEvent.OnBestPersonLongPress -> {
+            is ChaptersEvent.OnChapterLongPress -> {
 
             }
 
-            is HomeEvent.OnChapterClick -> {
-
-            }
-
-            is HomeEvent.OnChapterLongPress -> {
-
-            }
-
-            is HomeEvent.OnBottomNavBarClick -> {
+            is ChaptersEvent.OnBottomNavBarClick -> {
                 state = state.copy(
                     selectedScreen = event.route
                 )
@@ -69,11 +52,11 @@ class HomeViewModel @Inject constructor(
                 }
             }
 
-            is HomeEvent.OnFlickersClick -> {
+            is ChaptersEvent.OnFlickersClick -> {
 
             }
 
-            is HomeEvent.OnProfileClick -> {
+            is ChaptersEvent.OnProfileClick -> {
 
             }
         }

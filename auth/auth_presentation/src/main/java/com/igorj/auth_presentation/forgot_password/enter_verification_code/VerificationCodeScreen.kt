@@ -1,8 +1,7 @@
-package com.igorj.auth_presentation.login
+package com.igorj.auth_presentation.forgot_password.enter_verification_code
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,30 +28,26 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.OffsetMapping
-import androidx.compose.ui.text.input.TransformedText
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.igorj.core.components.CustomTextField
-import com.igorj.core.R
-import com.igorj.core.util.UiEvent
 import com.igorj.core.BrightOrange
+import com.igorj.core.LightGray
 import com.igorj.core.LocalSpacing
+import com.igorj.core.R
 import com.igorj.core.TextWhite
+import com.igorj.core.components.CustomTextField
 import com.igorj.core.components.GradientButton
+import com.igorj.core.util.UiEvent
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun LoginScreen(
+fun VerificationCodeScreen(
     scaffoldState: ScaffoldState,
-    onLoginClick: () -> Unit,
-    onRegisterClick: () -> Unit,
-    onForgotPasswordClick: () -> Unit,
-    viewModel: LoginViewModel = hiltViewModel()
+    onNavigation: () -> Unit,
+    viewModel: VerificationCodeViewModel = hiltViewModel()
 ) {
     val spacing = LocalSpacing.current
     val state = viewModel.state
@@ -69,9 +64,11 @@ fun LoginScreen(
                     )
                     keyboardController?.hide()
                 }
+
                 is UiEvent.OnNavigate -> {
-                    onLoginClick()
+                    onNavigation()
                 }
+
                 else -> Unit
             }
         }
@@ -102,6 +99,7 @@ fun LoginScreen(
                 color = BrightOrange,
             )
         }
+
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -110,99 +108,40 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = stringResource(id = R.string.sign_in),
+                text = stringResource(id = R.string.verification_code),
                 style = MaterialTheme.typography.h2,
                 fontWeight = FontWeight.SemiBold,
                 color = TextWhite,
                 fontSize = 32.sp
             )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = stringResource(id = R.string.please_enter_verification_code),
+                style = MaterialTheme.typography.body1,
+                color = LightGray,
+                textAlign = TextAlign.Center,
+                fontSize = 16.sp,
+            )
+
             Spacer(modifier = Modifier.height(26.dp))
             CustomTextField(
-                value = state.email,
+                value = state.verificationCode,
                 onValueChange = {
-                    viewModel.onEvent(LoginEvent.OnEmailChange(it))
+                    viewModel.onEvent(VerificationCodeEvent.OnVerificationCodeChange(it))
                 },
-                hint = stringResource(id = R.string.email),
-                trailingIconId = R.drawable.ic_gradient_user,
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            CustomTextField(
-                value = state.password,
-                onValueChange = {
-                    viewModel.onEvent(LoginEvent.OnPasswordChange(it))
-                },
-                hint = stringResource(id = R.string.password),
-                trailingIconId = state.passwordTextFieldIconId,
-                onTrailingIconClick = {
-                    viewModel.onEvent(LoginEvent.OnTogglePasswordVisibility)
-                },
-                isTrailingIconEnabled = !state.isTryingToLogin,
-                visualTransformation = if (state.shouldHidePassword) {
-                    VisualTransformation {
-                        TransformedText(
-                            AnnotatedString("*".repeat(it.length)),
-                            OffsetMapping.Identity
-                        )
-                    }
-                } else VisualTransformation.None
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = stringResource(id = R.string.forgot_password),
-                color = BrightOrange,
-                style = MaterialTheme.typography.h1,
-                fontWeight = FontWeight.Light,
-                fontSize = 12.sp,
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .clickable(
-                        enabled = !state.isTryingToLogin,
-                        onClick = {
-                            onForgotPasswordClick()
-                        }
-                    )
+                hint = stringResource(id = R.string.verification_code),
             )
         }
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            GradientButton(
-                text = stringResource(id = R.string.sign_in),
-                isEnabled = !state.isTryingToLogin,
-                onClick = {
-                    viewModel.onEvent(LoginEvent.OnLoginClick(
-                        state.email, state.password
-                    ))
-                }
-            )
-            Spacer(modifier = Modifier.height(spacing.spaceMedium))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(
-                    text = stringResource(id = R.string.dont_have_account) + " ",
-                    color = TextWhite,
-                    style = MaterialTheme.typography.h1,
-                    fontWeight = FontWeight.Light,
-                    fontSize = 15.sp
-                )
-                Text(
-                    text = stringResource(id = R.string.sign_up),
-                    color = BrightOrange,
-                    style = MaterialTheme.typography.h1,
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 15.sp,
-                    modifier = Modifier.clickable(
-                        enabled = !state.isTryingToLogin,
-                        onClick = {
-                            onRegisterClick()
-                        }
-                    )
-                )
-            }
-        }
+
+        GradientButton(
+            text = stringResource(id = R.string.check_verification_code),
+            fontSize = 15.sp,
+            width = 0.8f,
+            onClick = { viewModel.onEvent(VerificationCodeEvent.OnButtonClick) }
+        )
     }
 
-    if (state.isTryingToLogin) {
+    if (state.isLoading) {
         Box(
             modifier = Modifier
                 .fillMaxSize()

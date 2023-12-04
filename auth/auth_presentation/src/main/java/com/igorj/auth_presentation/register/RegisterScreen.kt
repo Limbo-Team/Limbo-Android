@@ -40,7 +40,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.igorj.auth_presentation.components.CustomTextField
+import com.igorj.core.components.CustomTextField
 import com.igorj.auth_presentation.register.model.RegisterUserInfo
 import com.igorj.core.R
 import com.igorj.core.util.UiEvent
