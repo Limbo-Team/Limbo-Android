@@ -19,14 +19,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.igorj.core.BlackGradient
 import com.igorj.core.BrightOrange
 import com.igorj.core.OrangeGradient
-import com.igorj.core.TextWhite
 import com.igorj.core.R
+import com.igorj.core.TextWhite
 
 @Composable
 fun RedeemFlickersCard(

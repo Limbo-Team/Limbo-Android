@@ -1,17 +1,12 @@
 package com.igorj.dashboard_presentation.profile
 
-import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
@@ -35,15 +30,12 @@ import com.igorj.core.components.CustomTextField
 import com.igorj.core.components.GradientButton
 import com.igorj.core.components.LimboLogo
 import com.igorj.core.util.UiEvent
-import com.igorj.dashboard_presentation.chapters.ChaptersEvent
 import com.igorj.dashboard_presentation.components.BottomNavBar
-import com.igorj.dashboard_presentation.components.ChapterCard
 import com.igorj.dashboard_presentation.components.CircleImage
 import com.igorj.dashboard_presentation.components.Flickers
 import com.igorj.dashboard_presentation.components.ProfileInfo
 import com.igorj.dashboard_presentation.components.RedeemFlickersCard
 import com.igorj.dashboard_presentation.components.bottomNavBarItems
-import com.igorj.dashboard_presentation.stats.StatsEvent
 
 @Composable
 fun ProfileScreen(
