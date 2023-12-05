@@ -4,7 +4,7 @@ import androidx.annotation.DrawableRes
 
 data class Question(
     val text: String,
-    @DrawableRes val image: Int?,
+    val imageUrl: String? = null,
     val wrongAnswers: ArrayList<String>,
     val correctAnswer: String
 )
