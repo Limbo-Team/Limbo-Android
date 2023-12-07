@@ -4,5 +4,5 @@ sealed class PlayingQuizEvent {
     object OnStart: PlayingQuizEvent()
     object OnNextQuestion: PlayingQuizEvent()
     object OnFinish: PlayingQuizEvent()
-    data class OnAnswer(val answer: String): PlayingQuizEvent()
+    data class OnAnswerClick(val position: Int): PlayingQuizEvent()
 }

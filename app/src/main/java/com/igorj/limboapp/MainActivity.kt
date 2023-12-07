@@ -9,9 +9,11 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.igorj.auth_presentation.forgot_password.change_password.ChangePasswordScreen
 import com.igorj.auth_presentation.forgot_password.enter_email.ForgotPasswordScreen
 import com.igorj.auth_presentation.forgot_password.enter_verification_code.VerificationCodeScreen
@@ -24,6 +26,7 @@ import com.igorj.dashboard_presentation.profile.ProfileScreen
 import com.igorj.dashboard_presentation.stats.StatsScreen
 import com.igorj.limboapp.navigation.Route
 import com.igorj.limboapp.ui.theme.LimboAppTheme
+import com.igorj.quiz_presentation.playing_quiz.PlayingQuizScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,7 +43,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = Route.WELCOME,
+                        startDestination = Route.CHAPTERS,
                         modifier = Modifier.padding(it)
                     ) {
                         composable(Route.WELCOME) {
@@ -126,6 +129,17 @@ class MainActivity : ComponentActivity() {
                                             )
                                             .build()
                                     )
+                                },
+                                onChapterNavigation = { chapterId ->
+                                    navController.navigate(
+                                        route = "${Route.QUIZ_PLAY}/$chapterId",
+                                        navOptions = NavOptions.Builder()
+                                            .setPopUpTo(
+                                                route = Route.CHAPTERS,
+                                                inclusive = true
+                                            )
+                                            .build()
+                                    )
                                 }
                             )
                         }
@@ -165,8 +179,18 @@ class MainActivity : ComponentActivity() {
                         composable(Route.QUIZ_START) {
 
                         }
-                        composable(Route.QUIZ_PLAY) {
+                        composable(
+                            route = "${Route.QUIZ_PLAY}/{chapterId}",
+                            arguments = listOf(navArgument("chapterId") {
+                                type = NavType.IntType
+                                defaultValue = 0
+                            })
+                        ) {
+                            PlayingQuizScreen(
+                                onNavigation = {
 
+                                }
+                            )
                         }
                         composable(Route.QUIZ_FINISH) {
 

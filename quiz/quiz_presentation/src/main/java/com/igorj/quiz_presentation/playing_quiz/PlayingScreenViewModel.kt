@@ -3,6 +3,7 @@ package com.igorj.quiz_presentation.playing_quiz
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.igorj.core.util.UiEvent
@@ -15,6 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PlayingScreenViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val questionsRepository: QuestionsRepository
 ): ViewModel() {
 
@@ -26,10 +28,13 @@ class PlayingScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val questions = questionsRepository.getQuestions(123).getOrElse {
-                return@launch
+            state = state.copy(chapterId = savedStateHandle.get<Int>("chapterId") ?: 0)
+            if (state.chapterId != 0) {
+                val questions = questionsRepository.getQuestions(state.chapterId, 123).getOrElse {
+                    return@launch
+                }
+                state = state.copy(questions = questions)
             }
-            state = state.copy(questions = questions)
         }
     }
 
@@ -39,13 +44,18 @@ class PlayingScreenViewModel @Inject constructor(
 
             }
             is PlayingQuizEvent.OnNextQuestion -> {
-
+                state = state.copy(
+                    currentQuestionIndex = state.currentQuestionIndex + 1,
+                    selectedAnswerPosition = -1
+                )
             }
             is PlayingQuizEvent.OnFinish -> {
 
             }
-            is PlayingQuizEvent.OnAnswer -> {
-
+            is PlayingQuizEvent.OnAnswerClick -> {
+                state = state.copy(
+                    selectedAnswerPosition = event.position
+                )
             }
         }
     }
