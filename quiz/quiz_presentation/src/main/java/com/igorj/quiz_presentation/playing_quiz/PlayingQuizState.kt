@@ -9,5 +9,5 @@ data class PlayingQuizState(
     val isFinished: Boolean = false,
     val selectedAnswerPosition: Int = -1,
     val answers: List<String> = listOf(),
-    val timer: Int = 60,
+    val timeLeft: Float = 60f,
 )

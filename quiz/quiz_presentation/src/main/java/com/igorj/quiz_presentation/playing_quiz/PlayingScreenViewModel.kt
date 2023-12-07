@@ -43,18 +43,24 @@ class PlayingScreenViewModel @Inject constructor(
             is PlayingQuizEvent.OnStart -> {
 
             }
-            is PlayingQuizEvent.OnNextQuestion -> {
+            is PlayingQuizEvent.OnNextQuestionClick -> {
                 state = state.copy(
                     currentQuestionIndex = state.currentQuestionIndex + 1,
-                    selectedAnswerPosition = -1
+                    selectedAnswerPosition = -1,
+                    timeLeft = state.timeLeft + 5f
                 )
             }
             is PlayingQuizEvent.OnFinish -> {
-
+                // send answers to backend server
             }
             is PlayingQuizEvent.OnAnswerClick -> {
                 state = state.copy(
                     selectedAnswerPosition = event.position
+                )
+            }
+            is PlayingQuizEvent.OnTimeTick -> {
+                state = state.copy(
+                    timeLeft = state.timeLeft - 0.1f
                 )
             }
         }

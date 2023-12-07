@@ -42,6 +42,8 @@ import com.igorj.core.components.GradientButton
 import com.igorj.core.components.LimboLogo
 import com.igorj.core.util.UiEvent
 import com.igorj.quiz_presentation.components.QuizAnswersSection
+import com.igorj.quiz_presentation.components.QuizTimeLeftBar
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
@@ -89,6 +91,16 @@ fun PlayingQuizScreen(
         }
     }
 
+    LaunchedEffect(key1 = state.timeLeft) {
+        while (state.timeLeft > 0) {
+            delay(100)
+            viewModel.onEvent(PlayingQuizEvent.OnTimeTick)
+        }
+        if (state.timeLeft == 0f) {
+            viewModel.onEvent(PlayingQuizEvent.OnFinish)
+        }
+    }
+
     Box(modifier = Modifier
         .fillMaxSize()
         .background(DarkVerticalQuizBackgroundGradient)
@@ -96,8 +108,14 @@ fun PlayingQuizScreen(
     Scaffold (
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding(),
-                bottom = WindowInsets.systemBars.asPaddingValues().calculateBottomPadding()),
+            .padding(
+                top = WindowInsets.systemBars
+                    .asPaddingValues()
+                    .calculateTopPadding(),
+                bottom = WindowInsets.systemBars
+                    .asPaddingValues()
+                    .calculateBottomPadding()
+            ),
         backgroundColor = Color.Transparent,
         topBar = {
             Box(
@@ -117,6 +135,8 @@ fun PlayingQuizScreen(
                     .padding(it),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                QuizTimeLeftBar(remainingTime = state.timeLeft)
+                Spacer(modifier = Modifier.height(26.dp))
                 Text(
                     text = currentQuestion.text,
                     modifier = Modifier.padding(top = 20.dp),
@@ -158,7 +178,7 @@ fun PlayingQuizScreen(
                 GradientButton(
                     text = "Next",
                     onClick = {
-                        viewModel.onEvent(PlayingQuizEvent.OnNextQuestion)
+                        viewModel.onEvent(PlayingQuizEvent.OnNextQuestionClick)
                     }
                 )
             }
