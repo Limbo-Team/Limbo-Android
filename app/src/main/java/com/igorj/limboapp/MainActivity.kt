@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -20,6 +22,7 @@ import com.igorj.auth_presentation.forgot_password.enter_verification_code.Verif
 import com.igorj.auth_presentation.login.LoginScreen
 import com.igorj.auth_presentation.register.RegisterScreen
 import com.igorj.auth_presentation.welcome.WelcomeScreen
+import com.igorj.core.DarkBackground
 import com.igorj.dashboard_presentation.chapters.ChaptersScreen
 import com.igorj.dashboard_presentation.home.HomeScreen
 import com.igorj.dashboard_presentation.profile.ProfileScreen
@@ -33,6 +36,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        window.apply {
+            statusBarColor = DarkBackground.toArgb()
+            navigationBarColor = DarkBackground.toArgb()
+        }
         setContent {
             LimboAppTheme {
                 val navController = rememberNavController()
@@ -43,7 +51,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = Route.CHAPTERS,
+                        startDestination = Route.WELCOME,
                         modifier = Modifier.padding(it)
                     ) {
                         composable(Route.WELCOME) {

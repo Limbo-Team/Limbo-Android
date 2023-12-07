@@ -1,31 +1,41 @@
 package com.igorj.quiz_presentation.playing_quiz
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.igorj.core.BrightOrangeGradient
+import com.igorj.core.DarkBackground
+import com.igorj.core.DarkVerticalQuizBackgroundGradient
 import com.igorj.core.R
 import com.igorj.core.TextWhite
 import com.igorj.core.components.GradientButton
@@ -48,6 +58,25 @@ fun PlayingQuizScreen(
         }.shuffled()
     }
 
+    val activity = LocalContext.current as? Activity
+    SideEffect {
+        activity?.window?.apply {
+            WindowCompat.setDecorFitsSystemWindows(this, false)
+            statusBarColor = Color.Transparent.toArgb()
+            navigationBarColor = Color.Transparent.toArgb()
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            activity?.window?.apply {
+                WindowCompat.setDecorFitsSystemWindows(this, true)
+                statusBarColor = DarkBackground.toArgb()
+                navigationBarColor = DarkBackground.toArgb()
+            }
+        }
+    }
+
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
@@ -62,10 +91,14 @@ fun PlayingQuizScreen(
 
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(BrightOrangeGradient)
+        .background(DarkVerticalQuizBackgroundGradient)
     )
     Scaffold (
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = WindowInsets.systemBars.asPaddingValues().calculateTopPadding(),
+                bottom = WindowInsets.systemBars.asPaddingValues().calculateBottomPadding()),
+        backgroundColor = Color.Transparent,
         topBar = {
             Box(
                 modifier = Modifier
