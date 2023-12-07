@@ -13,6 +13,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.min
 
 @HiltViewModel
 class PlayingScreenViewModel @Inject constructor(
@@ -44,10 +45,14 @@ class PlayingScreenViewModel @Inject constructor(
 
             }
             is PlayingQuizEvent.OnNextQuestionClick -> {
+                if (state.selectedAnswerPosition == -1) {
+                    return
+                }
                 state = state.copy(
+                    answers = state.answers + event.answer,
                     currentQuestionIndex = state.currentQuestionIndex + 1,
                     selectedAnswerPosition = -1,
-                    timeLeft = state.timeLeft + 5f
+                    timeLeft = min(60f, state.timeLeft + 5f),
                 )
             }
             is PlayingQuizEvent.OnFinish -> {

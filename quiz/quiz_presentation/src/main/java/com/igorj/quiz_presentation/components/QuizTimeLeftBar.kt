@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.igorj.core.OrangeGradient
 import com.igorj.core.R
@@ -24,6 +25,7 @@ import com.igorj.core.R
 @Composable
 fun QuizTimeLeftBar(
     modifier: Modifier = Modifier,
+    height: Dp = 36.dp,
     maxTime: Int = 60,
     remainingTime: Float
 ) {
@@ -32,14 +34,14 @@ fun QuizTimeLeftBar(
     Box(
         modifier = modifier
             .width(240.dp)
-            .height(30.dp)
+            .height(height)
             .clip(RoundedCornerShape(25.dp))
             .background(Color.White)
     ) {
         Box(
             modifier = Modifier
                 .width(240.dp * timeLeft)
-                .height(30.dp)
+                .height(height)
                 .clip(RoundedCornerShape(25.dp))
                 .background(OrangeGradient)
                 .align(Alignment.CenterStart)

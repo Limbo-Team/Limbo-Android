@@ -3,8 +3,10 @@ package com.igorj.quiz_presentation.playing_quiz
 import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -42,6 +45,7 @@ import com.igorj.core.components.GradientButton
 import com.igorj.core.components.LimboLogo
 import com.igorj.core.util.UiEvent
 import com.igorj.quiz_presentation.components.QuizAnswersSection
+import com.igorj.quiz_presentation.components.QuizNumberOfQuestionsLeft
 import com.igorj.quiz_presentation.components.QuizTimeLeftBar
 import kotlinx.coroutines.delay
 
@@ -121,10 +125,11 @@ fun PlayingQuizScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 14.dp)
+                    .padding(top = 14.dp, bottom = 8.dp)
             ) {
                 LimboLogo(
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center),
+                    textColor = TextWhite
                 )
             }
         },
@@ -132,11 +137,26 @@ fun PlayingQuizScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(it),
+                    .padding(it)
+                    .padding(horizontal = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                QuizTimeLeftBar(remainingTime = state.timeLeft)
-                Spacer(modifier = Modifier.height(26.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp)
+                        .padding(horizontal = 20.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    QuizTimeLeftBar(remainingTime = state.timeLeft)
+                    Spacer(modifier = Modifier.width(30.dp))
+                    QuizNumberOfQuestionsLeft(
+                        modifier = Modifier.weight(1f),
+                        numOfQuestions = state.questions.size,
+                        answeredQuestions = state.currentQuestionIndex + 1
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = currentQuestion.text,
                     modifier = Modifier.padding(top = 20.dp),
@@ -147,7 +167,7 @@ fun PlayingQuizScreen(
                 )
                 Image(
                     modifier = Modifier
-                        .fillMaxWidth(0.8f)
+                        .fillMaxWidth()
                         .padding(top = 20.dp),
                     painter = rememberImagePainter(
                         data = state.questions[state.currentQuestionIndex].imageUrl,
@@ -172,14 +192,23 @@ fun PlayingQuizScreen(
         },
         bottomBar = {
             Box(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 40.dp, top = 20.dp),
                 contentAlignment = Alignment.TopCenter
             ) {
                 GradientButton(
                     text = "Next",
                     onClick = {
-                        viewModel.onEvent(PlayingQuizEvent.OnNextQuestionClick)
-                    }
+                        viewModel.onEvent(PlayingQuizEvent.OnNextQuestionClick(
+                            if (state.selectedAnswerPosition == -1) {
+                                ""
+                            } else {
+                                currentQuestionAnswers[state.selectedAnswerPosition]
+                            }
+                        ))
+                    },
+                    isEnabled = state.selectedAnswerPosition != -1
                 )
             }
         }
