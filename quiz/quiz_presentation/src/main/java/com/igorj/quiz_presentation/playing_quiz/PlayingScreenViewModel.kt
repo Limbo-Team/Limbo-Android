@@ -59,7 +59,7 @@ class PlayingScreenViewModel @Inject constructor(
                         answers = state.answers + event.answer,
                         currentQuestionIndex = state.currentQuestionIndex + 1,
                         selectedAnswerPosition = -1,
-                        timeLeft = min(60f, state.timeLeft + 5f),
+                        timeLeft = min(state.maxTime.toFloat(), state.timeLeft + 5f),
                     )
                 }
             }
@@ -77,6 +77,11 @@ class PlayingScreenViewModel @Inject constructor(
                 state = state.copy(
                     timeLeft = state.timeLeft - 0.1f
                 )
+                if (state.timeLeft <= 0f) {
+                    viewModelScope.launch {
+                        _uiEvent.send(UiEvent.OnNavigate)
+                    }
+                }
             }
             is PlayingQuizEvent.OnBackButtonClick -> {
                 Log.d("LOGCAT", "OnBackButtonClick")

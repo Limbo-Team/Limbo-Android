@@ -93,9 +93,6 @@ fun PlayingQuizScreen(
             delay(100)
             viewModel.onEvent(PlayingQuizEvent.OnTimeTick)
         }
-        if (state.timeLeft == 0f) {
-            viewModel.onEvent(PlayingQuizEvent.OnFinish)
-        }
     }
 
     Box(modifier = Modifier
@@ -141,7 +138,10 @@ fun PlayingQuizScreen(
                         .padding(horizontal = 20.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    QuizTimeLeftBar(remainingTime = state.timeLeft)
+                    QuizTimeLeftBar(
+                        maxTime = state.maxTime,
+                        remainingTime = state.timeLeft
+                    )
                     Spacer(modifier = Modifier.width(30.dp))
                     QuizNumberOfQuestionsLeft(
                         modifier = Modifier.weight(1f),
