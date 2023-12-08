@@ -40,6 +40,11 @@ import com.igorj.core.components.GradientButton
 import com.igorj.core.components.LimboLogo
 import com.igorj.core.util.UiEvent
 import com.igorj.quiz_presentation.components.QuizGainedPointsCircle
+import nl.dionsegijn.konfetti.compose.KonfettiView
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.Position
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun FinishQuizScreen(
@@ -156,6 +161,20 @@ fun FinishQuizScreen(
                     )
                 }
             }
+        )
+        val party = Party(
+            speed = 0f,
+            maxSpeed = 30f,
+            damping = 0.95f,
+            spread = 360,
+            timeToLive = 3000L,
+            colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
+            position = Position.Relative(0.5, 0.3),
+            emitter = Emitter(duration = 150, TimeUnit.MILLISECONDS).max(150)
+        )
+        KonfettiView(
+            modifier = Modifier.fillMaxSize(),
+            parties = listOf(party)
         )
     }
 }
