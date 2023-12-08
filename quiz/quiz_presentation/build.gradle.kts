@@ -13,6 +13,6 @@ dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.coreUi))
     implementation(project(Modules.quizDomain))
-
     implementation(Coil.coilCompose)
+    implementation(Konfetti.konfettiCompose)
 }
