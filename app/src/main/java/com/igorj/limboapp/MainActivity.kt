@@ -29,6 +29,7 @@ import com.igorj.dashboard_presentation.profile.ProfileScreen
 import com.igorj.dashboard_presentation.stats.StatsScreen
 import com.igorj.limboapp.navigation.Route
 import com.igorj.limboapp.ui.theme.LimboAppTheme
+import com.igorj.quiz_presentation.finish_quiz.FinishQuizScreen
 import com.igorj.quiz_presentation.playing_quiz.PlayingQuizScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -196,12 +197,32 @@ class MainActivity : ComponentActivity() {
                         ) {
                             PlayingQuizScreen(
                                 onNavigation = {
-
+                                    navController.navigate(
+                                        route = Route.QUIZ_FINISH,
+                                        navOptions = NavOptions.Builder()
+                                            .setPopUpTo(
+                                                route = Route.QUIZ_PLAY,
+                                                inclusive = true
+                                            )
+                                            .build()
+                                    )
                                 }
                             )
                         }
                         composable(Route.QUIZ_FINISH) {
-
+                            FinishQuizScreen(
+                                onNavigation = {
+                                    navController.navigate(
+                                        route = Route.CHAPTERS,
+                                        navOptions = NavOptions.Builder()
+                                            .setPopUpTo(
+                                                route = Route.QUIZ_FINISH,
+                                                inclusive = true
+                                            )
+                                            .build()
+                                    )
+                                }
+                            )
                         }
                     }
                 }

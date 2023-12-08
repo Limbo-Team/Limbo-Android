@@ -6,4 +6,5 @@ sealed class PlayingQuizEvent {
     data class OnNextQuestionClick(val answer: String): PlayingQuizEvent()
     object OnFinish: PlayingQuizEvent()
     object OnTimeTick: PlayingQuizEvent()
+    object OnBackButtonClick: PlayingQuizEvent()
 }

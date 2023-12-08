@@ -1,6 +1,7 @@
 package com.igorj.quiz_presentation.playing_quiz
 
 import android.app.Activity
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -73,14 +74,8 @@ fun PlayingQuizScreen(
         }
     }
 
-    DisposableEffect(Unit) {
-        onDispose {
-            activity?.window?.apply {
-                WindowCompat.setDecorFitsSystemWindows(this, true)
-                statusBarColor = DarkBackground.toArgb()
-                navigationBarColor = DarkBackground.toArgb()
-            }
-        }
+    BackHandler {
+        viewModel.onEvent(PlayingQuizEvent.OnBackButtonClick)
     }
 
     LaunchedEffect(key1 = true) {
@@ -170,7 +165,7 @@ fun PlayingQuizScreen(
                         .fillMaxWidth()
                         .padding(top = 20.dp),
                     painter = rememberImagePainter(
-                        data = state.questions[state.currentQuestionIndex].imageUrl,
+                        data = currentQuestion.imageUrl,
                         builder = {
                             crossfade(true)
                             error(R.drawable.ic_profile)

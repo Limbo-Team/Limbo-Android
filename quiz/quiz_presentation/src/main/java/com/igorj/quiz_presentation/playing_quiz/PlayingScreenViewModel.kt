@@ -1,5 +1,6 @@
 package com.igorj.quiz_presentation.playing_quiz
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -48,15 +49,24 @@ class PlayingScreenViewModel @Inject constructor(
                 if (state.selectedAnswerPosition == -1) {
                     return
                 }
-                state = state.copy(
-                    answers = state.answers + event.answer,
-                    currentQuestionIndex = state.currentQuestionIndex + 1,
-                    selectedAnswerPosition = -1,
-                    timeLeft = min(60f, state.timeLeft + 5f),
-                )
+                if (state.currentQuestionIndex + 1 >= state.questions.size) {
+                    viewModelScope.launch {
+                        _uiEvent.send(UiEvent.OnNavigate)
+                    }
+                    return
+                } else {
+                    state = state.copy(
+                        answers = state.answers + event.answer,
+                        currentQuestionIndex = state.currentQuestionIndex + 1,
+                        selectedAnswerPosition = -1,
+                        timeLeft = min(60f, state.timeLeft + 5f),
+                    )
+                }
             }
             is PlayingQuizEvent.OnFinish -> {
-                // send answers to backend server
+                viewModelScope.launch {
+                    _uiEvent.send(UiEvent.OnNavigate)
+                }
             }
             is PlayingQuizEvent.OnAnswerClick -> {
                 state = state.copy(
@@ -67,6 +77,9 @@ class PlayingScreenViewModel @Inject constructor(
                 state = state.copy(
                     timeLeft = state.timeLeft - 0.1f
                 )
+            }
+            is PlayingQuizEvent.OnBackButtonClick -> {
+                Log.d("LOGCAT", "OnBackButtonClick")
             }
         }
     }
