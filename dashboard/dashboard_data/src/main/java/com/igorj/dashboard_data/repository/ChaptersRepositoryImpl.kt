@@ -8,6 +8,7 @@ class ChaptersRepositoryImpl: ChaptersRepository {
     override suspend fun getChapters(listSize: Int): Result<List<Chapter>> {
         val chaptersList = listOf(
             Chapter(
+                id = 1,
                 title = "Data operations",
                 isUnlocked = true,
                 isCompleted = true,
@@ -15,6 +16,7 @@ class ChaptersRepositoryImpl: ChaptersRepository {
                 gainedPoints = 43
             ),
             Chapter(
+                id = 2,
                 title = "Manual memory management",
                 isUnlocked = true,
                 isCompleted = false,
@@ -22,6 +24,7 @@ class ChaptersRepositoryImpl: ChaptersRepository {
                 gainedPoints = 12
             ),
             Chapter(
+                id = 3,
                 title = "Structure and union",
                 isUnlocked = true,
                 isCompleted = false,
@@ -29,6 +32,7 @@ class ChaptersRepositoryImpl: ChaptersRepository {
                 gainedPoints = 46
             ),
             Chapter(
+                id = 4,
                 title = "Bit operations and preprocessor directives",
                 isUnlocked = false,
                 isCompleted = false,
@@ -36,6 +40,7 @@ class ChaptersRepositoryImpl: ChaptersRepository {
                 gainedPoints = 0
             ),
             Chapter(
+                id = 5,
                 title = "Pointers and arrays",
                 isUnlocked = false,
                 isCompleted = false,
@@ -43,6 +48,7 @@ class ChaptersRepositoryImpl: ChaptersRepository {
                 gainedPoints = 0
             ),
             Chapter(
+                id = 6,
                 title = "Flow of control",
                 isUnlocked = false,
                 isCompleted = false,

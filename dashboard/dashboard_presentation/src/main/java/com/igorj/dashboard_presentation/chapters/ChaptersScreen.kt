@@ -29,6 +29,7 @@ import com.igorj.dashboard_presentation.components.bottomNavBarItems
 @Composable
 fun ChaptersScreen(
     onNavigation: (String) -> Unit,
+    onChapterNavigation: (Int) -> Unit,
     viewModel: ChaptersViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
@@ -90,7 +91,12 @@ fun ChaptersScreen(
                 )
             ) {
                 items(state.chapters) { chapter ->
-                    ChapterCard(chapter = chapter)
+                    ChapterCard(
+                        chapter = chapter,
+                        onClick = {
+                            onChapterNavigation(chapter.id)
+                        }
+                    )
                 }
             }
         },

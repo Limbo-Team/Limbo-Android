@@ -1,0 +1,161 @@
+package com.igorj.quiz_presentation.finish_quiz
+
+import android.app.Activity
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.igorj.core.DarkBackground
+import com.igorj.core.DarkVerticalQuizBackgroundGradient
+import com.igorj.core.R
+import com.igorj.core.TextWhite
+import com.igorj.core.components.GradientButton
+import com.igorj.core.components.LimboLogo
+import com.igorj.core.util.UiEvent
+import com.igorj.quiz_presentation.components.QuizGainedPointsCircle
+
+@Composable
+fun FinishQuizScreen(
+    onNavigation: () -> Unit,
+    viewModel: FinishQuizViewModel = hiltViewModel()
+) {
+    val state = viewModel.state
+
+    val activity = LocalContext.current as? Activity
+
+    DisposableEffect(Unit) {
+        onDispose {
+            activity?.window?.apply {
+                WindowCompat.setDecorFitsSystemWindows(this, true)
+                statusBarColor = DarkBackground.toArgb()
+                navigationBarColor = DarkBackground.toArgb()
+            }
+        }
+    }
+
+    BackHandler {
+        viewModel.onEvent(FinishQuizEvent.OnBackButtonClick)
+    }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.OnNavigate -> {
+                    onNavigation()
+                }
+
+                else -> Unit
+            }
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(DarkVerticalQuizBackgroundGradient),
+        contentAlignment = Alignment.Center
+    ) {
+        Scaffold (
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    top = WindowInsets.systemBars
+                        .asPaddingValues()
+                        .calculateTopPadding(),
+                    bottom = WindowInsets.systemBars
+                        .asPaddingValues()
+                        .calculateBottomPadding()
+                ),
+            backgroundColor = Color.Transparent,
+            topBar = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 14.dp, bottom = 8.dp)
+                ) {
+                    LimboLogo(
+                        modifier = Modifier.align(Alignment.Center),
+                        textColor = TextWhite
+                    )
+                }
+            },
+            content = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(it)
+                        .padding(horizontal = 10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    QuizGainedPointsCircle(gainedPoints = state.gainedPoints)
+                    Spacer(modifier = Modifier.height(28.dp))
+                    Column(
+                        modifier = Modifier.padding(horizontal = 12.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.you_are_amazing),
+                            color = TextWhite,
+                            style = MaterialTheme.typography.h2,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 18.sp,
+                            textAlign = TextAlign.Center,
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = stringResource(id = R.string.congratulations_you_scored_required_points_in_this_chapter),
+                            color = TextWhite,
+                            style = MaterialTheme.typography.body1,
+                            fontWeight = FontWeight.Light,
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                }
+            },
+            bottomBar = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 40.dp, top = 20.dp),
+                    contentAlignment = Alignment.TopCenter
+                ) {
+                    GradientButton(
+                        text = stringResource(id = R.string.finish),
+                        onClick = {
+                            viewModel.onEvent(FinishQuizEvent.OnFinish)
+                        }
+                    )
+                }
+            }
+        )
+    }
+}

@@ -72,3 +72,16 @@ val DarkBlackGradient = Brush.horizontalGradient(
         Color(0xFF111111)
     )
 )
+
+val DarkVerticalQuizBackgroundGradient = Brush.verticalGradient(
+    colors = listOf(
+        Color(0xFF47200D),
+        Color(0xFF2D1B0D),
+        Color(0xFF1D160D),
+        Color(0xFF14120D),
+        Color(0xFF11100E),
+        Color(0xFF0F0E0E),
+        Color(0xFF0F0E0E),
+        Color(0xFF0F0E0E)
+    )
+)
