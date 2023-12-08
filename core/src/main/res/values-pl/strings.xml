@@ -8,7 +8,7 @@
     <string name="password">Hasło</string>
     <string name="forgot_password">Zapomniałeś hasła?</string>
     <string name="dont_have_account">Nie masz konta?</string>
-    <string name="failed_to_log_in">Nie udało się zalogować, spróbuj ponownie...</string>
+    <string name="failed_to_log_in">Nie udało się zalogować, spróbuj ponownie…</string>
     <string name="empty_credentials">Puste pola, proszę podaj login i hasło.</string>
     <string name="function_not_implemented">Funkcja niezaimplementowana.</string>
     <string name="name">Imię</string>

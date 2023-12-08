@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.igorj.core.util.UiEvent
@@ -16,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FinishQuizViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle
+
 ): ViewModel() {
 
     var state by mutableStateOf(FinishQuizState())
