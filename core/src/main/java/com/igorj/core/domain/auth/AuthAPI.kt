@@ -9,6 +9,13 @@ interface AuthAPI {
         const val TOKEN_KEY = "token_key"
     }
     suspend fun authorize(onResult: (String) -> Unit)
+    suspend fun register(
+        firstName: String,
+        lastName: String,
+        password: String,
+        email: String,
+        onResult: (Boolean) -> Unit
+    )
 
     fun saveUsername(username: String)
     fun savePassword(password: String)

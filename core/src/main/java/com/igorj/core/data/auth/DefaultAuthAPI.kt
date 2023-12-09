@@ -39,6 +39,37 @@ class DefaultAuthAPI @Inject constructor(
         queue.add(jsonObjectRequest)
     }
 
+    override suspend fun register(
+        firstName: String,
+        lastName: String,
+        password: String,
+        email: String,
+        onResult: (Boolean) -> Unit
+    ) {
+        val queue = Volley.newRequestQueue(context)
+        val params = JSONObject(
+            mapOf(
+                "firstName" to firstName,
+                "lastName" to lastName,
+                "password" to password,
+                "email" to email
+            )
+        )
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.POST,
+            "${AuthAPI.BASE_URL}/user/signup",
+            params,
+            { success ->
+                onResult(true)
+            }, { error ->
+                error.printStackTrace()
+                Log.d("LOGCAT", error.networkResponse.statusCode.toString())
+                onResult(false)
+            }
+        )
+        queue.add(jsonObjectRequest)
+    }
+
     override fun saveUsername(username: String) {
         authSharedPreferences.putString(AuthAPI.USERNAME_KEY, username)
     }
