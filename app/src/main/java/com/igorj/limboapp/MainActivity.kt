@@ -23,6 +23,7 @@ import com.igorj.auth_presentation.login.LoginScreen
 import com.igorj.auth_presentation.register.RegisterScreen
 import com.igorj.auth_presentation.welcome.WelcomeScreen
 import com.igorj.core.DarkBackground
+import com.igorj.core.domain.auth.AuthAPI
 import com.igorj.dashboard_presentation.chapters.ChaptersScreen
 import com.igorj.dashboard_presentation.home.HomeScreen
 import com.igorj.dashboard_presentation.profile.ProfileScreen
@@ -32,15 +33,24 @@ import com.igorj.limboapp.ui.theme.LimboAppTheme
 import com.igorj.quiz_presentation.finish_quiz.FinishQuizScreen
 import com.igorj.quiz_presentation.playing_quiz.PlayingQuizScreen
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var authApi: AuthAPI
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, true)
         window.apply {
             statusBarColor = DarkBackground.toArgb()
             navigationBarColor = DarkBackground.toArgb()
+        }
+        val startDestination = if (authApi.getToken().isBlank()) {
+            Route.WELCOME
+        } else {
+            Route.HOME
         }
         setContent {
             LimboAppTheme {
@@ -52,7 +62,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(
                         navController = navController,
-                        startDestination = Route.WELCOME,
+                        startDestination = startDestination,
                         modifier = Modifier.padding(it)
                     ) {
                         composable(Route.WELCOME) {

@@ -33,6 +33,7 @@ import com.igorj.core.util.UiEvent
 import com.igorj.dashboard_presentation.components.BottomNavBar
 import com.igorj.dashboard_presentation.components.CircleImage
 import com.igorj.dashboard_presentation.components.Flickers
+import com.igorj.dashboard_presentation.components.LogoutButton
 import com.igorj.dashboard_presentation.components.ProfileInfo
 import com.igorj.dashboard_presentation.components.RedeemFlickersCard
 import com.igorj.dashboard_presentation.components.bottomNavBarItems
@@ -77,13 +78,13 @@ fun ProfileScreen(
                 LimboLogo(
                     modifier = Modifier.align(Alignment.Center)
                 )
-                CircleImage(
+                LogoutButton(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
-                        .padding(end = 30.dp),
-                    imageUrl = state.user.imageUrl,
-                    contentDescription = stringResource(id = R.string.profile),
-                    size = 40.dp
+                        .padding(end = 26.dp),
+                    onClick = {
+                        viewModel.onEvent(ProfileEvent.OnLogoutClick)
+                    }
                 )
             }
         },

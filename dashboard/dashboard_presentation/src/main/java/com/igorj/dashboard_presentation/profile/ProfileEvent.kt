@@ -9,4 +9,5 @@ sealed class ProfileEvent {
     data class OnNewPasswordConfirmationChange(val newPasswordConfirmation: String): ProfileEvent()
     object OnChangePasswordClick : ProfileEvent()
     object OnExchangeFlickersClick: ProfileEvent()
+    object OnLogoutClick: ProfileEvent()
 }

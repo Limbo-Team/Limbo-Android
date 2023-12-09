@@ -57,17 +57,24 @@ class LoginViewModel @Inject constructor(
                         return@launch
                     }
                     state = state.copy(isTryingToLogin = true)
-                    val response = authApi.attemptLogin(event.email, event.password)
-                    state = state.copy(isTryingToLogin = false)
-                    if (response.isBlank()) {
-                        _uiEvent.send(
-                            UiEvent.ShowSnackbar(
-                                UiText.StringResource(R.string.failed_to_log_in)
-                            )
-                        )
-                    } else {
-                        _uiEvent.send(UiEvent.OnNavigate)
-                    }
+                    authApi.saveUsername(event.email)
+                    authApi.savePassword(event.password)
+                    authApi.authorize(
+                        onResult = { response ->
+                            viewModelScope.launch {
+                                state = state.copy(isTryingToLogin = false)
+                                if (response.isBlank()) {
+                                    _uiEvent.send(
+                                        UiEvent.ShowSnackbar(
+                                            UiText.StringResource(R.string.failed_to_log_in)
+                                        )
+                                    )
+                                } else {
+                                    _uiEvent.send(UiEvent.OnNavigate)
+                                }
+                            }
+                        }
+                    )
                 }
             }
         }

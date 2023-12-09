@@ -34,7 +34,7 @@ class ForgotPasswordViewModel @Inject constructor(
             is ForgotPasswordEvent.OnButtonClick -> {
                 state = state.copy(isLoading = true)
                 viewModelScope.launch {
-                    val result = authAPI.forgotPassword(state.email)
+                    val result = true
                     delay(1000)
                     if (result) {
                         state = state.copy(isLoading = false)
