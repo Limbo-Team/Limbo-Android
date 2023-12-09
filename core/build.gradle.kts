@@ -11,4 +11,6 @@ android {
 
 dependencies {
     implementation(Security.securityCrypto)
+    implementation(Volley.volley)
+    implementation(Gson.gson)
 }

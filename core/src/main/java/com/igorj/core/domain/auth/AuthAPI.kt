@@ -1,11 +1,22 @@
 package com.igorj.core.domain.auth
 
 interface AuthAPI {
-    suspend fun attemptLogin(login: String, password: String): String
-    fun register(login: String, password: String)
-    fun changePasswordViaOldPassword(oldPassword: String, newPassword: String)
-    fun changePasswordViaVerificationCode(codeFromEmail: String, newPassword: String)
-    fun forgotPassword(email: String): Boolean
+    companion object {
+        const val BASE_URL = "https://limbo-backend.onrender.com/"
 
-    // TODO safe necessary data in encrypted shared preferences (token, credentials)
+        const val USERNAME_KEY = "username_key"
+        const val PASSWORD_KEY = "password_key"
+        const val TOKEN_KEY = "token_key"
+    }
+    suspend fun authorize(onResult: (String) -> Unit)
+
+    fun saveUsername(username: String)
+    fun savePassword(password: String)
+    fun saveToken(token: String)
+
+    fun getUsername(): String
+    fun getPassword(): String
+    fun getToken(): String
+
+    fun logout()
 }
