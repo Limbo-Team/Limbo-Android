@@ -5,6 +5,8 @@ import android.util.Log
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
+import com.igorj.core.data.model.LoginResponse
 import com.igorj.core.domain.auth.AuthAPI
 import org.json.JSONObject
 import javax.inject.Inject
@@ -23,15 +25,14 @@ class DefaultAuthAPI @Inject constructor(
         )
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.POST,
-            AuthAPI.BASE_URL,
+            "${AuthAPI.BASE_URL}/user/signin",
             params,
             { response ->
-                val token = response.getString("token")
-                Log.d("LOGCAT", "token: $token")
-                saveToken(token)
-                onResult(token)
+                val authToken = Gson().fromJson(response.toString(), LoginResponse::class.java).authToken
+                saveToken(authToken)
+                onResult(authToken)
             }, { error ->
-                Log.d("LOGCAT", "error: $error")
+                error.printStackTrace()
                 onResult("")
             }
         )

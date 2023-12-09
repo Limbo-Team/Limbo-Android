@@ -2,7 +2,7 @@ package com.igorj.core.domain.auth
 
 interface AuthAPI {
     companion object {
-        const val BASE_URL = "https://limbo-backend.onrender.com/"
+        const val BASE_URL = "https://limbo-backend.onrender.com"
 
         const val USERNAME_KEY = "username_key"
         const val PASSWORD_KEY = "password_key"
