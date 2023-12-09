@@ -1,6 +1,5 @@
 package com.igorj.auth_presentation.register
 
-import com.igorj.auth_presentation.register.model.RegisterUserInfo
 
 sealed class RegisterEvent {
     data class OnEmailChange(val email: String): RegisterEvent()
