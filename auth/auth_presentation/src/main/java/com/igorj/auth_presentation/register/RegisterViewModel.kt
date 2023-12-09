@@ -73,12 +73,31 @@ class RegisterViewModel @Inject constructor(
             is RegisterEvent.OnRegisterClick -> {
                 viewModelScope.launch {
                     state = state.copy(isTryingToRegister = true)
-                    _uiEvent.send(
-                        UiEvent.ShowSnackbar(
-                            message = UiText.StringResource(R.string.function_not_implemented)
-                        )
+                    authAPI.register(
+                        firstName = state.name,
+                        lastName = state.surname,
+                        password = state.password,
+                        email = state.email,
+                        onResult = { response ->
+                            viewModelScope.launch {
+                                state = state.copy(isTryingToRegister = false)
+                                if (response) {
+                                    _uiEvent.send(
+                                        UiEvent.ShowSnackbar(
+                                            UiText.DynamicString("Created account")
+                                        )
+                                    )
+                                    _uiEvent.send(UiEvent.OnNavigate)
+                                } else {
+                                    _uiEvent.send(
+                                        UiEvent.ShowSnackbar(
+                                            UiText.DynamicString("Failed to register")
+                                        )
+                                    )
+                                }
+                            }
+                        }
                     )
-                    state = state.copy(isTryingToRegister = false)
                 }
             }
         }

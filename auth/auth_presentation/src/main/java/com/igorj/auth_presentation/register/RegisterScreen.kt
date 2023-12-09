@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.igorj.core.components.CustomTextField
-import com.igorj.auth_presentation.register.model.RegisterUserInfo
 import com.igorj.core.R
 import com.igorj.core.util.UiEvent
 import com.igorj.core.BrightOrange
@@ -230,19 +229,7 @@ fun RegisterScreen(
                 text = stringResource(id = R.string.sign_up),
                 isEnabled = !state.isTryingToRegister,
                 onClick = {
-                    viewModel.onEvent(
-                        RegisterEvent.OnRegisterClick(
-                            RegisterUserInfo(
-                                name = state.name,
-                                surname = state.surname,
-                                email = state.email,
-                                password = state.password,
-                                studentId = if (state.isStudent && state.studentId.isNotBlank()) {
-                                    state.studentId
-                                } else null
-                            )
-                        )
-                    )
+                    viewModel.onEvent(RegisterEvent.OnRegisterClick)
                 }
             )
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
