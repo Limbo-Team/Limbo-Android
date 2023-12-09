@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.igorj.core.domain.auth.AuthAPI
 import com.igorj.core.util.UiEvent
 import com.igorj.dashboard_domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val authAPI: AuthAPI
 ): ViewModel() {
 
     var state by mutableStateOf(ProfileState())
@@ -64,6 +66,15 @@ class ProfileViewModel @Inject constructor(
             }
             is ProfileEvent.OnNewPasswordConfirmationChange -> {
                 state = state.copy(newPasswordConfirmation = event.newPasswordConfirmation)
+            }
+            is ProfileEvent.OnLogoutClick -> {
+                viewModelScope.launch {
+                    authAPI.logout()
+                    state = state.copy(
+                        selectedScreen = "login"
+                    )
+                    _uiEvent.send(UiEvent.OnNavigate)
+                }
             }
         }
     }
