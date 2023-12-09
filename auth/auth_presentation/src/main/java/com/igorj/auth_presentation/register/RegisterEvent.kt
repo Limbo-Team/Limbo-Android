@@ -11,5 +11,5 @@ sealed class RegisterEvent {
     object OnTogglePasswordVisibility: RegisterEvent()
     data class OnToggleIsStudent(val isChecked: Boolean): RegisterEvent()
     data class OnStudentIdChange(val studentId: String): RegisterEvent()
-    data class OnRegisterClick(val registerUserInfo: RegisterUserInfo): RegisterEvent()
+    object OnRegisterClick: RegisterEvent()
 }

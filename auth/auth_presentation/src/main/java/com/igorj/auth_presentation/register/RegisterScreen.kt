@@ -230,19 +230,7 @@ fun RegisterScreen(
                 text = stringResource(id = R.string.sign_up),
                 isEnabled = !state.isTryingToRegister,
                 onClick = {
-                    viewModel.onEvent(
-                        RegisterEvent.OnRegisterClick(
-                            RegisterUserInfo(
-                                name = state.name,
-                                surname = state.surname,
-                                email = state.email,
-                                password = state.password,
-                                studentId = if (state.isStudent && state.studentId.isNotBlank()) {
-                                    state.studentId
-                                } else null
-                            )
-                        )
-                    )
+                    viewModel.onEvent(RegisterEvent.OnRegisterClick)
                 }
             )
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
