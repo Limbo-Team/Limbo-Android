@@ -4,5 +4,5 @@ import com.igorj.limboapp.model.Chapter
 
 interface ChaptersRepository {
 
-    suspend fun getChapters(listSize: Int): Result<List<Chapter>>
+    suspend fun getChapters(): Result<List<Chapter>>
 }

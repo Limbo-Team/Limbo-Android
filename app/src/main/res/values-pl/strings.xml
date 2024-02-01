@@ -47,4 +47,5 @@
     <string name="you_are_amazing">Jesteś niesamowity!</string>
     <string name="congratulations_you_scored_required_points_in_this_chapter">Gratulacje! Zdobyłeś wymaganą liczbę punktów w tym dziale!</string>
     <string name="finish">Zakończ</string>
+    <string name="finished_quizzes">Ukończone quizy</string>
 </resources>

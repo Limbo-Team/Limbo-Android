@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
                 }
             state = state.copy(bestPeople = bestPeopleInGroupResult)
 
-            val miniChaptersListResult = chaptersRepository.getChapters(4)
+            val miniChaptersListResult = chaptersRepository.getChapters()
                 .getOrElse {
                     return@launch
                 }

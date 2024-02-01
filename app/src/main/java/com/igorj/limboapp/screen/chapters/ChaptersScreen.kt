@@ -28,7 +28,7 @@ import com.igorj.limboapp.util.UiEvent
 @Composable
 fun ChaptersScreen(
     onNavigation: (String) -> Unit,
-    onChapterNavigation: (Int) -> Unit,
+    onChapterNavigation: (String) -> Unit,
     viewModel: ChaptersViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
@@ -93,7 +93,7 @@ fun ChaptersScreen(
                     ChapterCard(
                         chapter = chapter,
                         onClick = {
-                            onChapterNavigation(chapter.id)
+                            onChapterNavigation(chapter.chapterId)
                         }
                     )
                 }

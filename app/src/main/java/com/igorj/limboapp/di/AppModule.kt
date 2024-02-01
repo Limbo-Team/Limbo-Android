@@ -54,8 +54,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideChaptersRepository(): ChaptersRepository {
-        return ChaptersRepositoryImpl()
+    fun provideChaptersRepository(authApi: AuthAPI, @ApplicationContext appContext: Context): ChaptersRepository {
+        return ChaptersRepositoryImpl(authApi, appContext)
     }
 
     @Provides

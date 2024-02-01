@@ -25,7 +25,7 @@ class ChaptersViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val chaptersListResult = chaptersRepository.getChapters(4)
+            val chaptersListResult = chaptersRepository.getChapters()
                 .getOrElse {
                     return@launch
                 }

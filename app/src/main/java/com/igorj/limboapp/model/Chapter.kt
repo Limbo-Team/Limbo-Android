@@ -1,10 +1,9 @@
 package com.igorj.limboapp.model
 
 data class Chapter(
-    val id: Int,
-    val title: String,
-    val isUnlocked: Boolean,
-    val isCompleted: Boolean,
-    val maxPoints: Int,
-    val gainedPoints: Int
+    val chapterId: String,
+    val chapterTitle: String,
+    val maximumQuizzes: Int,
+    val doneQuizzes: Int,
+    val percentage: Int
 )

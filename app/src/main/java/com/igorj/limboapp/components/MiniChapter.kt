@@ -37,19 +37,22 @@ fun MiniChapter(
     modifier: Modifier = Modifier,
     borderWidth: Dp = 2.dp,
 ) {
+    val isCompleted = chapter.doneQuizzes == chapter.maximumQuizzes
+    val isStarted = chapter.doneQuizzes > 0
+
     val borderGradient =
-        if (chapter.isCompleted) {
+        if (isCompleted) {
             GreenGradient
-        } else if (chapter.isUnlocked) {
+        } else if (isStarted) {
             OrangeGradient
         } else {
             RedGradient
         }
 
     val progressBarColor =
-        if (chapter.isCompleted) {
+        if (isCompleted) {
             LightGreenGradient
-        } else if (chapter.isUnlocked) {
+        } else if (isStarted) {
             BrightOrangeGradient
         } else {
             RedGradient
@@ -59,12 +62,12 @@ fun MiniChapter(
         modifier = modifier
             .clip(RoundedCornerShape(25.dp))
             .clickable(
-                enabled = chapter.isUnlocked,
+                enabled = true,
                 onClick = onClick
             )
             .background(DarkBlackGradient)
             .border(
-                width = if (chapter.isUnlocked) {
+                width = if (isStarted) {
                     borderWidth
                 } else 1.dp,
                 brush = borderGradient,
@@ -76,18 +79,18 @@ fun MiniChapter(
         verticalArrangement = Arrangement.Center
     ) {
         CircularProgressBar(
-            percentage = (chapter.gainedPoints / chapter.maxPoints.toFloat()),
+            percentage = (chapter.percentage / 100.toFloat()),
             radius = 30.dp,
             progressGradient = progressBarColor,
             strokeWidth = 5.5.dp,
-            isUnlocked = chapter.isUnlocked
+            isUnlocked = isStarted
         )
         Spacer(modifier = Modifier.height(10.dp))
         Text(
             modifier = Modifier
                 .padding(bottom = 8.dp)
                 .padding(horizontal = 6.dp),
-            text = chapter.title,
+            text = chapter.chapterTitle,
             color = TextWhite,
             style = MaterialTheme.typography.body1,
             fontWeight = FontWeight.SemiBold,
