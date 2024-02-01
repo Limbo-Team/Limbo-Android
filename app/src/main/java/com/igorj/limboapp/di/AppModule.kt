@@ -41,31 +41,31 @@ object AppModule {
     }
 
     @Provides
-    @ViewModelScoped
+    @Singleton
     fun provideFilterOutStudentIdDigits(): FilterOutStudentIdDigits {
         return FilterOutStudentIdDigits()
     }
 
     @Provides
-    @ViewModelScoped
+    @Singleton
     fun provideStatsRepository(): StatsRepository {
         return StatsRepositoryImpl()
     }
 
     @Provides
-    @ViewModelScoped
+    @Singleton
     fun provideChaptersRepository(): ChaptersRepository {
         return ChaptersRepositoryImpl()
     }
 
     @Provides
-    @ViewModelScoped
+    @Singleton
     fun provideUserRepository(): UserRepository {
         return UserRepositoryImpl()
     }
 
     @Provides
-    @ViewModelScoped
+    @Singleton
     fun provideQuestionsRepository(): QuestionsRepository {
         return QuestionsRepositoryImpl()
     }
