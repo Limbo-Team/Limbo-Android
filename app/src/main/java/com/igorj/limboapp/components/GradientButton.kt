@@ -22,13 +22,14 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.igorj.limboapp.ui.theme.LocalSpacing
+import com.igorj.limboapp.ui.theme.OrangeGradient
 
 @Composable
 fun GradientButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    gradient: Brush = com.igorj.limboapp.ui.theme.OrangeGradient,
+    gradient: Brush = OrangeGradient,
     textStyle: TextStyle = MaterialTheme.typography.button,
     isEnabled: Boolean = true,
     width: Float = 0.65f,

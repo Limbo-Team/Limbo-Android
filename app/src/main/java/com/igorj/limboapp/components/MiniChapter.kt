@@ -1,4 +1,4 @@
-package com.igorj.limboapp.model
+package com.igorj.limboapp.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -32,27 +32,27 @@ import com.igorj.limboapp.model.Chapter
 
 @Composable
 fun MiniChapter(
-    chapter: com.igorj.limboapp.model.Chapter,
+    chapter: Chapter,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     borderWidth: Dp = 2.dp,
 ) {
     val borderGradient =
         if (chapter.isCompleted) {
-            com.igorj.limboapp.ui.theme.GreenGradient
+            GreenGradient
         } else if (chapter.isUnlocked) {
-            com.igorj.limboapp.ui.theme.OrangeGradient
+            OrangeGradient
         } else {
-            com.igorj.limboapp.ui.theme.RedGradient
+            RedGradient
         }
 
     val progressBarColor =
         if (chapter.isCompleted) {
-            com.igorj.limboapp.ui.theme.LightGreenGradient
+            LightGreenGradient
         } else if (chapter.isUnlocked) {
-            com.igorj.limboapp.ui.theme.BrightOrangeGradient
+            BrightOrangeGradient
         } else {
-            com.igorj.limboapp.ui.theme.RedGradient
+            RedGradient
         }
 
     Column(
@@ -62,7 +62,7 @@ fun MiniChapter(
                 enabled = chapter.isUnlocked,
                 onClick = onClick
             )
-            .background(com.igorj.limboapp.ui.theme.DarkBlackGradient)
+            .background(DarkBlackGradient)
             .border(
                 width = if (chapter.isUnlocked) {
                     borderWidth
@@ -75,7 +75,7 @@ fun MiniChapter(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        com.igorj.limboapp.components.CircularProgressBar(
+        CircularProgressBar(
             percentage = (chapter.gainedPoints / chapter.maxPoints.toFloat()),
             radius = 30.dp,
             progressGradient = progressBarColor,
@@ -88,7 +88,7 @@ fun MiniChapter(
                 .padding(bottom = 8.dp)
                 .padding(horizontal = 6.dp),
             text = chapter.title,
-            color = com.igorj.limboapp.ui.theme.TextWhite,
+            color = TextWhite,
             style = MaterialTheme.typography.body1,
             fontWeight = FontWeight.SemiBold,
             fontSize = 14.sp,

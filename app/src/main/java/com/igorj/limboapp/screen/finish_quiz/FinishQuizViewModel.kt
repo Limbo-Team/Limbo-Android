@@ -21,7 +21,7 @@ class FinishQuizViewModel @Inject constructor(
     var state by mutableStateOf(FinishQuizState())
         private set
 
-    private val _uiEvent = Channel<com.igorj.limboapp.util.UiEvent>()
+    private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
     init {
@@ -34,7 +34,7 @@ class FinishQuizViewModel @Inject constructor(
         when (event) {
             is FinishQuizEvent.OnFinish -> {
                 viewModelScope.launch {
-                    _uiEvent.send(com.igorj.limboapp.util.UiEvent.OnNavigate)
+                    _uiEvent.send(UiEvent.OnNavigate)
                 }
             }
             is FinishQuizEvent.OnBackButtonClick -> {

@@ -8,9 +8,9 @@ interface StatsRepository {
     suspend fun getBestPeopleInGroup(
         groupId: Int,
         listSize: Int
-    ): Result<List<com.igorj.limboapp.model.User>>
+    ): Result<List<User>>
 
     suspend fun getUserStats(
         userId: Int
-    ): Result<com.igorj.limboapp.model.UserStats>
+    ): Result<UserStats>
 }

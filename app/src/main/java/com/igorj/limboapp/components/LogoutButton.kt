@@ -1,4 +1,4 @@
-package com.igorj.limboapp.model
+package com.igorj.limboapp.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,7 +26,7 @@ fun LogoutButton(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(10.dp))
-            .background(com.igorj.limboapp.ui.theme.DarkGray)
+            .background(DarkGray)
             .clickable { onClick() }
             .padding(8.dp),
         contentAlignment = Alignment.Center

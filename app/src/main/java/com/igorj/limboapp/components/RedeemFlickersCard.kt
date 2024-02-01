@@ -1,4 +1,4 @@
-package com.igorj.limboapp.model
+package com.igorj.limboapp.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,10 +39,10 @@ fun RedeemFlickersCard(
             .clickable { onClick() }
             .border(
                 width = 1.5.dp,
-                brush = com.igorj.limboapp.ui.theme.OrangeGradient,
+                brush = OrangeGradient,
                 shape = RoundedCornerShape(26.dp)
             )
-            .background(com.igorj.limboapp.ui.theme.BlackGradient)
+            .background(BlackGradient)
             .padding(start = 26.dp, end = 16.dp, top = 20.dp, bottom = 20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -52,7 +52,7 @@ fun RedeemFlickersCard(
         ) {
             Text(
                 text = "Płomyki do wymiany",
-                color = com.igorj.limboapp.ui.theme.TextWhite,
+                color = TextWhite,
                 fontSize = 16.sp,
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.SemiBold,
@@ -61,7 +61,7 @@ fun RedeemFlickersCard(
             Spacer(Modifier.height(4.dp))
             Text(
                 text = "49",
-                color = com.igorj.limboapp.ui.theme.BrightOrange,
+                color = BrightOrange,
                 fontSize = 30.sp,
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.SemiBold,
@@ -70,7 +70,7 @@ fun RedeemFlickersCard(
             Spacer(Modifier.height(6.dp))
             Text(
                 text = "Kliknij aby przejeść do ekranu wymiany płomyków.",
-                color = com.igorj.limboapp.ui.theme.TextWhite,
+                color = TextWhite,
                 fontSize = 12.sp,
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.Light,

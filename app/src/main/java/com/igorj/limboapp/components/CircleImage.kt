@@ -1,4 +1,4 @@
-package com.igorj.limboapp.model
+package com.igorj.limboapp.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

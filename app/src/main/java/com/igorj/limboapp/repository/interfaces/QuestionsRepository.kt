@@ -6,5 +6,5 @@ interface QuestionsRepository {
         suspend fun getQuestions(
             chapterId: Int,
             listSize: Int
-        ): Result<List<com.igorj.limboapp.model.Question>>
+        ): Result<List<Question>>
 }

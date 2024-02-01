@@ -55,14 +55,14 @@ fun CustomTextField(
         placeholder = {
             Text(
                 text = hint,
-                color = com.igorj.limboapp.ui.theme.LightGray,
+                color = LightGray,
                 style = MaterialTheme.typography.body2,
                 fontWeight = FontWeight.Light,
                 fontSize = 15.sp
             )
         },
         textStyle = TextStyle(
-            color = com.igorj.limboapp.ui.theme.TextWhite
+            color = TextWhite
         ),
         trailingIcon = {
             IconButton(
@@ -92,9 +92,9 @@ fun CustomTextField(
             }
         ),
         colors = TextFieldDefaults.textFieldColors(
-            textColor = com.igorj.limboapp.ui.theme.TextWhite,
-            disabledTextColor = com.igorj.limboapp.ui.theme.TextWhite,
-            backgroundColor = com.igorj.limboapp.ui.theme.DarkGray,
+            textColor = TextWhite,
+            disabledTextColor = TextWhite,
+            backgroundColor = DarkGray,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent

@@ -16,14 +16,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val userRepository: com.igorj.limboapp.repository.interfaces.UserRepository,
-    private val authAPI: com.igorj.limboapp.repository.interfaces.AuthAPI
+    private val userRepository: UserRepository,
+    private val authAPI: AuthAPI
 ): ViewModel() {
 
     var state by mutableStateOf(ProfileState())
         private set
 
-    private val _uiEvent = Channel<com.igorj.limboapp.util.UiEvent>()
+    private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
     init {
@@ -43,7 +43,7 @@ class ProfileViewModel @Inject constructor(
                     selectedScreen = event.route
                 )
                 viewModelScope.launch {
-                    _uiEvent.send(com.igorj.limboapp.util.UiEvent.OnNavigate)
+                    _uiEvent.send(UiEvent.OnNavigate)
                 }
             }
             is ProfileEvent.OnFlickersClick -> {
@@ -73,7 +73,7 @@ class ProfileViewModel @Inject constructor(
                     state = state.copy(
                         selectedScreen = "login"
                     )
-                    _uiEvent.send(com.igorj.limboapp.util.UiEvent.OnNavigate)
+                    _uiEvent.send(UiEvent.OnNavigate)
                 }
             }
         }

@@ -79,7 +79,7 @@ fun PlayingQuizScreen(
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                is com.igorj.limboapp.util.UiEvent.OnNavigate -> {
+                is UiEvent.OnNavigate -> {
                     onNavigation()
                 }
 
@@ -97,7 +97,7 @@ fun PlayingQuizScreen(
 
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(com.igorj.limboapp.ui.theme.DarkVerticalQuizBackgroundGradient)
+        .background(DarkVerticalQuizBackgroundGradient)
     )
     Scaffold (
         modifier = Modifier
@@ -117,9 +117,9 @@ fun PlayingQuizScreen(
                     .fillMaxWidth()
                     .padding(top = 14.dp, bottom = 8.dp)
             ) {
-                com.igorj.limboapp.components.LimboLogo(
+                LimboLogo(
                     modifier = Modifier.align(Alignment.Center),
-                    textColor = com.igorj.limboapp.ui.theme.TextWhite
+                    textColor = TextWhite
                 )
             }
         },
@@ -138,12 +138,12 @@ fun PlayingQuizScreen(
                         .padding(horizontal = 20.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    com.igorj.limboapp.components.QuizTimeLeftBar(
+                    QuizTimeLeftBar(
                         maxTime = state.maxTime,
                         remainingTime = state.timeLeft
                     )
                     Spacer(modifier = Modifier.width(30.dp))
-                    com.igorj.limboapp.components.QuizNumberOfQuestionsLeft(
+                    QuizNumberOfQuestionsLeft(
                         modifier = Modifier.weight(1f),
                         numOfQuestions = state.questions.size,
                         answeredQuestions = state.currentQuestionIndex + 1
@@ -155,7 +155,7 @@ fun PlayingQuizScreen(
                     modifier = Modifier.padding(top = 20.dp),
                     style = MaterialTheme.typography.h5,
                     fontSize = 20.sp,
-                    color = com.igorj.limboapp.ui.theme.TextWhite,
+                    color = TextWhite,
                     textAlign = TextAlign.Center
                 )
                 Image(
@@ -174,7 +174,7 @@ fun PlayingQuizScreen(
                     contentScale = ContentScale.Crop
                 )
                 Spacer(modifier = Modifier.height(26.dp))
-                com.igorj.limboapp.components.QuizAnswersSection(
+                QuizAnswersSection(
                     answers = currentQuestionAnswers,
                     selectedAnswerPosition = state.selectedAnswerPosition,
                     onAnswerClick = { answerPosition ->
@@ -190,7 +190,7 @@ fun PlayingQuizScreen(
                     .padding(bottom = 40.dp, top = 20.dp),
                 contentAlignment = Alignment.TopCenter
             ) {
-                com.igorj.limboapp.components.GradientButton(
+                GradientButton(
                     text = "Next",
                     onClick = {
                         viewModel.onEvent(

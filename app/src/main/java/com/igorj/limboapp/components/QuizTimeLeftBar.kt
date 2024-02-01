@@ -40,7 +40,7 @@ fun QuizTimeLeftBar(
                 .width(240.dp * timeLeft)
                 .height(height)
                 .clip(RoundedCornerShape(25.dp))
-                .background(com.igorj.limboapp.ui.theme.OrangeGradient)
+                .background(OrangeGradient)
                 .align(Alignment.CenterStart)
         )
         Icon(

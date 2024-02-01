@@ -59,8 +59,8 @@ fun FinishQuizScreen(
         onDispose {
             activity?.window?.apply {
                 WindowCompat.setDecorFitsSystemWindows(this, true)
-                statusBarColor = com.igorj.limboapp.ui.theme.DarkBackground.toArgb()
-                navigationBarColor = com.igorj.limboapp.ui.theme.DarkBackground.toArgb()
+                statusBarColor = DarkBackground.toArgb()
+                navigationBarColor = DarkBackground.toArgb()
             }
         }
     }
@@ -72,7 +72,7 @@ fun FinishQuizScreen(
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                is com.igorj.limboapp.util.UiEvent.OnNavigate -> {
+                is UiEvent.OnNavigate -> {
                     onNavigation()
                 }
 
@@ -84,7 +84,7 @@ fun FinishQuizScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(com.igorj.limboapp.ui.theme.DarkVerticalQuizBackgroundGradient),
+            .background(DarkVerticalQuizBackgroundGradient),
         contentAlignment = Alignment.Center
     ) {
         Scaffold (
@@ -105,9 +105,9 @@ fun FinishQuizScreen(
                         .fillMaxWidth()
                         .padding(top = 14.dp, bottom = 8.dp)
                 ) {
-                    com.igorj.limboapp.components.LimboLogo(
+                    LimboLogo(
                         modifier = Modifier.align(Alignment.Center),
-                        textColor = com.igorj.limboapp.ui.theme.TextWhite
+                        textColor = TextWhite
                     )
                 }
             },
@@ -120,7 +120,7 @@ fun FinishQuizScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
-                    com.igorj.limboapp.components.QuizGainedPointsCircle(gainedPoints = state.gainedPoints)
+                    QuizGainedPointsCircle(gainedPoints = state.gainedPoints)
                     Spacer(modifier = Modifier.height(28.dp))
                     Column(
                         modifier = Modifier.padding(horizontal = 12.dp),
@@ -128,7 +128,7 @@ fun FinishQuizScreen(
                     ) {
                         Text(
                             text = stringResource(id = R.string.you_are_amazing),
-                            color = com.igorj.limboapp.ui.theme.TextWhite,
+                            color = TextWhite,
                             style = MaterialTheme.typography.h2,
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 18.sp,
@@ -137,7 +137,7 @@ fun FinishQuizScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = stringResource(id = R.string.congratulations_you_scored_required_points_in_this_chapter),
-                            color = com.igorj.limboapp.ui.theme.TextWhite,
+                            color = TextWhite,
                             style = MaterialTheme.typography.body1,
                             fontWeight = FontWeight.Light,
                             fontSize = 14.sp,
@@ -153,7 +153,7 @@ fun FinishQuizScreen(
                         .padding(bottom = 40.dp, top = 20.dp),
                     contentAlignment = Alignment.TopCenter
                 ) {
-                    com.igorj.limboapp.components.GradientButton(
+                    GradientButton(
                         text = stringResource(id = R.string.finish),
                         onClick = {
                             viewModel.onEvent(FinishQuizEvent.OnFinish)

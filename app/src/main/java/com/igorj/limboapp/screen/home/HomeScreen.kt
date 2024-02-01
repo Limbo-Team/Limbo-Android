@@ -26,17 +26,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.igorj.limboapp.util.UiEvent
 import com.igorj.limboapp.R
-import com.igorj.limboapp.ui.theme.TextWhite
+import com.igorj.limboapp.components.BestPersonItem
+import com.igorj.limboapp.components.BottomNavBar
+import com.igorj.limboapp.components.CircleImage
+import com.igorj.limboapp.components.Flickers
 import com.igorj.limboapp.components.LimboLogo
-import com.igorj.limboapp.model.BestPersonItem
-import com.igorj.limboapp.model.BottomNavBar
-import com.igorj.limboapp.model.CircleImage
-import com.igorj.limboapp.model.Flickers
-import com.igorj.limboapp.model.MiniChapter
-import com.igorj.limboapp.model.bottomNavBarItems
+import com.igorj.limboapp.components.MiniChapter
+import com.igorj.limboapp.components.bottomNavBarItems
 import com.igorj.limboapp.ui.theme.LocalSpacing
+import com.igorj.limboapp.util.UiEvent
 
 @Composable
 fun HomeScreen(
@@ -49,7 +48,7 @@ fun HomeScreen(
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                is com.igorj.limboapp.util.UiEvent.OnNavigate -> {
+                is UiEvent.OnNavigate -> {
                     onNavigation(viewModel.state.selectedScreen)
                 }
 
@@ -67,7 +66,7 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .padding(vertical = 14.dp)
             ) {
-                com.igorj.limboapp.model.Flickers(
+                Flickers(
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 26.dp),
@@ -76,10 +75,10 @@ fun HomeScreen(
                     },
                     flickers = state.flickers
                 )
-                com.igorj.limboapp.components.LimboLogo(
+                LimboLogo(
                     modifier = Modifier.align(Alignment.Center)
                 )
-                com.igorj.limboapp.model.CircleImage(
+                CircleImage(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(end = 30.dp),
@@ -113,7 +112,7 @@ fun HomeScreen(
                         horizontalArrangement = Arrangement.spacedBy(spacing.spaceSmall)
                     ) {
                         items(state.bestPeople) { person ->
-                            com.igorj.limboapp.model.BestPersonItem(
+                            BestPersonItem(
                                 name = person.name,
                                 imageUrl = person.imageUrl,
                                 flickers = person.flickers
@@ -139,7 +138,7 @@ fun HomeScreen(
                         verticalItemSpacing = 16.dp,
                         content = {
                             items(state.miniChapters) { item ->
-                                com.igorj.limboapp.model.MiniChapter(
+                                MiniChapter(
                                     modifier = Modifier.fillMaxSize(),
                                     onClick = {},
                                     chapter = item
@@ -151,8 +150,8 @@ fun HomeScreen(
             }
         },
         bottomBar = {
-            com.igorj.limboapp.model.BottomNavBar(
-                items = com.igorj.limboapp.model.bottomNavBarItems,
+            BottomNavBar(
+                items = bottomNavBarItems,
                 selectedItemRoute = state.selectedScreen,
                 onItemClick = {
                     viewModel.onEvent(

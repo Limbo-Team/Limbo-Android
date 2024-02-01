@@ -1,4 +1,4 @@
-package com.igorj.limboapp.screen.stats.components
+package com.igorj.limboapp.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,11 +34,11 @@ fun StatsTextDisplay(
     Row(
         modifier = modifier
             .clickable { onClick() }
-            .background(com.igorj.limboapp.ui.theme.BlackGradient)
+            .background(BlackGradient)
             .clip(RoundedCornerShape(50.dp))
             .border(
                 width = 1.dp,
-                brush = com.igorj.limboapp.ui.theme.BrightOrangeGradient,
+                brush = BrightOrangeGradient,
                 shape = RoundedCornerShape(50.dp)
             )
             .padding(horizontal = spacing.spaceSmall)
@@ -50,7 +50,7 @@ fun StatsTextDisplay(
             modifier = Modifier
                 .weight(1f),
             text = text,
-            color = com.igorj.limboapp.ui.theme.TextWhite,
+            color = TextWhite,
             style = MaterialTheme.typography.body1,
             fontWeight = FontWeight.SemiBold,
             fontSize = 12.sp,
@@ -58,7 +58,7 @@ fun StatsTextDisplay(
         )
         Text(
             text = value,
-            color = com.igorj.limboapp.ui.theme.TextWhite,
+            color = TextWhite,
             style = MaterialTheme.typography.body1,
             fontWeight = FontWeight.SemiBold,
             fontSize = 12.sp,

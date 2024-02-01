@@ -1,4 +1,4 @@
-package com.igorj.limboapp.model
+package com.igorj.limboapp.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
@@ -16,13 +16,13 @@ import com.igorj.limboapp.R
 @Composable
 fun BottomNavBar(
     modifier: Modifier = Modifier,
-    items: List<com.igorj.limboapp.model.BottomNavItem>,
+    items: List<BottomNavItem>,
     selectedItemRoute: String,
-    onItemClick: (com.igorj.limboapp.model.BottomNavItem) -> Unit
+    onItemClick: (BottomNavItem) -> Unit
 ) {
     BottomNavigation(
         modifier = modifier.height(66.dp),
-        backgroundColor = com.igorj.limboapp.ui.theme.DarkGray
+        backgroundColor = DarkGray
     ) {
         items.forEach { item ->
             val selected = item.route == selectedItemRoute
@@ -48,25 +48,25 @@ fun BottomNavBar(
 }
 
 val bottomNavBarItems = listOf(
-    com.igorj.limboapp.model.BottomNavItem(
+    BottomNavItem(
         name = "Home",
         route = "home",
         iconId = R.drawable.ic_home,
         selectedIconId = R.drawable.ic_selected_home
     ),
-    com.igorj.limboapp.model.BottomNavItem(
+    BottomNavItem(
         name = "Chapters",
         route = "chapters",
         iconId = R.drawable.ic_chapters,
         selectedIconId = R.drawable.ic_selected_chapters
     ),
-    com.igorj.limboapp.model.BottomNavItem(
+    BottomNavItem(
         name = "Stats",
         route = "stats",
         iconId = R.drawable.ic_stats,
         selectedIconId = R.drawable.ic_selected_stats
     ),
-    com.igorj.limboapp.model.BottomNavItem(
+    BottomNavItem(
         name = "Profile",
         route = "profile",
         iconId = R.drawable.ic_profile,

@@ -44,7 +44,9 @@ import com.igorj.limboapp.components.CustomTextField
 import com.igorj.limboapp.R
 import com.igorj.limboapp.util.UiEvent
 import com.igorj.limboapp.components.GradientButton
+import com.igorj.limboapp.ui.theme.BrightOrange
 import com.igorj.limboapp.ui.theme.LocalSpacing
+import com.igorj.limboapp.ui.theme.TextWhite
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -68,12 +70,9 @@ fun RegisterScreen(
                     )
                     keyboardController?.hide()
                 }
-
                 is UiEvent.OnNavigate -> {
                     onNavigation()
                 }
-
-                else -> Unit
             }
         }
     }
@@ -100,7 +99,7 @@ fun RegisterScreen(
                 fontSize = 36.sp,
                 style = MaterialTheme.typography.h2,
                 fontWeight = FontWeight.SemiBold,
-                color = com.igorj.limboapp.ui.theme.BrightOrange,
+                color = BrightOrange,
             )
         }
 
@@ -115,7 +114,7 @@ fun RegisterScreen(
                 text = stringResource(id = R.string.sign_up),
                 style = MaterialTheme.typography.h2,
                 fontWeight = FontWeight.SemiBold,
-                color = com.igorj.limboapp.ui.theme.TextWhite,
+                color = TextWhite,
                 fontSize = 32.sp
             )
             Spacer(modifier = Modifier.height(26.dp))
@@ -182,14 +181,14 @@ fun RegisterScreen(
                         viewModel.onEvent(RegisterEvent.OnToggleIsStudent(it))
                     },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = com.igorj.limboapp.ui.theme.BrightOrange,
+                        checkedColor = BrightOrange,
                         uncheckedColor = Color.Gray,
-                        checkmarkColor = com.igorj.limboapp.ui.theme.TextWhite
+                        checkmarkColor = TextWhite
                     )
                 )
                 Text(
                     text = stringResource(id = R.string.are_you_tul_student),
-                    color = com.igorj.limboapp.ui.theme.TextWhite,
+                    color = TextWhite,
                     style = MaterialTheme.typography.body1,
                     fontWeight = FontWeight.Light,
                     fontSize = 16.sp,
@@ -234,14 +233,14 @@ fun RegisterScreen(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = stringResource(id = R.string.have_account_already) + " ",
-                    color = com.igorj.limboapp.ui.theme.TextWhite,
+                    color = TextWhite,
                     style = MaterialTheme.typography.h1,
                     fontWeight = FontWeight.Light,
                     fontSize = 15.sp
                 )
                 Text(
                     text = stringResource(id = R.string.sign_in),
-                    color = com.igorj.limboapp.ui.theme.BrightOrange,
+                    color = BrightOrange,
                     style = MaterialTheme.typography.h1,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 15.sp,

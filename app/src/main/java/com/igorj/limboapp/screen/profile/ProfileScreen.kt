@@ -23,19 +23,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.igorj.limboapp.ui.theme.OrangeGradient
 import com.igorj.limboapp.R
-import com.igorj.limboapp.ui.theme.TextWhite
+import com.igorj.limboapp.components.BottomNavBar
 import com.igorj.limboapp.components.CustomTextField
+import com.igorj.limboapp.components.Flickers
 import com.igorj.limboapp.components.GradientButton
-import com.igorj.limboapp.components.LimboLogo
+import com.igorj.limboapp.components.LogoutButton
+import com.igorj.limboapp.components.ProfileInfo
+import com.igorj.limboapp.components.RedeemFlickersCard
+import com.igorj.limboapp.components.bottomNavBarItems
 import com.igorj.limboapp.util.UiEvent
-import com.igorj.limboapp.model.BottomNavBar
-import com.igorj.limboapp.model.Flickers
-import com.igorj.limboapp.model.LogoutButton
-import com.igorj.limboapp.model.ProfileInfo
-import com.igorj.limboapp.model.RedeemFlickersCard
-import com.igorj.limboapp.model.bottomNavBarItems
 
 @Composable
 fun ProfileScreen(
@@ -47,7 +44,7 @@ fun ProfileScreen(
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                is com.igorj.limboapp.util.UiEvent.OnNavigate -> {
+                is UiEvent.OnNavigate -> {
                     onNavigation(viewModel.state.selectedScreen)
                 }
 
@@ -65,7 +62,7 @@ fun ProfileScreen(
                     .fillMaxWidth()
                     .padding(vertical = 14.dp)
             ) {
-                com.igorj.limboapp.model.Flickers(
+                Flickers(
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 26.dp),
@@ -77,7 +74,7 @@ fun ProfileScreen(
                 com.igorj.limboapp.components.LimboLogo(
                     modifier = Modifier.align(Alignment.Center)
                 )
-                com.igorj.limboapp.model.LogoutButton(
+                LogoutButton(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(end = 26.dp),
@@ -96,7 +93,7 @@ fun ProfileScreen(
                     .verticalScroll(rememberScrollState())
             ) {
                 Spacer(modifier = Modifier.height(8.dp))
-                com.igorj.limboapp.model.ProfileInfo(
+                ProfileInfo(
                     imageUrl = state.user.imageUrl,
                     name = state.user.name,
                     email = state.user.email
@@ -112,7 +109,7 @@ fun ProfileScreen(
                         modifier = Modifier
                             .padding(top = 20.dp, bottom = 10.dp)
                     )
-                    com.igorj.limboapp.components.CustomTextField(
+                    CustomTextField(
                         value = state.oldPassword,
                         onValueChange = {
                             viewModel.onEvent(ProfileEvent.OnOldPasswordChange(it))
@@ -124,7 +121,7 @@ fun ProfileScreen(
 
                     }
                     Spacer(modifier = Modifier.height(10.dp))
-                    com.igorj.limboapp.components.CustomTextField(
+                    CustomTextField(
                         value = state.newPassword,
                         onValueChange = {
                             viewModel.onEvent(ProfileEvent.OnNewPasswordChange(it))
@@ -136,7 +133,7 @@ fun ProfileScreen(
 
                     }
                     Spacer(modifier = Modifier.height(10.dp))
-                    com.igorj.limboapp.components.CustomTextField(
+                    CustomTextField(
                         value = state.newPasswordConfirmation,
                         onValueChange = {
                             viewModel.onEvent(ProfileEvent.OnNewPasswordConfirmationChange(it))
@@ -148,7 +145,7 @@ fun ProfileScreen(
 
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    com.igorj.limboapp.components.GradientButton(
+                    GradientButton(
                         text = stringResource(id = R.string.change_password),
                         gradient = com.igorj.limboapp.ui.theme.OrangeGradient,
                         width = 0.6f,
@@ -158,13 +155,13 @@ fun ProfileScreen(
                         }
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                    com.igorj.limboapp.model.RedeemFlickersCard()
+                    RedeemFlickersCard()
                 }
             }
         },
         bottomBar = {
-            com.igorj.limboapp.model.BottomNavBar(
-                items = com.igorj.limboapp.model.bottomNavBarItems,
+            BottomNavBar(
+                items = bottomNavBarItems,
                 selectedItemRoute = state.selectedScreen,
                 onItemClick = {
                     viewModel.onEvent(

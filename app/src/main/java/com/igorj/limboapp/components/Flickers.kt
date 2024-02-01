@@ -1,4 +1,4 @@
-package com.igorj.limboapp.model
+package com.igorj.limboapp.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,7 +37,7 @@ fun Flickers(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
-            .background(com.igorj.limboapp.ui.theme.DarkGray)
+            .background(DarkGray)
             .clickable(
                 enabled = isEnabled,
                 onClick = onClick
@@ -52,7 +52,7 @@ fun Flickers(
         )
         Text(
             text = flickers.toString(),
-            color = com.igorj.limboapp.ui.theme.TextWhite,
+            color = TextWhite,
             style = MaterialTheme.typography.body1,
             fontWeight = FontWeight.SemiBold,
             fontSize = textSize,

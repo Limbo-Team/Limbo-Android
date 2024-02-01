@@ -28,15 +28,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.igorj.limboapp.R
-import com.igorj.limboapp.ui.theme.TextWhite
-import com.igorj.limboapp.components.LimboLogo
-import com.igorj.limboapp.util.UiEvent
-import com.igorj.limboapp.model.BottomNavBar
-import com.igorj.limboapp.model.CircleImage
-import com.igorj.limboapp.model.Flickers
-import com.igorj.limboapp.model.bottomNavBarItems
-import com.igorj.limboapp.screen.stats.components.MiniStats
+import com.igorj.limboapp.components.BottomNavBar
+import com.igorj.limboapp.components.CircleImage
+import com.igorj.limboapp.components.Flickers
+import com.igorj.limboapp.components.bottomNavBarItems
+import com.igorj.limboapp.components.MiniStats
 import com.igorj.limboapp.ui.theme.LocalSpacing
+import com.igorj.limboapp.util.UiEvent
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -53,19 +51,16 @@ fun StatsScreen(
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                is com.igorj.limboapp.util.UiEvent.OnNavigate -> {
+                is UiEvent.OnNavigate -> {
                     onNavigation(viewModel.state.selectedScreen)
                 }
-
-                is com.igorj.limboapp.util.UiEvent.ShowSnackbar -> {
+                is UiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = event.message.asString(context),
                         actionLabel = "OK"
                     )
                     keyboardController?.hide()
                 }
-
-                else -> Unit
             }
         }
     }
@@ -79,7 +74,7 @@ fun StatsScreen(
                     .fillMaxWidth()
                     .padding(vertical = 14.dp)
             ) {
-                com.igorj.limboapp.model.Flickers(
+                Flickers(
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 26.dp),
@@ -91,7 +86,7 @@ fun StatsScreen(
                 com.igorj.limboapp.components.LimboLogo(
                     modifier = Modifier.align(Alignment.Center)
                 )
-                com.igorj.limboapp.model.CircleImage(
+                CircleImage(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(end = 30.dp),
@@ -191,8 +186,8 @@ fun StatsScreen(
             }
         },
         bottomBar = {
-            com.igorj.limboapp.model.BottomNavBar(
-                items = com.igorj.limboapp.model.bottomNavBarItems,
+            BottomNavBar(
+                items = bottomNavBarItems,
                 selectedItemRoute = state.selectedScreen,
                 onItemClick = {
                     viewModel.onEvent(

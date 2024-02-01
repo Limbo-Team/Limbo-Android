@@ -4,5 +4,5 @@ import com.igorj.limboapp.model.User
 
 interface UserRepository {
 
-    suspend fun getUser(): Result<com.igorj.limboapp.model.User>
+    suspend fun getUser(): Result<User>
 }

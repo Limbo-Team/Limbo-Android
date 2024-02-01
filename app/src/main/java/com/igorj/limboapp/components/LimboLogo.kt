@@ -21,7 +21,7 @@ import com.igorj.limboapp.R
 @Composable
 fun LimboLogo(
     modifier: Modifier = Modifier,
-    textColor: Color = com.igorj.limboapp.ui.theme.BrightOrange
+    textColor: Color = BrightOrange
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,

@@ -17,13 +17,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StatsViewModel @Inject constructor(
-    private val statsRepository: com.igorj.limboapp.repository.interfaces.StatsRepository
+    private val statsRepository: StatsRepository
 ): ViewModel() {
 
     var state by mutableStateOf((StatsState()))
         private set
 
-    private val _uiEvent = Channel<com.igorj.limboapp.util.UiEvent>()
+    private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
     init {
@@ -47,15 +47,15 @@ class StatsViewModel @Inject constructor(
                     selectedScreen = event.route
                 )
                 viewModelScope.launch {
-                    _uiEvent.send(com.igorj.limboapp.util.UiEvent.OnNavigate)
+                    _uiEvent.send(UiEvent.OnNavigate)
                 }
             }
 
             else -> {
                 viewModelScope.launch {
                     _uiEvent.send(
-                        com.igorj.limboapp.util.UiEvent.ShowSnackbar(
-                        message = com.igorj.limboapp.util.UiText.StringResource(R.string.function_not_implemented)
+                        UiEvent.ShowSnackbar(
+                        message = UiText.StringResource(R.string.function_not_implemented)
                     ))
                 }
             }

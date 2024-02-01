@@ -4,7 +4,7 @@ import com.igorj.limboapp.model.Question
 
 data class PlayingQuizState(
     val chapterId: Int = 0,
-    val questions: List<com.igorj.limboapp.model.Question> = listOf(),
+    val questions: List<Question> = listOf(),
     val currentQuestionIndex: Int = 0,
     val isFinished: Boolean = false,
     val selectedAnswerPosition: Int = -1,

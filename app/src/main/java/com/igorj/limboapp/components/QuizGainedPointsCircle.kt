@@ -29,6 +29,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.igorj.limboapp.R
+import com.igorj.limboapp.ui.theme.BrightOrangeGradient
+import com.igorj.limboapp.ui.theme.CircleGray
 
 @Composable
 fun QuizGainedPointsCircle(
@@ -59,8 +61,8 @@ fun CircularGainedPointsIndicator(
     modifier: Modifier = Modifier,
     percentage: Float,
     radius: Dp = 35.dp,
-    progressGradient: Brush = com.igorj.limboapp.ui.theme.BrightOrangeGradient,
-    innerCircleColor: Color = com.igorj.limboapp.ui.theme.CircleGray,
+    progressGradient: Brush = BrightOrangeGradient,
+    innerCircleColor: Color = CircleGray,
     strokeWidth: Dp = 8.dp,
     animDuration: Int = 1000,
     animDelay: Int = 0,

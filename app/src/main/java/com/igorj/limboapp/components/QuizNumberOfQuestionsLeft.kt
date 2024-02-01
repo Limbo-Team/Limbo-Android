@@ -30,13 +30,13 @@ fun QuizNumberOfQuestionsLeft(
         modifier = modifier
             .height(height)
             .clip(RoundedCornerShape(25.dp))
-            .background(com.igorj.limboapp.ui.theme.OrangeGradient)
+            .background(OrangeGradient)
             .padding(horizontal = 8.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = questionsLeft,
-            color = com.igorj.limboapp.ui.theme.TextWhite,
+            color = TextWhite,
             style = MaterialTheme.typography.body1,
             fontWeight = FontWeight.SemiBold,
             fontSize = 16.sp

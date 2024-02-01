@@ -15,12 +15,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChaptersViewModel @Inject constructor(
-    private val chaptersRepository: com.igorj.limboapp.repository.interfaces.ChaptersRepository
+    private val chaptersRepository: ChaptersRepository
 ): ViewModel() {
     var state by mutableStateOf(ChaptersState())
         private set
 
-    private val _uiEvent = Channel<com.igorj.limboapp.util.UiEvent>()
+    private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
     init {
@@ -48,7 +48,7 @@ class ChaptersViewModel @Inject constructor(
                     selectedScreen = event.route
                 )
                 viewModelScope.launch {
-                    _uiEvent.send(com.igorj.limboapp.util.UiEvent.OnNavigate)
+                    _uiEvent.send(UiEvent.OnNavigate)
                 }
             }
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.igorj.limboapp.R
 import com.igorj.limboapp.repository.interfaces.AuthAPI
+import com.igorj.limboapp.use_case.FilterOutStudentIdDigits
 import com.igorj.limboapp.util.UiEvent
 import com.igorj.limboapp.util.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val authAPI: AuthAPI,
-    private val filterOutStudentIdDigits: com.igorj.limboapp.use_case.FilterOutStudentIdDigits
+    private val filterOutStudentIdDigits: FilterOutStudentIdDigits
 ) : ViewModel() {
 
     var state by mutableStateOf(RegisterState())

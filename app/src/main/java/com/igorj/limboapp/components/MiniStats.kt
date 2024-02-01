@@ -1,4 +1,4 @@
-package com.igorj.limboapp.screen.stats.components
+package com.igorj.limboapp.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -33,7 +33,7 @@ fun MiniStats(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     borderWidth: Dp = 2.dp,
-    borderGradient: Brush = com.igorj.limboapp.ui.theme.BrightOrangeGradient,
+    borderGradient: Brush = BrightOrangeGradient,
     textSize: TextUnit = 16.sp,
     valueSize: TextUnit = 30.sp
 ) {
@@ -41,7 +41,7 @@ fun MiniStats(
         modifier = modifier
             .clip(RoundedCornerShape(25.dp))
             .clickable { onClick() }
-            .background(com.igorj.limboapp.ui.theme.DarkBlackGradient)
+            .background(DarkBlackGradient)
             .border(
                 width = borderWidth,
                 brush = borderGradient,
@@ -54,7 +54,7 @@ fun MiniStats(
     ) {
         Text(
             text = value,
-            color = com.igorj.limboapp.ui.theme.TextWhite,
+            color = TextWhite,
             style = MaterialTheme.typography.body1,
             fontWeight = FontWeight.Bold,
             fontSize = valueSize,
@@ -63,7 +63,7 @@ fun MiniStats(
         Spacer(modifier = Modifier.height(10.dp))
         Text(
             text = text,
-            color = com.igorj.limboapp.ui.theme.TextWhite,
+            color = TextWhite,
             style = MaterialTheme.typography.body1,
             fontSize = textSize,
             textAlign = TextAlign.Center

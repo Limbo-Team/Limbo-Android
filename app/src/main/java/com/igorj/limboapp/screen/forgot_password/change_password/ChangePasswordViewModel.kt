@@ -24,15 +24,15 @@ class ChangePasswordViewModel @Inject constructor(
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    fun onEvent(event: com.igorj.limboapp.screen.forgot_password.change_password.ChangePasswordEvent) {
+    fun onEvent(event: ChangePasswordEvent) {
         when (event) {
-            is com.igorj.limboapp.screen.forgot_password.change_password.ChangePasswordEvent.OnNewPasswordChange -> {
+            is ChangePasswordEvent.OnNewPasswordChange -> {
                 state = state.copy(newPassword = event.newPassword)
             }
-            is com.igorj.limboapp.screen.forgot_password.change_password.ChangePasswordEvent.OnConfirmNewPasswordChange -> {
+            is ChangePasswordEvent.OnConfirmNewPasswordChange -> {
                 state = state.copy(confirmNewPassword = event.confirmNewPassword)
             }
-            is com.igorj.limboapp.screen.forgot_password.change_password.ChangePasswordEvent.OnButtonClick -> {
+            is ChangePasswordEvent.OnButtonClick -> {
                 state = state.copy(isLoading = true)
                 viewModelScope.launch {
                     delay(1000)

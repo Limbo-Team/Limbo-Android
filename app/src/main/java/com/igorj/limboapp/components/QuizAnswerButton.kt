@@ -43,7 +43,7 @@ fun QuizAnswerButton(
             .background(answerBackground)
             .border(
                 width = 1.dp,
-                brush = com.igorj.limboapp.ui.theme.OrangeGradient,
+                brush = OrangeGradient,
                 shape = RoundedCornerShape(25.dp)
             )
             .clickable { onClick() },
@@ -53,7 +53,7 @@ fun QuizAnswerButton(
             modifier = Modifier
                 .padding(vertical = 6.dp),
             text = answerText,
-            color = com.igorj.limboapp.ui.theme.TextWhite,
+            color = TextWhite,
             style = MaterialTheme.typography.body1,
             fontWeight = FontWeight.Medium,
             fontSize = 20.sp

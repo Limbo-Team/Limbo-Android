@@ -1,4 +1,4 @@
-package com.igorj.limboapp.model
+package com.igorj.limboapp.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -36,31 +36,31 @@ import com.igorj.limboapp.model.Chapter
 @Composable
 fun ChapterCard(
     modifier: Modifier = Modifier,
-    chapter: com.igorj.limboapp.model.Chapter,
+    chapter: Chapter,
     onClick: () -> Unit = {},
     borderWidth: Dp = 2.dp
 ) {
     val borderGradient =
         if (chapter.isCompleted) {
-            com.igorj.limboapp.ui.theme.GreenGradient
+            GreenGradient
         } else if (chapter.isUnlocked) {
-            com.igorj.limboapp.ui.theme.OrangeGradient
+            OrangeGradient
         } else {
-            com.igorj.limboapp.ui.theme.RedGradient
+            RedGradient
         }
 
     val progressBarColor =
         if (chapter.isCompleted) {
-            com.igorj.limboapp.ui.theme.LightGreenGradient
+            LightGreenGradient
         } else if (chapter.isUnlocked) {
-            com.igorj.limboapp.ui.theme.BrightOrangeGradient
+            BrightOrangeGradient
         } else {
-            com.igorj.limboapp.ui.theme.RedGradient
+            RedGradient
         }
 
     val pointsColor = if (!chapter.isUnlocked || !chapter.isCompleted) {
-        com.igorj.limboapp.ui.theme.LightOrange
-    } else com.igorj.limboapp.ui.theme.LightGreen
+        LightOrange
+    } else LightGreen
 
     Row(
         modifier = modifier
@@ -74,7 +74,7 @@ fun ChapterCard(
                 brush = borderGradient,
                 shape = RoundedCornerShape(20.dp)
             )
-            .background(com.igorj.limboapp.ui.theme.DarkBlackGradient)
+            .background(DarkBlackGradient)
             .clickable(
                 enabled = chapter.isUnlocked,
                 onClick = onClick
@@ -90,7 +90,7 @@ fun ChapterCard(
         ) {
             Text(
                 text = chapter.title,
-                color = com.igorj.limboapp.ui.theme.TextWhite,
+                color = TextWhite,
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,
@@ -100,7 +100,7 @@ fun ChapterCard(
             )
             Text(
                 text = "Zdobyte punkty",
-                color = com.igorj.limboapp.ui.theme.TextWhite,
+                color = TextWhite,
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.Medium,
                 fontSize = 12.sp,
@@ -116,7 +116,7 @@ fun ChapterCard(
                 textAlign = TextAlign.Center
             )
         }
-        com.igorj.limboapp.components.CircularProgressBar(
+        CircularProgressBar(
             modifier = Modifier.weight(1f),
             percentage = (chapter.gainedPoints / chapter.maxPoints.toFloat()),
             number = 100,

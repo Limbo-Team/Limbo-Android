@@ -19,13 +19,13 @@ import kotlin.math.min
 @HiltViewModel
 class PlayingScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val questionsRepository: com.igorj.limboapp.repository.interfaces.QuestionsRepository
+    private val questionsRepository: QuestionsRepository
 ): ViewModel() {
 
     var state by mutableStateOf(PlayingQuizState())
         private set
 
-    private val _uiEvent = Channel<com.igorj.limboapp.util.UiEvent>()
+    private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
     init {
@@ -51,7 +51,7 @@ class PlayingScreenViewModel @Inject constructor(
                 }
                 if (state.currentQuestionIndex + 1 >= state.questions.size) {
                     viewModelScope.launch {
-                        _uiEvent.send(com.igorj.limboapp.util.UiEvent.OnNavigate)
+                        _uiEvent.send(UiEvent.OnNavigate)
                     }
                     return
                 } else {
@@ -65,7 +65,7 @@ class PlayingScreenViewModel @Inject constructor(
             }
             is PlayingQuizEvent.OnFinish -> {
                 viewModelScope.launch {
-                    _uiEvent.send(com.igorj.limboapp.util.UiEvent.OnNavigate)
+                    _uiEvent.send(UiEvent.OnNavigate)
                 }
             }
             is PlayingQuizEvent.OnAnswerClick -> {
@@ -79,7 +79,7 @@ class PlayingScreenViewModel @Inject constructor(
                 )
                 if (state.timeLeft <= 0f) {
                     viewModelScope.launch {
-                        _uiEvent.send(com.igorj.limboapp.util.UiEvent.OnNavigate)
+                        _uiEvent.send(UiEvent.OnNavigate)
                     }
                 }
             }

@@ -9,13 +9,14 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.igorj.limboapp.model.LoginResponse
+import com.igorj.limboapp.repository.interfaces.AuthAPI
 import org.json.JSONObject
 import javax.inject.Inject
 
 class DefaultAuthAPI @Inject constructor(
     private val context: Context,
     private val authSharedPreferences: AuthSharedPreferences
-): com.igorj.limboapp.repository.interfaces.AuthAPI {
+): AuthAPI {
     companion object {
         const val TAG = "DefaultAuthAPI"
     }
@@ -29,7 +30,7 @@ class DefaultAuthAPI @Inject constructor(
         )
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.POST,
-            "${com.igorj.limboapp.repository.interfaces.AuthAPI.BASE_URL}/user/signin",
+            "${AuthAPI.BASE_URL}/user/signin",
             params,
             { response ->
                 val authToken = Gson().fromJson(response.toString(), LoginResponse::class.java).authToken
@@ -61,7 +62,7 @@ class DefaultAuthAPI @Inject constructor(
         )
         val stringRequest = object : StringRequest(
             Method.POST,
-            "${com.igorj.limboapp.repository.interfaces.AuthAPI.BASE_URL}/user/signup",
+            "${AuthAPI.BASE_URL}/user/signup",
             Response.Listener { _ ->
                 onResult(true)
             },
@@ -91,27 +92,27 @@ class DefaultAuthAPI @Inject constructor(
     }
 
     override fun saveUsername(username: String) {
-        authSharedPreferences.putString(com.igorj.limboapp.repository.interfaces.AuthAPI.USERNAME_KEY, username)
+        authSharedPreferences.putString(AuthAPI.USERNAME_KEY, username)
     }
 
     override fun savePassword(password: String) {
-        authSharedPreferences.putString(com.igorj.limboapp.repository.interfaces.AuthAPI.PASSWORD_KEY, password)
+        authSharedPreferences.putString(AuthAPI.PASSWORD_KEY, password)
     }
 
     override fun saveToken(token: String) {
-        authSharedPreferences.putString(com.igorj.limboapp.repository.interfaces.AuthAPI.TOKEN_KEY, token)
+        authSharedPreferences.putString(AuthAPI.TOKEN_KEY, token)
     }
 
     override fun getUsername(): String {
-        return authSharedPreferences.getString(com.igorj.limboapp.repository.interfaces.AuthAPI.USERNAME_KEY) ?: ""
+        return authSharedPreferences.getString(AuthAPI.USERNAME_KEY) ?: ""
     }
 
     override fun getPassword(): String {
-        return authSharedPreferences.getString(com.igorj.limboapp.repository.interfaces.AuthAPI.PASSWORD_KEY) ?: ""
+        return authSharedPreferences.getString(AuthAPI.PASSWORD_KEY) ?: ""
     }
 
     override fun getToken(): String {
-        return authSharedPreferences.getString(com.igorj.limboapp.repository.interfaces.AuthAPI.TOKEN_KEY) ?: ""
+        return authSharedPreferences.getString(AuthAPI.TOKEN_KEY) ?: ""
     }
 
     override fun logout() {

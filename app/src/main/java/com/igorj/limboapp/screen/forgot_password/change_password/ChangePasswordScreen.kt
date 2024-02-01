@@ -60,12 +60,9 @@ fun ChangePasswordScreen(
                     )
                     keyboardController?.hide()
                 }
-
                 is UiEvent.OnNavigate -> {
                     onNavigation()
                 }
-
-                else -> Unit
             }
         }
     }

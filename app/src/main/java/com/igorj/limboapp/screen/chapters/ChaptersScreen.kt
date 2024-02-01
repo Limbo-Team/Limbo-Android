@@ -18,13 +18,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.igorj.limboapp.R
-import com.igorj.limboapp.components.LimboLogo
+import com.igorj.limboapp.components.BottomNavBar
+import com.igorj.limboapp.components.ChapterCard
+import com.igorj.limboapp.components.CircleImage
+import com.igorj.limboapp.components.Flickers
+import com.igorj.limboapp.components.bottomNavBarItems
 import com.igorj.limboapp.util.UiEvent
-import com.igorj.limboapp.model.BottomNavBar
-import com.igorj.limboapp.model.ChapterCard
-import com.igorj.limboapp.model.CircleImage
-import com.igorj.limboapp.model.Flickers
-import com.igorj.limboapp.model.bottomNavBarItems
 
 @Composable
 fun ChaptersScreen(
@@ -37,7 +36,7 @@ fun ChaptersScreen(
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                is com.igorj.limboapp.util.UiEvent.OnNavigate -> {
+                is UiEvent.OnNavigate -> {
                     onNavigation(viewModel.state.selectedScreen)
                 }
 
@@ -55,7 +54,7 @@ fun ChaptersScreen(
                     .fillMaxWidth()
                     .padding(vertical = 14.dp)
             ) {
-                com.igorj.limboapp.model.Flickers(
+                Flickers(
                     modifier = Modifier
                         .align(Alignment.CenterStart)
                         .padding(start = 26.dp),
@@ -67,7 +66,7 @@ fun ChaptersScreen(
                 com.igorj.limboapp.components.LimboLogo(
                     modifier = Modifier.align(Alignment.Center)
                 )
-                com.igorj.limboapp.model.CircleImage(
+                CircleImage(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(end = 30.dp),
@@ -91,7 +90,7 @@ fun ChaptersScreen(
                 )
             ) {
                 items(state.chapters) { chapter ->
-                    com.igorj.limboapp.model.ChapterCard(
+                    ChapterCard(
                         chapter = chapter,
                         onClick = {
                             onChapterNavigation(chapter.id)
@@ -101,8 +100,8 @@ fun ChaptersScreen(
             }
         },
         bottomBar = {
-            com.igorj.limboapp.model.BottomNavBar(
-                items = com.igorj.limboapp.model.bottomNavBarItems,
+            BottomNavBar(
+                items = bottomNavBarItems,
                 selectedItemRoute = state.selectedScreen,
                 onItemClick = {
                     viewModel.onEvent(

@@ -41,7 +41,9 @@ import com.igorj.limboapp.components.CustomTextField
 import com.igorj.limboapp.R
 import com.igorj.limboapp.util.UiEvent
 import com.igorj.limboapp.components.GradientButton
+import com.igorj.limboapp.ui.theme.BrightOrange
 import com.igorj.limboapp.ui.theme.LocalSpacing
+import com.igorj.limboapp.ui.theme.TextWhite
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -70,7 +72,6 @@ fun LoginScreen(
                 is UiEvent.OnNavigate -> {
                     onLoginClick()
                 }
-                else -> Unit
             }
         }
     }
@@ -97,7 +98,7 @@ fun LoginScreen(
                 fontSize = 36.sp,
                 style = MaterialTheme.typography.h2,
                 fontWeight = FontWeight.SemiBold,
-                color = com.igorj.limboapp.ui.theme.BrightOrange,
+                color = BrightOrange,
             )
         }
         Column(
@@ -111,7 +112,7 @@ fun LoginScreen(
                 text = stringResource(id = R.string.sign_in),
                 style = MaterialTheme.typography.h2,
                 fontWeight = FontWeight.SemiBold,
-                color = com.igorj.limboapp.ui.theme.TextWhite,
+                color = TextWhite,
                 fontSize = 32.sp
             )
             Spacer(modifier = Modifier.height(26.dp))
@@ -147,7 +148,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = stringResource(id = R.string.forgot_password),
-                color = com.igorj.limboapp.ui.theme.BrightOrange,
+                color = BrightOrange,
                 style = MaterialTheme.typography.h1,
                 fontWeight = FontWeight.Light,
                 fontSize = 12.sp,
@@ -178,14 +179,14 @@ fun LoginScreen(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = stringResource(id = R.string.dont_have_account) + " ",
-                    color = com.igorj.limboapp.ui.theme.TextWhite,
+                    color = TextWhite,
                     style = MaterialTheme.typography.h1,
                     fontWeight = FontWeight.Light,
                     fontSize = 15.sp
                 )
                 Text(
                     text = stringResource(id = R.string.sign_up),
-                    color = com.igorj.limboapp.ui.theme.BrightOrange,
+                    color = BrightOrange,
                     style = MaterialTheme.typography.h1,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 15.sp,
