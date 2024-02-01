@@ -7,14 +7,6 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
-import com.igorj.core.BrightOrange
-import com.igorj.core.DarkBackground
-import com.igorj.core.DarkOrange
-import com.igorj.core.Dimensions
-import com.igorj.core.LightGray
-import com.igorj.core.LightOrange
-import com.igorj.core.LocalSpacing
-import com.igorj.core.TextWhite
 
 private val DarkColorPalette = darkColors(
     primary = BrightOrange,

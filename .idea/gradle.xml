@@ -21,20 +21,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/auth" />
-            <option value="$PROJECT_DIR$/auth/auth_domain" />
-            <option value="$PROJECT_DIR$/auth/auth_presentation" />
             <option value="$PROJECT_DIR$/buildSrc" />
-            <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/core_ui" />
-            <option value="$PROJECT_DIR$/dashboard" />
-            <option value="$PROJECT_DIR$/dashboard/dashboard_data" />
-            <option value="$PROJECT_DIR$/dashboard/dashboard_domain" />
-            <option value="$PROJECT_DIR$/dashboard/dashboard_presentation" />
-            <option value="$PROJECT_DIR$/quiz" />
-            <option value="$PROJECT_DIR$/quiz/quiz_data" />
-            <option value="$PROJECT_DIR$/quiz/quiz_domain" />
-            <option value="$PROJECT_DIR$/quiz/quiz_presentation" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

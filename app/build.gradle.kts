@@ -52,6 +52,11 @@ android {
 }
 
 dependencies {
+    implementation(AndroidX.coreKtx)
+    implementation(AndroidX.appCompat)
+
+    implementation(Coil.coilCompose)
+
     implementation(Compose.compiler)
     implementation(Compose.ui)
     implementation(Compose.uiToolingPreview)
@@ -65,23 +70,11 @@ dependencies {
     implementation(DaggerHilt.hiltAndroid)
     kapt(DaggerHilt.hiltCompiler)
 
-    implementation(project(Modules.core))
-    implementation(project(Modules.coreUi))
-    implementation(project(Modules.authDomain))
-    implementation(project(Modules.authPresentation))
-    implementation(project(Modules.dashboardData))
-    implementation(project(Modules.dashboardDomain))
-    implementation(project(Modules.dashboardPresentation))
-    implementation(project(Modules.quizData))
-    implementation(project(Modules.quizDomain))
-    implementation(project(Modules.quizPresentation))
-
-    implementation(AndroidX.coreKtx)
-    implementation(AndroidX.appCompat)
-
-    implementation(Coil.coilCompose)
-
     implementation(Google.material)
+
+    implementation(Gson.gson)
+
+    implementation(Konfetti.konfettiCompose)
 
     implementation(Retrofit.okHttp)
     implementation(Retrofit.retrofit)
@@ -91,6 +84,8 @@ dependencies {
     kapt(Room.roomCompiler)
     implementation(Room.roomKtx)
     implementation(Room.roomRuntime)
+
+    implementation(Security.securityCrypto)
 
     testImplementation(Testing.junit4)
     testImplementation(Testing.junitAndroidExt)
@@ -113,4 +108,5 @@ dependencies {
     kaptAndroidTest(DaggerHilt.hiltCompiler)
     androidTestImplementation(Testing.testRunner)
 
+    implementation(Volley.volley)
 }

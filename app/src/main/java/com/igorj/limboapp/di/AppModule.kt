@@ -1,9 +1,9 @@
 package com.igorj.limboapp.di
 
 import android.content.Context
-import com.igorj.core.data.auth.AuthSharedPreferences
-import com.igorj.core.data.auth.DefaultAuthAPI
-import com.igorj.core.domain.auth.AuthAPI
+import com.igorj.limboapp.repository.implementation.AuthSharedPreferences
+import com.igorj.limboapp.repository.implementation.DefaultAuthAPI
+import com.igorj.limboapp.repository.interfaces.AuthAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
