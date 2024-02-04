@@ -17,6 +17,9 @@ class MainViewModel @Inject constructor(
             is MainEvent.OnFlickersClick -> {
 
             }
+            is MainEvent.OnBottomNavBarClick -> {
+
+            }
         }
     }
 }

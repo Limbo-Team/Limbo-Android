@@ -154,16 +154,5 @@ fun StatsScreen(
                 }
             }
         },
-        bottomBar = {
-            BottomNavBar(
-                items = bottomNavBarItems,
-                selectedItemRoute = state.selectedScreen,
-                onItemClick = {
-                    viewModel.onEvent(
-                        StatsEvent.OnBottomNavBarClick(it.route)
-                    )
-                }
-            )
-        }
     )
 }

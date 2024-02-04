@@ -131,16 +131,5 @@ fun ProfileScreen(
                 }
             }
         },
-        bottomBar = {
-            BottomNavBar(
-                items = bottomNavBarItems,
-                selectedItemRoute = state.selectedScreen,
-                onItemClick = {
-                    viewModel.onEvent(
-                        ProfileEvent.OnBottomNavBarClick(it.route)
-                    )
-                }
-            )
-        }
     )
 }

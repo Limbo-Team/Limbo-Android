@@ -70,17 +70,6 @@ fun ChaptersScreen(
                     )
                 }
             }
-        },
-        bottomBar = {
-            BottomNavBar(
-                items = bottomNavBarItems,
-                selectedItemRoute = state.selectedScreen,
-                onItemClick = {
-                    viewModel.onEvent(
-                        ChaptersEvent.OnBottomNavBarClick(it.route)
-                    )
-                }
-            )
         }
     )
 }

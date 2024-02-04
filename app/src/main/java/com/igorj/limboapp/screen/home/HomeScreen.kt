@@ -120,17 +120,6 @@ fun HomeScreen(
                 }
             }
         },
-        bottomBar = {
-            BottomNavBar(
-                items = bottomNavBarItems,
-                selectedItemRoute = state.selectedScreen,
-                onItemClick = {
-                    viewModel.onEvent(
-                        HomeEvent.OnBottomNavBarClick(it.route)
-                    )
-                }
-            )
-        }
     )
 }
 
