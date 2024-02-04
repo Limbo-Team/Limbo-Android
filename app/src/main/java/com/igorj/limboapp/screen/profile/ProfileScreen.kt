@@ -56,34 +56,6 @@ fun ProfileScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         backgroundColor = MaterialTheme.colors.background,
-        topBar = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 14.dp)
-            ) {
-                Flickers(
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .padding(start = 26.dp),
-                    onClick = {
-                        viewModel.onEvent(ProfileEvent.OnFlickersClick)
-                    },
-                    flickers = state.flickers
-                )
-                com.igorj.limboapp.components.LimboLogo(
-                    modifier = Modifier.align(Alignment.Center)
-                )
-                LogoutButton(
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 26.dp),
-                    onClick = {
-                        viewModel.onEvent(ProfileEvent.OnLogoutClick)
-                    }
-                )
-            }
-        },
         content = {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

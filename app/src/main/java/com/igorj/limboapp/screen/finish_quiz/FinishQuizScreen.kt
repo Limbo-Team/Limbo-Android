@@ -99,18 +99,6 @@ fun FinishQuizScreen(
                         .calculateBottomPadding()
                 ),
             backgroundColor = Color.Transparent,
-            topBar = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 14.dp, bottom = 8.dp)
-                ) {
-                    LimboLogo(
-                        modifier = Modifier.align(Alignment.Center),
-                        textColor = TextWhite
-                    )
-                }
-            },
             content = {
                 Column(
                     modifier = Modifier

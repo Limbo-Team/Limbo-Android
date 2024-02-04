@@ -83,24 +83,6 @@ fun LoginScreen(
             .padding(bottom = spacing.spaceLarge),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                modifier = Modifier.size(40.dp),
-                painter = painterResource(id = R.drawable.ic_flame),
-                contentDescription = null
-            )
-            Text(
-                text = stringResource(id = R.string.limbo),
-                fontSize = 36.sp,
-                style = MaterialTheme.typography.h2,
-                fontWeight = FontWeight.SemiBold,
-                color = BrightOrange,
-            )
-        }
         Column(
             modifier = Modifier
                 .weight(1f)

@@ -58,36 +58,7 @@ fun HomeScreen(
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
         backgroundColor = MaterialTheme.colors.background,
-        topBar = {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 14.dp)
-            ) {
-                Flickers(
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .padding(start = 26.dp),
-                    onClick = {
-                        viewModel.onEvent(HomeEvent.OnFlickersClick)
-                    },
-                    flickers = state.flickers
-                )
-                LimboLogo(
-                    modifier = Modifier.align(Alignment.Center)
-                )
-                CircleImage(
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 30.dp),
-                    imageUrl = "https://i.imgur.com/36nMXsk.jpg",
-                    contentDescription = stringResource(id = R.string.profile),
-                    size = 40.dp
-                )
-            }
-        },
         content = {
             Column(
                 modifier = Modifier
