@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.igorj.limboapp.repository.interfaces.ChaptersRepository
 import com.igorj.limboapp.util.UiEvent
 import com.igorj.limboapp.repository.interfaces.QuestionsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,24 +20,26 @@ import kotlin.math.min
 @HiltViewModel
 class PlayingScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val questionsRepository: QuestionsRepository
+    private val chaptersRepository: ChaptersRepository
 ): ViewModel() {
-
     var state by mutableStateOf(PlayingQuizState())
         private set
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    init {
+    suspend fun loadQuestions(quizId: String) {
+        state = state.copy(
+            isLoading = true
+        )
         viewModelScope.launch {
-            state = state.copy(chapterId = savedStateHandle.get<Int>("chapterId") ?: 0)
-            if (state.chapterId != 0) {
-                val questions = questionsRepository.getQuestions(state.chapterId, 123).getOrElse {
-                    return@launch
-                }
-                state = state.copy(questions = questions)
-            }
+            val questions = chaptersRepository.getQuizQuestions(quizId)
+                .getOrElse { return@launch }
+            state = state.copy(
+                questions = questions,
+                maxTime = questions.size * 10,
+                isLoading = false
+            )
         }
     }
 

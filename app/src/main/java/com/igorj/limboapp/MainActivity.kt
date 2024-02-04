@@ -1,6 +1,7 @@
 package com.igorj.limboapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +31,7 @@ import com.igorj.limboapp.screen.forgot_password.enter_email.ForgotPasswordScree
 import com.igorj.limboapp.screen.forgot_password.enter_verification_code.VerificationCodeScreen
 import com.igorj.limboapp.screen.login.LoginScreen
 import com.igorj.limboapp.screen.playing_quiz.PlayingQuizScreen
+import com.igorj.limboapp.screen.quizzes.QuizzesScreen
 import com.igorj.limboapp.screen.register.RegisterScreen
 import com.igorj.limboapp.screen.welcome.WelcomeScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -151,10 +153,43 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onChapterNavigation = { chapterId ->
                                     navController.navigate(
-                                        route = "${Route.QUIZ_PLAY}/$chapterId",
+                                        route = "${Route.QUIZZES}/$chapterId",
                                         navOptions = NavOptions.Builder()
                                             .setPopUpTo(
                                                 route = Route.CHAPTERS,
+                                                inclusive = true
+                                            )
+                                            .build()
+                                    )
+                                }
+                            )
+                        }
+                        composable(
+                            route = "${Route.QUIZZES}/{chapterId}",
+                            arguments = listOf(navArgument("chapterId") {
+                                type = NavType.StringType
+                                defaultValue = ""
+                            })
+                        ) { entry ->
+                            QuizzesScreen(
+                                chapterId = entry.arguments?.getString("chapterId").toString(),
+                                onNavigation = { route ->
+                                    navController.navigate(
+                                        route = route,
+                                        navOptions = NavOptions.Builder()
+                                            .setPopUpTo(
+                                                route = Route.QUIZZES,
+                                                inclusive = true
+                                            )
+                                            .build()
+                                    )
+                                },
+                                onQuizClick = { quizId ->
+                                    navController.navigate(
+                                        route = "${Route.QUIZ_PLAY}/$quizId",
+                                        navOptions = NavOptions.Builder()
+                                            .setPopUpTo(
+                                                route = Route.QUIZZES,
                                                 inclusive = true
                                             )
                                             .build()
@@ -199,13 +234,14 @@ class MainActivity : ComponentActivity() {
 
                         }
                         composable(
-                            route = "${Route.QUIZ_PLAY}/{chapterId}",
-                            arguments = listOf(navArgument("chapterId") {
-                                type = NavType.IntType
-                                defaultValue = 0
+                            route = "${Route.QUIZ_PLAY}/{quizId}",
+                            arguments = listOf(navArgument("quizId") {
+                                type = NavType.StringType
+                                defaultValue = ""
                             })
                         ) {
                             PlayingQuizScreen(
+                                quizId = it.arguments?.getString("quizId").toString(),
                                 onNavigation = {
                                     navController.navigate(
                                         route = Route.QUIZ_FINISH,

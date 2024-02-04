@@ -4,7 +4,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.igorj.limboapp.ui.theme.OrangeGradient
@@ -36,9 +39,9 @@ fun QuizAnswerButton(
         R.drawable.ic_answer_selected
     } else R.drawable.ic_answer_not_selected
 
-    Box(
+    Row(
         modifier = modifier
-            .fillMaxWidth(0.8f)
+            .fillMaxWidth()
             .clip(RoundedCornerShape(25.dp))
             .background(answerBackground)
             .border(
@@ -47,11 +50,13 @@ fun QuizAnswerButton(
                 shape = RoundedCornerShape(25.dp)
             )
             .clickable { onClick() },
-        contentAlignment = Alignment.Center
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
             modifier = Modifier
-                .padding(vertical = 6.dp),
+                .weight(1f)
+                .padding(top = 6.dp, bottom = 6.dp, start = 16.dp),
             text = answerText,
             color = TextWhite,
             style = MaterialTheme.typography.body1,
@@ -62,9 +67,18 @@ fun QuizAnswerButton(
             painter = painterResource(id = answerIcon),
             contentDescription = null,
             modifier = Modifier
-                .padding(end = 10.dp)
+                .padding(horizontal = 10.dp)
                 .size(20.dp)
-                .align(Alignment.CenterEnd)
         )
     }
+}
+
+@Preview
+@Composable
+fun QuizAnswerButtonPreview() {
+    QuizAnswerButton(
+        answerText = "Answer",
+        isSelected = true,
+        onClick = {}
+    )
 }
