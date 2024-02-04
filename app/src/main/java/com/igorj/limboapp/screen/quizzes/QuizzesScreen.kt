@@ -1,4 +1,4 @@
-package com.igorj.limboapp.screen.chapters
+package com.igorj.limboapp.screen.quizzes
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,23 +17,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.igorj.limboapp.R
 import com.igorj.limboapp.components.BottomNavBar
-import com.igorj.limboapp.components.ChapterCard
 import com.igorj.limboapp.components.CircleImage
 import com.igorj.limboapp.components.Flickers
+import com.igorj.limboapp.components.LimboLogo
+import com.igorj.limboapp.components.QuizCard
 import com.igorj.limboapp.components.bottomNavBarItems
 import com.igorj.limboapp.util.UiEvent
 
 @Composable
-fun ChaptersScreen(
+fun QuizzesScreen(
+    chapterId: String,
     onNavigation: (String) -> Unit,
-    onChapterNavigation: (String) -> Unit,
-    viewModel: ChaptersViewModel = hiltViewModel()
+    onQuizClick: (String) -> Unit,
+    viewModel: QuizzesViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
 
     LaunchedEffect(key1 = true) {
+        viewModel.loadQuizzes(chapterId = chapterId)
         viewModel.uiEvent.collect { event ->
             when (event) {
                 is UiEvent.OnNavigate -> {
@@ -59,11 +64,11 @@ fun ChaptersScreen(
                         .align(Alignment.CenterStart)
                         .padding(start = 26.dp),
                     onClick = {
-                        viewModel.onEvent(ChaptersEvent.OnFlickersClick)
+                        viewModel.onEvent(QuizzesEvent.OnFlickersClick)
                     },
                     flickers = state.flickers
                 )
-                com.igorj.limboapp.components.LimboLogo(
+                LimboLogo(
                     modifier = Modifier.align(Alignment.Center)
                 )
                 CircleImage(
@@ -89,11 +94,11 @@ fun ChaptersScreen(
                     bottom = 16.dp
                 )
             ) {
-                items(state.chapters) { chapter ->
-                    ChapterCard(
-                        chapter = chapter,
+                items(state.quizzes) { quiz ->
+                    QuizCard(
+                        quiz = quiz,
                         onClick = {
-                            onChapterNavigation(chapter.chapterId)
+                            onQuizClick(quiz.quizId)
                         }
                     )
                 }
@@ -105,7 +110,7 @@ fun ChaptersScreen(
                 selectedItemRoute = state.selectedScreen,
                 onItemClick = {
                     viewModel.onEvent(
-                        ChaptersEvent.OnBottomNavBarClick(it.route)
+                        QuizzesEvent.OnBottomNavBarClick(it.route)
                     )
                 }
             )

@@ -14,7 +14,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +22,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.igorj.limboapp.R
+import com.igorj.limboapp.model.Chapter
+import com.igorj.limboapp.model.Quiz
 import com.igorj.limboapp.ui.theme.BrightOrangeGradient
 import com.igorj.limboapp.ui.theme.DarkBlackGradient
 import com.igorj.limboapp.ui.theme.GreenGradient
@@ -30,36 +31,29 @@ import com.igorj.limboapp.ui.theme.LightGreen
 import com.igorj.limboapp.ui.theme.LightGreenGradient
 import com.igorj.limboapp.ui.theme.LightOrange
 import com.igorj.limboapp.ui.theme.OrangeGradient
-import com.igorj.limboapp.ui.theme.RedGradient
 import com.igorj.limboapp.ui.theme.TextWhite
-import com.igorj.limboapp.model.Chapter
 
 @Composable
-fun ChapterCard(
+fun QuizCard(
     modifier: Modifier = Modifier,
-    chapter: Chapter,
+    quiz: Quiz,
     onClick: () -> Unit = {},
-    borderWidth: Dp = 2.dp
+    borderWidth: Dp = 1.5.dp
 ) {
-    val isCompleted = chapter.doneQuizzes == chapter.maximumQuizzes
-    val isStarted = chapter.doneQuizzes > 0
+    val isCompleted = quiz.isDone
 
     val borderGradient =
         if (isCompleted) {
             GreenGradient
-        } else if (isStarted) {
-            OrangeGradient
         } else {
-            RedGradient
+            OrangeGradient
         }
 
     val progressBarColor =
         if (isCompleted) {
             LightGreenGradient
-        } else if (isStarted) {
-            BrightOrangeGradient
         } else {
-            RedGradient
+            BrightOrangeGradient
         }
 
     val pointsColor = if (isCompleted) {
@@ -92,7 +86,7 @@ fun ChapterCard(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = chapter.chapterTitle,
+                text = quiz.quizTitle,
                 color = TextWhite,
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.SemiBold,
@@ -101,29 +95,6 @@ fun ChapterCard(
                 modifier = Modifier
                     .padding(bottom = 10.dp)
             )
-            Text(
-                text = stringResource(id = R.string.finished_quizzes),
-                color = TextWhite,
-                style = MaterialTheme.typography.body1,
-                fontWeight = FontWeight.Medium,
-                fontSize = 12.sp,
-                modifier = Modifier
-                    .padding(bottom = 6.dp)
-            )
-            Text(
-                text = "${chapter.doneQuizzes}/${chapter.maximumQuizzes}",
-                color = pointsColor,
-                style = MaterialTheme.typography.body1,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center
-            )
         }
-        CircularProgressBar(
-            modifier = Modifier.weight(1f),
-            percentage = (chapter.percentage / 100.toFloat()),
-            number = 100,
-            progressGradient = progressBarColor
-        )
     }
 }

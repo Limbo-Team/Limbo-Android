@@ -14,6 +14,8 @@ object Route {
     const val PROFILE = "profile"
     const val REDEEM_FLICKERS = "redeem_flickers"
 
+    const val QUIZZES = "quizzes"
+
     const val QUIZ_START = "quiz_start"
     const val QUIZ_PLAY = "quiz_play"
     const val QUIZ_FINISH = "quiz_finish"
