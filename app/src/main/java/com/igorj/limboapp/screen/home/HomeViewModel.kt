@@ -1,5 +1,6 @@
 package com.igorj.limboapp.screen.home
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -10,6 +11,7 @@ import com.igorj.limboapp.repository.interfaces.ChaptersRepository
 import com.igorj.limboapp.repository.interfaces.StatsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,19 +28,36 @@ class HomeViewModel @Inject constructor(
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    init {
+    fun loadBestPeople() {
+        state = state.copy(loadingBestPeople = true)
         viewModelScope.launch {
             val bestPeopleInGroupResult = statsRepository.getBestPeopleInGroup(0, 4)
                 .getOrElse {
-                    return@launch  // fix, so that miniChapters get loaded if this fails
-                }
-            state = state.copy(bestPeople = bestPeopleInGroupResult)
-
-            val miniChaptersListResult = chaptersRepository.getChapters()
-                .getOrElse {
+                    state = state.copy(loadingBestPeople = false)
                     return@launch
                 }
-            state = state.copy(miniChapters = miniChaptersListResult)
+            delay(1000)
+            state = state.copy(
+                bestPeople = bestPeopleInGroupResult,
+                loadingBestPeople = false
+            )
+        }
+    }
+
+    fun loadMiniChapters() {
+        state = state.copy(loadingMiniChapters = true)
+        viewModelScope.launch {
+            val miniChaptersListResult = chaptersRepository.getChapters()
+                .getOrElse {
+                    state = state.copy(loadingMiniChapters = false)
+                    Log.d("LOGCAT", "Failed to get chapters")
+                    return@launch
+                }
+            delay(1000)
+            state = state.copy(
+                miniChapters = miniChaptersListResult,
+                loadingMiniChapters = false
+            )
         }
     }
 
