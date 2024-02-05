@@ -9,6 +9,7 @@ import com.igorj.limboapp.util.UiEvent
 import com.igorj.limboapp.repository.interfaces.ChaptersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,13 +24,19 @@ class ChaptersViewModel @Inject constructor(
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    init {
+    fun loadChapters() {
+        state = state.copy(isLoading = true)
         viewModelScope.launch {
             val chaptersListResult = chaptersRepository.getChapters()
                 .getOrElse {
+                    state = state.copy(isLoading = false)
                     return@launch
                 }
-            state = state.copy(chapters = chaptersListResult)
+            delay(1000)
+            state = state.copy(
+                chapters = chaptersListResult,
+                isLoading = false
+            )
         }
     }
 

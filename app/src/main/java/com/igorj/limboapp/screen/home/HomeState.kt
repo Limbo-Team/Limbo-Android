@@ -8,6 +8,6 @@ data class HomeState(
     val miniChapters: List<Chapter> = emptyList(),
     val selectedScreen: String = "home",
     val flickers: Int = 0,
-    val loadingBestPeople: Boolean = false,
-    val loadingMiniChapters: Boolean = false
+    val isLoadingBestPeople: Boolean = false,
+    val isLoadingMiniChapters: Boolean = false
 )

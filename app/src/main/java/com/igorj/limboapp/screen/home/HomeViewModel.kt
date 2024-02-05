@@ -29,34 +29,34 @@ class HomeViewModel @Inject constructor(
     val uiEvent = _uiEvent.receiveAsFlow()
 
     fun loadBestPeople() {
-        state = state.copy(loadingBestPeople = true)
+        state = state.copy(isLoadingBestPeople = true)
         viewModelScope.launch {
             val bestPeopleInGroupResult = statsRepository.getBestPeopleInGroup(0, 4)
                 .getOrElse {
-                    state = state.copy(loadingBestPeople = false)
+                    state = state.copy(isLoadingBestPeople = false)
                     return@launch
                 }
             delay(1000)
             state = state.copy(
                 bestPeople = bestPeopleInGroupResult,
-                loadingBestPeople = false
+                isLoadingBestPeople = false
             )
         }
     }
 
     fun loadMiniChapters() {
-        state = state.copy(loadingMiniChapters = true)
+        state = state.copy(isLoadingMiniChapters = true)
         viewModelScope.launch {
             val miniChaptersListResult = chaptersRepository.getChapters()
                 .getOrElse {
-                    state = state.copy(loadingMiniChapters = false)
+                    state = state.copy(isLoadingMiniChapters = false)
                     Log.d("LOGCAT", "Failed to get chapters")
                     return@launch
                 }
             delay(1000)
             state = state.copy(
                 miniChapters = miniChaptersListResult,
-                loadingMiniChapters = false
+                isLoadingMiniChapters = false
             )
         }
     }

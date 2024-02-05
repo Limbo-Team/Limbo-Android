@@ -1,6 +1,5 @@
 package com.igorj.limboapp.screen.home
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
@@ -33,12 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.igorj.limboapp.R
 import com.igorj.limboapp.components.BestPersonItem
-import com.igorj.limboapp.components.BottomNavBar
-import com.igorj.limboapp.components.CircleImage
-import com.igorj.limboapp.components.Flickers
-import com.igorj.limboapp.components.LimboLogo
 import com.igorj.limboapp.components.MiniChapter
-import com.igorj.limboapp.components.bottomNavBarItems
 import com.igorj.limboapp.ui.theme.LocalSpacing
 import com.igorj.limboapp.util.UiEvent
 
@@ -108,7 +101,7 @@ fun HomeScreen(
                                 )
                             }
                         }
-                        if (state.loadingBestPeople) {
+                        if (state.isLoadingBestPeople) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxSize()
@@ -155,7 +148,7 @@ fun HomeScreen(
                                 }
                             }
                         )
-                        if (state.loadingMiniChapters) {
+                        if (state.isLoadingMiniChapters) {
                             Box(
                                 modifier = Modifier
                                     .fillMaxSize()
