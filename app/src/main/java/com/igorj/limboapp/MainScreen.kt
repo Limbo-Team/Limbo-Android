@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,8 +26,11 @@ import com.igorj.limboapp.components.BottomNavBar
 import com.igorj.limboapp.components.CircleImage
 import com.igorj.limboapp.components.Flickers
 import com.igorj.limboapp.components.LimboLogo
+import com.igorj.limboapp.components.LogoutButton
 import com.igorj.limboapp.components.bottomNavBarItems
+import com.igorj.limboapp.model.User
 import com.igorj.limboapp.navigation.Route
+import com.igorj.limboapp.repository.interfaces.AuthAPI
 import com.igorj.limboapp.screen.chapters.ChaptersScreen
 import com.igorj.limboapp.screen.finish_quiz.FinishQuizScreen
 import com.igorj.limboapp.screen.forgot_password.change_password.ChangePasswordScreen
@@ -41,6 +45,8 @@ import com.igorj.limboapp.screen.quizzes.QuizzesScreen
 import com.igorj.limboapp.screen.register.RegisterScreen
 import com.igorj.limboapp.screen.stats.StatsScreen
 import com.igorj.limboapp.screen.welcome.WelcomeScreen
+import com.igorj.limboapp.util.UiEvent
+import javax.inject.Inject
 
 @Composable
 fun MainScreen(
@@ -49,7 +55,7 @@ fun MainScreen(
     startDestination: String,
     viewModel: MainViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
+    val state = viewModel.state
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     val screensWithTopLogo = listOf(
         Route.WELCOME,
@@ -68,6 +74,19 @@ fun MainScreen(
         Route.QUIZ_START,
         "${Route.QUIZZES}/{chapterId}"
     )
+
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                is UiEvent.OnNavigate -> {
+                    navController.navigate(Route.LOGIN)
+                }
+                else -> {
+
+                }
+            }
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -101,14 +120,28 @@ fun MainScreen(
                     LimboLogo(
                         modifier = Modifier.align(Alignment.Center)
                     )
-                    CircleImage(
-                        modifier = Modifier
-                            .align(Alignment.CenterEnd)
-                            .padding(end = 30.dp),
-                        imageUrl = "https://i.imgur.com/36nMXsk.jpg",
-                        contentDescription = stringResource(id = R.string.profile),
-                        size = 40.dp
-                    )
+                    if (currentRoute == Route.PROFILE) {
+                        LogoutButton(
+                            modifier = Modifier
+                                .align(Alignment.CenterEnd)
+                                .padding(end = 26.dp),
+                            onClick = {
+                                viewModel.onEvent(MainEvent.OnLogoutClick)
+                            }
+                        )
+                    } else {
+                        CircleImage(
+                            modifier = Modifier
+                                .align(Alignment.CenterEnd)
+                                .padding(end = 30.dp),
+                            imageUrl = state.userInfo.image,
+                            contentDescription = stringResource(id = R.string.profile),
+                            size = 40.dp,
+                            onClick = {
+                                navController.navigate(Route.PROFILE)
+                            }
+                        )
+                    }
                 }
             }
         },
@@ -132,6 +165,7 @@ fun MainScreen(
                     LoginScreen(
                         scaffoldState = scaffoldState,
                         onLoginClick = {
+                            viewModel.loadInitialUserInfo()
                             navController.navigate(Route.HOME)
                         },
                         onRegisterClick = {

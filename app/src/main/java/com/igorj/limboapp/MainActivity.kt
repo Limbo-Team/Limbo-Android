@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
                 MainScreen(
                     navController = navController,
                     scaffoldState = scaffoldState,
-                    startDestination = startDestination
+                    startDestination = startDestination,
                 )
             }
         }

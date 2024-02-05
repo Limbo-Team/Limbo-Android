@@ -9,6 +9,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.igorj.limboapp.model.LoginResponse
+import com.igorj.limboapp.model.User
 import com.igorj.limboapp.repository.interfaces.AuthAPI
 import org.json.JSONObject
 import javax.inject.Inject
@@ -33,9 +34,18 @@ class DefaultAuthAPI @Inject constructor(
             "${AuthAPI.BASE_URL}/user/signin",
             params,
             { response ->
-                val authToken = Gson().fromJson(response.toString(), LoginResponse::class.java).authToken
-                saveToken(authToken)
-                onResult(authToken)
+                val loginResponse = Gson().fromJson(response.toString(), LoginResponse::class.java)
+                saveToken(loginResponse.authToken)
+                saveUserInfo(
+                    User(
+                        loginResponse.firstName,
+                        loginResponse.lastName,
+                        loginResponse.email,
+                        loginResponse.image,
+                        loginResponse.points
+                    )
+                )
+                onResult(loginResponse.authToken)
             }, { error ->
                 error.printStackTrace()
                 onResult("")
@@ -103,6 +113,10 @@ class DefaultAuthAPI @Inject constructor(
         authSharedPreferences.putString(AuthAPI.TOKEN_KEY, token)
     }
 
+    override fun saveUserInfo(user: User) {
+        authSharedPreferences.putString(AuthAPI.USER_INFO_KEY, Gson().toJson(user))
+    }
+
     override fun getUsername(): String {
         return authSharedPreferences.getString(AuthAPI.USERNAME_KEY) ?: ""
     }
@@ -113,6 +127,10 @@ class DefaultAuthAPI @Inject constructor(
 
     override fun getToken(): String {
         return authSharedPreferences.getString(AuthAPI.TOKEN_KEY) ?: ""
+    }
+
+    override fun getUserInfo(): User {
+        return Gson().fromJson(authSharedPreferences.getString(AuthAPI.USER_INFO_KEY), User::class.java)
     }
 
     override fun logout() {
