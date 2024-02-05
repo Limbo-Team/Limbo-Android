@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -28,14 +30,12 @@ import com.igorj.limboapp.ui.theme.TextWhite
 
 @Composable
 fun MiniStats(
-    text: String,
-    value: String,
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    value: String,
+    onClick: () -> Unit = {},
     borderWidth: Dp = 2.dp,
     borderGradient: Brush = BrightOrangeGradient,
-    textSize: TextUnit = 16.sp,
-    valueSize: TextUnit = 30.sp
+    valueSize: TextUnit = 16.sp
 ) {
     Column(
         modifier = modifier
@@ -47,6 +47,8 @@ fun MiniStats(
                 brush = borderGradient,
                 shape = RoundedCornerShape(25.dp)
             )
+            .fillMaxWidth()
+            .height(100.dp)
             .padding(vertical = 14.dp)
             .padding(horizontal = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -61,12 +63,14 @@ fun MiniStats(
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = text,
-            color = TextWhite,
-            style = MaterialTheme.typography.body1,
-            fontSize = textSize,
-            textAlign = TextAlign.Center
-        )
     }
+}
+
+@Preview
+@Composable
+fun MiniStatsPreview() {
+    MiniStats(
+        onClick = {},
+        value = "5"
+    )
 }

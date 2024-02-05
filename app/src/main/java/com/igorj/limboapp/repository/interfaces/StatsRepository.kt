@@ -10,7 +10,5 @@ interface StatsRepository {
         listSize: Int
     ): Result<List<User>>
 
-    suspend fun getUserStats(
-        userId: Int
-    ): Result<UserStats>
+    suspend fun getUserStats(): Result<UserStats>
 }

@@ -48,8 +48,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideStatsRepository(): StatsRepository {
-        return StatsRepositoryImpl()
+    fun provideStatsRepository(authApi: AuthAPI, @ApplicationContext appContext: Context): StatsRepository {
+        return StatsRepositoryImpl(authApi, appContext)
     }
 
     @Provides

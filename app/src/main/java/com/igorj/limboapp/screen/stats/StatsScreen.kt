@@ -1,16 +1,22 @@
 package com.igorj.limboapp.screen.stats
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
@@ -20,6 +26,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -33,7 +40,9 @@ import com.igorj.limboapp.components.CircleImage
 import com.igorj.limboapp.components.Flickers
 import com.igorj.limboapp.components.bottomNavBarItems
 import com.igorj.limboapp.components.MiniStats
+import com.igorj.limboapp.components.StatsTextDisplay
 import com.igorj.limboapp.ui.theme.LocalSpacing
+import com.igorj.limboapp.ui.theme.TextWhite
 import com.igorj.limboapp.util.UiEvent
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -47,6 +56,10 @@ fun StatsScreen(
     val state = viewModel.state
     val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    LaunchedEffect(key1 = true) {
+        viewModel.loadStats()
+    }
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
@@ -65,94 +78,78 @@ fun StatsScreen(
         }
     }
 
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        backgroundColor = MaterialTheme.colors.background,
-        content = {
-            Column(
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp)
+            .background(MaterialTheme.colors.background)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = stringResource(id = R.string.your_statistics),
+                color = TextWhite,
+                style = MaterialTheme.typography.h2,
+                fontWeight = FontWeight.Medium,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(start = 20.dp)
+            )
+            Spacer(modifier = Modifier.height(spacing.spaceMedium))
+            Box(
                 modifier = Modifier
-                    .padding(it)
-                    .fillMaxSize()
+                    .fillMaxWidth()
+                    .weight(1f),
+                contentAlignment = Alignment.Center
             ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
+                    StatsTextDisplay(
+                        onClick = { /*TODO*/ },
+                        text = stringResource(id = R.string.finished_chapters),
+                        value = state.userStats.chaptersDone.toString()
+                    )
+                    StatsTextDisplay(
+                        onClick = { /*TODO*/ },
+                        text = stringResource(id = R.string.finished_quizzes),
+                        value = state.userStats.quizzesDone.toString()
+                    )
                     Text(
-                        text = stringResource(id = R.string.your_statistics),
-                        color = com.igorj.limboapp.ui.theme.TextWhite,
+                        text = stringResource(id = R.string.your_rewards),
+                        color = TextWhite,
                         style = MaterialTheme.typography.h2,
                         fontWeight = FontWeight.Medium,
                         fontSize = 20.sp,
-                        modifier = Modifier.padding(start = 20.dp)
+                        modifier = Modifier.padding(start = 20.dp, top = 20.dp, bottom = 8.dp)
                     )
-                    Spacer(modifier = Modifier.height(spacing.spaceMedium))
                     LazyVerticalStaggeredGrid(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f),
                         columns = StaggeredGridCells.Fixed(2),
-                        contentPadding = PaddingValues(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        verticalItemSpacing = 16.dp,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalItemSpacing = 8.dp,
                         content = {
-                            item {
-                                MiniStats(
-                                    text = stringResource(id = R.string.bonus_exam_points),
-                                    value = "+${state.userStats.examBonus}",
-                                    onClick = {
-                                        viewModel.onEvent(StatsEvent.OnExamBonusClick)
-                                    },
-                                    valueSize = 36.sp
-                                )
-                            }
-                            item {
-                                MiniStats(
-                                    text = stringResource(id = R.string.bonus_dante_points),
-                                    value = "+${state.userStats.danteBonus}",
-                                    onClick = {
-                                        viewModel.onEvent(StatsEvent.OnDanteBonusClick)
-                                    },
-                                    valueSize = 36.sp
-                                )
-                            }
-                            item {
-                                MiniStats(
-                                    text = stringResource(id = R.string.total_questions_answered),
-                                    value = state.userStats.questionSolved.toString(),
-                                    onClick = {
-                                        viewModel.onEvent(StatsEvent.OnQuestionsSolvedClick)
-                                    }
-                                )
-                            }
-                            item {
-                                MiniStats(
-                                    text = stringResource(id = R.string.finished_chapters),
-                                    value = state.userStats.chaptersFinished.toString(),
-                                    onClick = {
-                                        viewModel.onEvent(StatsEvent.OnChaptersFinishedClick)
-                                    }
-                                )
-                            }
-                            item {
-                                MiniStats(
-                                    text = stringResource(id = R.string.average_answer_time),
-                                    value = "${state.userStats.averageAnswerTime}s",
-                                    onClick = {
-                                        viewModel.onEvent(StatsEvent.OnAverageAnswerTimeClick)
-                                    }
-                                )
-                            }
-                            item {
-                                MiniStats(
-                                    text = stringResource(id = R.string.most_questions_answered_in_day),
-                                    value = state.userStats.mostAnswersInDay.toString(),
-                                    onClick = {
-                                        viewModel.onEvent(StatsEvent.OnMostAnswersInDayClick)
-                                    }
-                                )
+                            items(state.userStats.userRewards) { reward ->
+                                MiniStats(value = reward)
                             }
                         }
                     )
                 }
+                if (state.isLoading) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color(0x77000000)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
             }
-        },
-    )
+        }
+    }
 }

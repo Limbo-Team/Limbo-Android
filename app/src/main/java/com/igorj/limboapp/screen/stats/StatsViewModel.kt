@@ -11,6 +11,7 @@ import com.igorj.limboapp.repository.interfaces.StatsRepository
 import com.igorj.limboapp.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,17 +27,19 @@ class StatsViewModel @Inject constructor(
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    init {
+    fun loadStats() {
+        state = state.copy(isLoading = true)
         viewModelScope.launch {
-            val userStats = statsRepository.getUserStats(1)
-            if (userStats.isSuccess) {
-                state = state.copy(
-                    userStats = userStats.getOrElse {
-                        return@launch
-                    }
-
-                )
-            }
+            val userStats = statsRepository.getUserStats()
+                .getOrElse {
+                    state = state.copy(isLoading = false)
+                    return@launch
+                }
+            delay(1000)
+            state = state.copy(
+                userStats = userStats,
+                isLoading = false
+            )
         }
     }
 

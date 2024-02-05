@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.igorj.limboapp.ui.theme.BlackGradient
@@ -29,11 +30,8 @@ fun StatsTextDisplay(
     text: String,
     value: String,
 ) {
-    val spacing = LocalSpacing.current
-
     Row(
         modifier = modifier
-            .clickable { onClick() }
             .background(BlackGradient)
             .clip(RoundedCornerShape(50.dp))
             .border(
@@ -41,28 +39,36 @@ fun StatsTextDisplay(
                 brush = BrightOrangeGradient,
                 shape = RoundedCornerShape(50.dp)
             )
-            .padding(horizontal = spacing.spaceSmall)
-            .padding(vertical = spacing.spaceExtraSmall),
+            .clickable { onClick() }
+            .padding(horizontal = 32.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            modifier = Modifier
-                .weight(1f),
+            modifier = Modifier.weight(1f),
             text = text,
             color = TextWhite,
             style = MaterialTheme.typography.body1,
-            fontWeight = FontWeight.SemiBold,
+            fontWeight = FontWeight.Normal,
             fontSize = 12.sp,
-            textAlign = TextAlign.Center
         )
         Text(
             text = value,
             color = TextWhite,
             style = MaterialTheme.typography.body1,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp,
             textAlign = TextAlign.Center
         )
     }
+}
+
+@Preview
+@Composable
+fun StatsTextDisplayPreview() {
+    StatsTextDisplay(
+        onClick = {},
+        text = "Total Flickers",
+        value = "100"
+    )
 }
