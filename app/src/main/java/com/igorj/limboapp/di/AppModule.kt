@@ -60,8 +60,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(): UserRepository {
-        return UserRepositoryImpl()
+    fun provideUserRepository(authApi: AuthAPI, @ApplicationContext appContext: Context): UserRepository {
+        return UserRepositoryImpl(authApi, appContext)
     }
 
     @Provides

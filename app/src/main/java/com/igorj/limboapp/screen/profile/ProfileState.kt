@@ -10,5 +10,6 @@ data class ProfileState(
     val newPassword: String = "",
     val newPasswordConfirmation: String = "",
     val isLoggingOut: Boolean = false,
-    val isChangingPassword: Boolean = false
+    val isChangingPassword: Boolean = false,
+    val isLoading: Boolean = false
 )

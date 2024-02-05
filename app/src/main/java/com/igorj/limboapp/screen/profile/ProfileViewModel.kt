@@ -10,6 +10,7 @@ import com.igorj.limboapp.util.UiEvent
 import com.igorj.limboapp.repository.interfaces.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,13 +27,19 @@ class ProfileViewModel @Inject constructor(
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
-    init {
+    fun loadProfileInfo() {
+        state = state.copy(isLoading = true)
         viewModelScope.launch {
             val userResult = userRepository.getUser()
                 .getOrElse {
+                    state = state.copy(isLoading = false)
                     return@launch
                 }
-            state = state.copy(user = userResult)
+            delay(1000)
+            state = state.copy(
+                user = userResult,
+                isLoading = false
+            )
         }
     }
 

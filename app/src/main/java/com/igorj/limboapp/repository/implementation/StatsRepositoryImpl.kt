@@ -22,32 +22,32 @@ class StatsRepositoryImpl(
     override suspend fun getBestPeopleInGroup(groupId: Int, listSize: Int): Result<List<User>> {
         val fakeBestPeopleInGroupList = listOf(
             User(
-                name = "John",
-                flickers = 49,
-                imageUrl = "https://i.imgur.com/36nMXsk.jpg",
-                studentId = null,
-                studentGroupId = null
+                firstName = "John",
+                lastName = "Silva",
+                email = "",
+                image = "https://i.imgur.com/36nMXsk.jpg",
+                points = 42
             ),
             User(
-                name = "Peter",
-                flickers = 42,
-                imageUrl = "https://i.imgur.com/E9D7cJT.jpg",
-                studentId = 123456,
-                studentGroupId = 3
+                firstName = "Peter",
+                lastName = "Meow",
+                email = "",
+                image = "https://i.imgur.com/E9D7cJT.jpg",
+                points = 39
             ),
             User(
-                name = "Alice",
-                flickers = 35,
-                imageUrl = "https://i.imgur.com/5Ny1A0G.jpg",
-                studentId = null,
-                studentGroupId = null
+                firstName = "Bob",
+                lastName = "Graham",
+                email = "",
+                image = "https://i.imgur.com/5Ny1A0G.jpg",
+                points = 29
             ),
             User(
-                name = "Bob",
-                flickers = 29,
-                imageUrl = "https://i.imgur.com/ehbaBkE.jpg",
-                studentId = null,
-                studentGroupId = null
+                firstName = "Alice",
+                lastName = "Eclipse",
+                email = "",
+                image = "https://i.imgur.com/ehbaBkE.jpg",
+                points = 25
             ),
         )
         val result = fakeBestPeopleInGroupList.subList(0, listSize)

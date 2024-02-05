@@ -95,9 +95,9 @@ fun HomeScreen(
                         ) {
                             items(state.bestPeople) { person ->
                                 BestPersonItem(
-                                    name = person.name,
-                                    imageUrl = person.imageUrl,
-                                    flickers = person.flickers
+                                    name = person.firstName,
+                                    imageUrl = person.image,
+                                    flickers = person.points
                                 )
                             }
                         }

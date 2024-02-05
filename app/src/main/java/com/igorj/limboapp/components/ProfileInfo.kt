@@ -12,12 +12,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.igorj.limboapp.components.CircleImage
+import com.igorj.limboapp.ui.theme.TextWhite
 
 @Composable
 fun ProfileInfo(
     modifier: Modifier = Modifier,
-    imageUrl: String,
-    name: String,
+    image: String,
+    firstName: String,
+    lastName: String,
     email: String
 ) {
     Column(
@@ -25,21 +27,28 @@ fun ProfileInfo(
         modifier = modifier
     ) {
         CircleImage(
-            imageUrl = imageUrl,
+            imageUrl = image,
             contentDescription = "Profile picture",
             size = 100.dp
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = name,
-            color = com.igorj.limboapp.ui.theme.TextWhite,
+            text = firstName,
+            color = TextWhite,
+            style = MaterialTheme.typography.body1,
+            fontWeight = FontWeight.Medium,
+            fontSize = 18.sp
+        )
+        Text(
+            text = lastName,
+            color = TextWhite,
             style = MaterialTheme.typography.body1,
             fontWeight = FontWeight.Medium,
             fontSize = 18.sp
         )
         Text(
             text = email,
-            color = com.igorj.limboapp.ui.theme.TextWhite,
+            color = TextWhite,
             style = MaterialTheme.typography.body1,
             fontWeight = FontWeight.Light,
             fontSize = 14.sp
