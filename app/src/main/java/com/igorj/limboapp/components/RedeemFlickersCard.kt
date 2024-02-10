@@ -66,7 +66,7 @@ fun RedeemFlickersCard(
             )
             Spacer(Modifier.height(4.dp))
             Box(
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier.height(40.dp),
                 contentAlignment = Alignment.Center
             ) {
                 if (isLoading) {
