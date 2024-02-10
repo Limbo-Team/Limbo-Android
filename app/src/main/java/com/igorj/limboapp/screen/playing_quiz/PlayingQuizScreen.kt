@@ -188,8 +188,8 @@ fun PlayingQuizScreen(
                         text = "Next",
                         onClick = {
                             if (state.currentQuestionIndex + 1 >= state.questions.size) {
-                                Log.d("LOGCAT", "OnFinish")
-                                viewModel.onEvent(PlayingQuizEvent.OnFinish(quizId))
+                                val lastAnswer = currentQuestionAnswers[state.selectedAnswerPosition]
+                                viewModel.onEvent(PlayingQuizEvent.OnFinish(lastAnswer, quizId))
                             } else {
                                 viewModel.onEvent(
                                     PlayingQuizEvent.OnNextQuestionClick(

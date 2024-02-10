@@ -54,24 +54,23 @@ class PlayingScreenViewModel @Inject constructor(
 
             }
             is PlayingQuizEvent.OnNextQuestionClick -> {
-                if (state.selectedAnswerPosition == -1) {
-                    return
-                }
-                if (state.currentQuestionIndex + 1 >= state.questions.size) {
-                    return
-                } else {
-                    state = state.copy(
-                        answersChosenByUser = state.answersChosenByUser +
-                                (state.questions[state.currentQuestionIndex].questionId
-                                    to
-                                event.answer),
-                        currentQuestionIndex = state.currentQuestionIndex + 1,
-                        selectedAnswerPosition = -1,
-                        timeLeft = min(state.maxTime.toFloat(), state.timeLeft + 5f),
-                    )
-                }
+                state = state.copy(
+                    answersChosenByUser = state.answersChosenByUser +
+                        (state.questions[state.currentQuestionIndex].questionId
+                            to
+                        event.answer),
+                    currentQuestionIndex = state.currentQuestionIndex + 1,
+                    selectedAnswerPosition = -1,
+                    timeLeft = min(state.maxTime.toFloat(), state.timeLeft + 5f),
+                )
             }
             is PlayingQuizEvent.OnFinish -> {
+                state = state.copy(
+                    answersChosenByUser = state.answersChosenByUser +
+                        (state.questions[state.currentQuestionIndex].questionId
+                            to
+                        event.lastAnswer)
+                )
                 viewModelScope.launch {
                     sendAnswersToServer(event.quizId)
                     _uiEvent.send(UiEvent.OnNavigate)
