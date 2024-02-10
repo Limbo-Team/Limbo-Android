@@ -106,7 +106,7 @@ fun HomeScreen(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .height(120.dp)
-                                    .background(Color(0x77000000)),
+                                    .background(if (state.bestPeople.isEmpty()) Color(0x00FFFFFF) else Color(0x77000000)),
                                 contentAlignment = Alignment.Center
                             ) {
                                 CircularProgressIndicator()
@@ -152,7 +152,7 @@ fun HomeScreen(
                             Box(
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .background(Color(0x77000000)),
+                                    .background(if (state.miniChapters.isEmpty()) Color(0x00FFFFFF) else Color(0x77000000)),
                                 contentAlignment = Alignment.Center
                             ) {
                                 CircularProgressIndicator()

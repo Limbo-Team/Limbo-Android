@@ -80,7 +80,7 @@ fun ChaptersScreen(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0x77000000)),
+                    .background(if (state.chapters.isEmpty()) Color(0x00FFFFFF) else Color(0x77000000)),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator()
