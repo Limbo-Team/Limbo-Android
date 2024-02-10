@@ -112,7 +112,7 @@ fun PlayingQuizScreen(
         LaunchedEffect(key1 = state.timeLeft) {
             while (state.timeLeft > 0) {
                 delay(100)
-                viewModel.onEvent(PlayingQuizEvent.OnTimeTick)
+                viewModel.onEvent(PlayingQuizEvent.OnTimeTick(quizId))
             }
         }
 

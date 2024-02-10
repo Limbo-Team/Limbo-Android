@@ -43,9 +43,8 @@ class PlayingScreenViewModel @Inject constructor(
         }
     }
 
-    private suspend fun sendAnswersToServer(quizId: String) {
-        val answers = state.answersChosenByUser
-        chaptersRepository.sendAnswers(quizId, answers)
+    private suspend fun sendAnswersToServer(quizId: String, answersChosenByUser: Map<String, String>) {
+        chaptersRepository.sendAnswers(quizId, answersChosenByUser)
     }
 
     fun onEvent(event: PlayingQuizEvent) {
@@ -72,7 +71,7 @@ class PlayingScreenViewModel @Inject constructor(
                         event.lastAnswer)
                 )
                 viewModelScope.launch {
-                    sendAnswersToServer(event.quizId)
+                    sendAnswersToServer(event.quizId, state.answersChosenByUser)
                     _uiEvent.send(UiEvent.OnNavigate)
                 }
             }
@@ -87,6 +86,14 @@ class PlayingScreenViewModel @Inject constructor(
                 )
                 if (state.timeLeft <= 0f) {
                     viewModelScope.launch {
+                        val allQuestions = state.questions
+                        var userAnswers = state.answersChosenByUser
+                        for (question in allQuestions) {
+                            if (!userAnswers.containsKey(question.questionId)) {
+                                userAnswers = userAnswers + (question.questionId to "")
+                            }
+                        }
+                        sendAnswersToServer(event.quizId, userAnswers)
                         _uiEvent.send(UiEvent.OnNavigate)
                     }
                 }
