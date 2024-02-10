@@ -78,10 +78,9 @@ fun StatsScreen(
         }
     }
 
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 16.dp)
             .background(MaterialTheme.colors.background)
     ) {
         Column(
@@ -93,13 +92,14 @@ fun StatsScreen(
                 style = MaterialTheme.typography.h2,
                 fontWeight = FontWeight.Medium,
                 fontSize = 20.sp,
-                modifier = Modifier.padding(start = 20.dp)
+                modifier = Modifier.padding(start = 20.dp, top = 8.dp)
             )
             Spacer(modifier = Modifier.height(spacing.spaceMedium))
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f),
+                    .weight(1f)
+                    .padding(horizontal = 16.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Column(
@@ -123,7 +123,7 @@ fun StatsScreen(
                         style = MaterialTheme.typography.h2,
                         fontWeight = FontWeight.Medium,
                         fontSize = 20.sp,
-                        modifier = Modifier.padding(start = 20.dp, top = 20.dp, bottom = 8.dp)
+                        modifier = Modifier.padding(top = 20.dp, bottom = 8.dp)
                     )
                     LazyVerticalStaggeredGrid(
                         modifier = Modifier
@@ -139,16 +139,16 @@ fun StatsScreen(
                         }
                     )
                 }
-                if (state.isLoading) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color(0x77000000)),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
-                    }
-                }
+            }
+        }
+        if (state.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(0x77000000)),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
             }
         }
     }
