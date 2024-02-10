@@ -9,4 +9,5 @@ interface ChaptersRepository {
     suspend fun getChapters(): Result<List<Chapter>>
     suspend fun getChapterQuizzes(chapterId: String): Result<List<Quiz>>
     suspend fun getQuizQuestions(quizId: String): Result<List<Question>>
+    suspend fun sendAnswers(quizId: String, answers: Map<String, String>)
 }

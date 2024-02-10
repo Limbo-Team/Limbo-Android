@@ -1,8 +1,10 @@
 package com.igorj.limboapp.repository.implementation
 
 import android.content.Context
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
@@ -13,6 +15,7 @@ import com.igorj.limboapp.model.Quiz
 import com.igorj.limboapp.repository.interfaces.AuthAPI
 import com.igorj.limboapp.repository.interfaces.ChaptersRepository
 import kotlinx.coroutines.suspendCancellableCoroutine
+import org.json.JSONObject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
@@ -116,4 +119,32 @@ class ChaptersRepositoryImpl(
             queue.add(stringRequest)
         }
     }
+
+    override suspend fun sendAnswers(quizId: String, answers: Map<String, String>) {
+//        val queue = Volley.newRequestQueue(context)
+//        val url = "https://limbo-backend.onrender.com/user/quizzes/$quizId/answer"
+
+        val jsonObject = JSONObject(answers.mapValues { it.value })
+        Log.d("LOGCAT", jsonObject.toString())
+
+//        val stringRequest = object : JsonObjectRequest(
+//            Method.POST, url, jsonObject,
+//            Response.Listener { response ->
+//                Log.d("Response", response.toString())
+//            },
+//            Response.ErrorListener { error ->
+//                Log.e("Error", error.toString())
+//            }) {
+//
+//            override fun getHeaders(): Map<String, String> {
+//                val headers = HashMap<String, String>()
+//                headers["Authorization"] = "Bearer ${authApi.getToken()}"
+//                headers["Content-Type"] = "application/json"
+//                return headers
+//            }
+//        }
+//
+//        queue.add(stringRequest)
+    }
+
 }

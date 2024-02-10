@@ -1,6 +1,7 @@
 package com.igorj.limboapp.screen.playing_quiz
 
 import android.app.Activity
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -159,28 +160,13 @@ fun PlayingQuizScreen(
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = currentQuestion?.description ?: "",
+                        text = currentQuestion.description ?: "",
                         modifier = Modifier.padding(top = 20.dp),
                         style = MaterialTheme.typography.h5,
                         fontSize = 20.sp,
                         color = TextWhite,
                         textAlign = TextAlign.Center
                     )
-//                Image(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(top = 20.dp),
-//                    painter = rememberImagePainter(
-//                        data = currentQuestion.imageUrl,
-//                        builder = {
-//                            crossfade(true)
-//                            error(R.drawable.ic_profile)
-//                            fallback(R.drawable.ic_profile)
-//                        }
-//                    ),
-//                    contentDescription = "Question image",
-//                    contentScale = ContentScale.Crop
-//                )
                     Spacer(modifier = Modifier.height(26.dp))
                     QuizAnswersSection(
                         answers = currentQuestionAnswers,
@@ -201,15 +187,20 @@ fun PlayingQuizScreen(
                     GradientButton(
                         text = "Next",
                         onClick = {
-                            viewModel.onEvent(
-                                PlayingQuizEvent.OnNextQuestionClick(
-                                    if (state.selectedAnswerPosition == -1) {
-                                        ""
-                                    } else {
-                                        currentQuestionAnswers[state.selectedAnswerPosition]
-                                    }
+                            if (state.currentQuestionIndex + 1 >= state.questions.size) {
+                                Log.d("LOGCAT", "OnFinish")
+                                viewModel.onEvent(PlayingQuizEvent.OnFinish(quizId))
+                            } else {
+                                viewModel.onEvent(
+                                    PlayingQuizEvent.OnNextQuestionClick(
+                                        if (state.selectedAnswerPosition == -1) {
+                                            ""
+                                        } else {
+                                            currentQuestionAnswers[state.selectedAnswerPosition]
+                                        }
+                                    )
                                 )
-                            )
+                            }
                         },
                         isEnabled = state.selectedAnswerPosition != -1
                     )

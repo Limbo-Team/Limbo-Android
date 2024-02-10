@@ -19,7 +19,6 @@ import kotlin.math.min
 
 @HiltViewModel
 class PlayingScreenViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val chaptersRepository: ChaptersRepository
 ): ViewModel() {
     var state by mutableStateOf(PlayingQuizState())
@@ -37,10 +36,16 @@ class PlayingScreenViewModel @Inject constructor(
                 .getOrElse { return@launch }
             state = state.copy(
                 questions = questions,
+                timeLeft = questions.size * 10f,
                 maxTime = questions.size * 10,
                 isLoading = false
             )
         }
+    }
+
+    private suspend fun sendAnswersToServer(quizId: String) {
+        val answers = state.answersChosenByUser
+        chaptersRepository.sendAnswers(quizId, answers)
     }
 
     fun onEvent(event: PlayingQuizEvent) {
@@ -53,13 +58,13 @@ class PlayingScreenViewModel @Inject constructor(
                     return
                 }
                 if (state.currentQuestionIndex + 1 >= state.questions.size) {
-                    viewModelScope.launch {
-                        _uiEvent.send(UiEvent.OnNavigate)
-                    }
                     return
                 } else {
                     state = state.copy(
-                        answers = state.answers + event.answer,
+                        answersChosenByUser = state.answersChosenByUser +
+                                (state.questions[state.currentQuestionIndex].questionId
+                                    to
+                                event.answer),
                         currentQuestionIndex = state.currentQuestionIndex + 1,
                         selectedAnswerPosition = -1,
                         timeLeft = min(state.maxTime.toFloat(), state.timeLeft + 5f),
@@ -68,6 +73,7 @@ class PlayingScreenViewModel @Inject constructor(
             }
             is PlayingQuizEvent.OnFinish -> {
                 viewModelScope.launch {
+                    sendAnswersToServer(event.quizId)
                     _uiEvent.send(UiEvent.OnNavigate)
                 }
             }
