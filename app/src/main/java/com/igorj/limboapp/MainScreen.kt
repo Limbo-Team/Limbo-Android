@@ -327,6 +327,7 @@ fun MainScreen(
                     })
                 ) {
                     PlayingQuizScreen(
+                        mainViewModel = viewModel,
                         quizId = it.arguments?.getString("quizId").toString(),
                         onNavigation = {
                             navController.navigate(

@@ -1,9 +1,7 @@
 package com.igorj.limboapp.screen.playing_quiz
 
 import android.app.Activity
-import android.util.Log
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,7 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -38,18 +35,15 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.annotation.ExperimentalCoilApi
-import coil.compose.rememberImagePainter
-import com.igorj.limboapp.ui.theme.DarkVerticalQuizBackgroundGradient
-import com.igorj.limboapp.R
-import com.igorj.limboapp.ui.theme.TextWhite
+import com.igorj.limboapp.MainViewModel
 import com.igorj.limboapp.components.GradientButton
-import com.igorj.limboapp.components.LimboLogo
-import com.igorj.limboapp.util.UiEvent
 import com.igorj.limboapp.components.QuizAnswersSection
 import com.igorj.limboapp.components.QuizNumberOfQuestionsLeft
 import com.igorj.limboapp.components.QuizTimeLeftBar
-import com.igorj.limboapp.model.Question
 import com.igorj.limboapp.ui.theme.BrightOrange
+import com.igorj.limboapp.ui.theme.DarkVerticalQuizBackgroundGradient
+import com.igorj.limboapp.ui.theme.TextWhite
+import com.igorj.limboapp.util.UiEvent
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalCoilApi::class)
@@ -57,7 +51,8 @@ import kotlinx.coroutines.delay
 fun PlayingQuizScreen(
     quizId: String,
     onNavigation: () -> Unit,
-    viewModel: PlayingScreenViewModel = hiltViewModel()
+    viewModel: PlayingScreenViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel
 ) {
     LaunchedEffect(key1 = true) {
         viewModel.loadQuestions(quizId)
@@ -101,6 +96,7 @@ fun PlayingQuizScreen(
             viewModel.uiEvent.collect { event ->
                 when (event) {
                     is UiEvent.OnNavigate -> {
+                        mainViewModel.updateTopBarInfo()
                         onNavigation()
                     }
 
