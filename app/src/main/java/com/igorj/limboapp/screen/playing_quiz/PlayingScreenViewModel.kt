@@ -43,8 +43,8 @@ class PlayingScreenViewModel @Inject constructor(
         }
     }
 
-    private suspend fun sendAnswersToServer(quizId: String, answersChosenByUser: Map<String, String>) {
-        chaptersRepository.sendAnswers(quizId, answersChosenByUser)
+    private suspend fun sendAnswersToServer(quizId: String, answersChosenByUser: Map<String, String>): Result<Unit> {
+        return chaptersRepository.sendAnswers(quizId, answersChosenByUser)
     }
 
     fun onEvent(event: PlayingQuizEvent) {

@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.igorj.limboapp.MainViewModel
 import com.igorj.limboapp.R
 import com.igorj.limboapp.components.BestPersonItem
 import com.igorj.limboapp.components.MiniChapter
@@ -38,12 +39,14 @@ import com.igorj.limboapp.util.UiEvent
 @Composable
 fun HomeScreen(
     onNavigation: (String) -> Unit,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel
 ) {
     val spacing = LocalSpacing.current
     val state = viewModel.state
 
     LaunchedEffect(key1 = true) {
+        mainViewModel.updateTopBarInfo()
         viewModel.loadBestPeople()
         viewModel.loadMiniChapters()
     }
@@ -106,7 +109,11 @@ fun HomeScreen(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .height(120.dp)
-                                    .background(if (state.bestPeople.isEmpty()) Color(0x00FFFFFF) else Color(0x77000000)),
+                                    .background(
+                                        if (state.bestPeople.isEmpty()) Color(0x00FFFFFF) else Color(
+                                            0x77000000
+                                        )
+                                    ),
                                 contentAlignment = Alignment.Center
                             ) {
                                 CircularProgressIndicator()
@@ -152,7 +159,11 @@ fun HomeScreen(
                             Box(
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .background(if (state.miniChapters.isEmpty()) Color(0x00FFFFFF) else Color(0x77000000)),
+                                    .background(
+                                        if (state.miniChapters.isEmpty()) Color(0x00FFFFFF) else Color(
+                                            0x77000000
+                                        )
+                                    ),
                                 contentAlignment = Alignment.Center
                             ) {
                                 CircularProgressIndicator()

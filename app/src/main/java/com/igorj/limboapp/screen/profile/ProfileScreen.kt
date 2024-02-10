@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.igorj.limboapp.MainViewModel
 import com.igorj.limboapp.R
 import com.igorj.limboapp.components.BottomNavBar
 import com.igorj.limboapp.components.CustomTextField
@@ -40,11 +41,13 @@ import com.igorj.limboapp.util.UiEvent
 @Composable
 fun ProfileScreen(
     onNavigation: (String) -> Unit,
-    viewModel: ProfileViewModel = hiltViewModel()
+    viewModel: ProfileViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel
 ) {
     val state = viewModel.state
 
     LaunchedEffect(key1 = true) {
+        mainViewModel.updateTopBarInfo()
         viewModel.loadProfileInfo()
     }
 

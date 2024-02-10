@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.igorj.limboapp.MainViewModel
 import com.igorj.limboapp.R
 import com.igorj.limboapp.components.BottomNavBar
 import com.igorj.limboapp.components.CircleImage
@@ -50,7 +51,8 @@ import com.igorj.limboapp.util.UiEvent
 fun StatsScreen(
     scaffoldState: ScaffoldState,
     onNavigation: (String) -> Unit,
-    viewModel: StatsViewModel = hiltViewModel()
+    viewModel: StatsViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel
 ) {
     val spacing = LocalSpacing.current
     val state = viewModel.state
@@ -58,6 +60,7 @@ fun StatsScreen(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(key1 = true) {
+        mainViewModel.updateTopBarInfo()
         viewModel.loadStats()
     }
 

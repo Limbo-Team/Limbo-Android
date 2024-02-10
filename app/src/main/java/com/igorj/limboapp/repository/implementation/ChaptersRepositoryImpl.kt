@@ -13,6 +13,7 @@ import com.igorj.limboapp.model.Question
 import com.igorj.limboapp.model.Quiz
 import com.igorj.limboapp.repository.interfaces.AuthAPI
 import com.igorj.limboapp.repository.interfaces.ChaptersRepository
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.suspendCancellableCoroutine
 import org.json.JSONArray
 import org.json.JSONObject
@@ -119,7 +120,7 @@ class ChaptersRepositoryImpl(
         }
     }
 
-    override suspend fun sendAnswers(quizId: String, answers: Map<String, String>) {
+    override suspend fun sendAnswers(quizId: String, answers: Map<String, String>): Result<Unit> {
         val queue = Volley.newRequestQueue(context)
         val url = "https://limbo-backend.onrender.com/user/quizzes/$quizId/answer"
 
@@ -132,13 +133,17 @@ class ChaptersRepositoryImpl(
         }
         Log.d("LOGCAT", jsonArray.toString())
 
+        val promise = CompletableDeferred<Result<Unit>>()
+
         val jsonRequest = object : JsonArrayRequest(
             Method.POST, url, jsonArray,
             Response.Listener { response ->
                 Log.d("Response", response.toString())
+                promise.complete(Result.success(Unit))
             },
             Response.ErrorListener { error ->
                 Log.e("Error", error.toString())
+                promise.complete(Result.failure(error))
             }) {
 
             override fun getHeaders(): Map<String, String> {
@@ -148,6 +153,9 @@ class ChaptersRepositoryImpl(
                 return headers
             }
         }
+
         queue.add(jsonRequest)
+
+        return promise.await()
     }
 }

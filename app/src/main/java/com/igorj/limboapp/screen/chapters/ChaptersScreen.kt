@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.igorj.limboapp.MainViewModel
 import com.igorj.limboapp.R
 import com.igorj.limboapp.components.BottomNavBar
 import com.igorj.limboapp.components.ChapterCard
@@ -32,11 +33,13 @@ import com.igorj.limboapp.util.UiEvent
 fun ChaptersScreen(
     onNavigation: (String) -> Unit,
     onChapterNavigation: (String) -> Unit,
-    viewModel: ChaptersViewModel = hiltViewModel()
+    viewModel: ChaptersViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel
 ) {
     val state = viewModel.state
 
     LaunchedEffect(key1 = true) {
+        mainViewModel.updateTopBarInfo()
         viewModel.loadChapters()
     }
 

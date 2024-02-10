@@ -9,7 +9,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,15 +27,12 @@ import com.igorj.limboapp.components.Flickers
 import com.igorj.limboapp.components.LimboLogo
 import com.igorj.limboapp.components.LogoutButton
 import com.igorj.limboapp.components.bottomNavBarItems
-import com.igorj.limboapp.model.User
 import com.igorj.limboapp.navigation.Route
-import com.igorj.limboapp.repository.interfaces.AuthAPI
 import com.igorj.limboapp.screen.chapters.ChaptersScreen
 import com.igorj.limboapp.screen.finish_quiz.FinishQuizScreen
 import com.igorj.limboapp.screen.forgot_password.change_password.ChangePasswordScreen
 import com.igorj.limboapp.screen.forgot_password.enter_email.ForgotPasswordScreen
 import com.igorj.limboapp.screen.forgot_password.enter_verification_code.VerificationCodeScreen
-import com.igorj.limboapp.screen.home.HomeEvent
 import com.igorj.limboapp.screen.home.HomeScreen
 import com.igorj.limboapp.screen.login.LoginScreen
 import com.igorj.limboapp.screen.playing_quiz.PlayingQuizScreen
@@ -46,7 +42,6 @@ import com.igorj.limboapp.screen.register.RegisterScreen
 import com.igorj.limboapp.screen.stats.StatsScreen
 import com.igorj.limboapp.screen.welcome.WelcomeScreen
 import com.igorj.limboapp.util.UiEvent
-import javax.inject.Inject
 
 @Composable
 fun MainScreen(
@@ -138,7 +133,7 @@ fun MainScreen(
                             contentDescription = stringResource(id = R.string.profile),
                             size = 40.dp,
                             onClick = {
-                                navController.navigate(Route.PROFILE)
+                                Log.d("LOGCAT profile", "${state.userInfo}")
                             }
                         )
                     }
@@ -165,7 +160,7 @@ fun MainScreen(
                     LoginScreen(
                         scaffoldState = scaffoldState,
                         onLoginClick = {
-                            viewModel.loadInitialUserInfo()
+                            viewModel.updateTopBarInfo()
                             navController.navigate(Route.HOME)
                         },
                         onRegisterClick = {
@@ -210,6 +205,7 @@ fun MainScreen(
                 }
                 composable(Route.HOME) {
                     HomeScreen(
+                        mainViewModel = viewModel,
                         onNavigation = { route ->
                             Log.d("LOGCAT", "MainScreen: ${navController.currentDestination?.route}")
                             navController.navigate(
@@ -226,6 +222,7 @@ fun MainScreen(
                 }
                 composable(Route.CHAPTERS) {
                     ChaptersScreen(
+                        mainViewModel = viewModel,
                         onNavigation = { route ->
                             navController.navigate(
                                 route = route,
@@ -285,6 +282,7 @@ fun MainScreen(
                 }
                 composable(Route.STATS) {
                     StatsScreen(
+                        mainViewModel = viewModel,
                         scaffoldState = scaffoldState,
                         onNavigation = { route ->
                             navController.navigate(
@@ -300,7 +298,9 @@ fun MainScreen(
                     )
                 }
                 composable(Route.PROFILE) {
-                    ProfileScreen(onNavigation = { route ->
+                    ProfileScreen(
+                        mainViewModel = viewModel,
+                        onNavigation = { route ->
                         navController.navigate(
                             route = route,
                             navOptions = NavOptions.Builder()
