@@ -135,7 +135,7 @@ fun MainScreen(
                             contentDescription = stringResource(id = R.string.profile),
                             size = 40.dp,
                             onClick = {
-                                Log.d("LOGCAT profile", "${state.userInfo}")
+                                navController.navigate(Route.PROFILE)
                             }
                         )
                     }
