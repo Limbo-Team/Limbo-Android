@@ -219,6 +219,17 @@ fun MainScreen(
                                     )
                                     .build()
                             )
+                        },
+                        onMiniChapterNavigation = { chapterId ->
+                            navController.navigate(
+                                route = "${Route.QUIZZES}/$chapterId",
+                                navOptions = NavOptions.Builder()
+                                    .setPopUpTo(
+                                        route = Route.HOME,
+                                        inclusive = true
+                                    )
+                                    .build()
+                            )
                         }
                     )
                 }

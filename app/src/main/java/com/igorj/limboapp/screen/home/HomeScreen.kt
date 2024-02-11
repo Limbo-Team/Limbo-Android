@@ -40,6 +40,7 @@ import com.igorj.limboapp.util.UiEvent
 fun HomeScreen(
     onNavigation: (String) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
+    onMiniChapterNavigation: (String) -> Unit,
     mainViewModel: MainViewModel
 ) {
     val spacing = LocalSpacing.current
@@ -149,7 +150,9 @@ fun HomeScreen(
                                 items(state.miniChapters) { item ->
                                     MiniChapter(
                                         modifier = Modifier.fillMaxSize(),
-                                        onClick = {},
+                                        onClick = {
+                                            onMiniChapterNavigation(item.chapterId)
+                                        },
                                         chapter = item
                                     )
                                 }
