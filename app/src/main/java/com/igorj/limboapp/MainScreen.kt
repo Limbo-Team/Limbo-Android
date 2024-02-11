@@ -353,15 +353,10 @@ fun MainScreen(
                     FinishQuizScreen(
                         finishedQuizResponseAsJson = entry.arguments?.getString("finishedQuizResponseAsJson"),
                         onNavigation = {
-                            navController.navigate(
-                                route = Route.CHAPTERS,
-                                navOptions = NavOptions.Builder()
-                                    .setPopUpTo(
-                                        route = Route.QUIZ_FINISH,
-                                        inclusive = true
-                                    )
-                                    .build()
-                            )
+                            navController.navigate(Route.CHAPTERS) {
+                                popUpTo(navController.graph.startDestinationId) { inclusive = true }
+                                launchSingleTop = true
+                            }
                         }
                     )
                 }
