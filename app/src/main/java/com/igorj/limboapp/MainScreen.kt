@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
+import com.google.gson.Gson
 import com.igorj.limboapp.components.BottomNavBar
 import com.igorj.limboapp.components.CircleImage
 import com.igorj.limboapp.components.Flickers
@@ -69,6 +70,7 @@ fun MainScreen(
         Route.QUIZ_START,
         "${Route.QUIZZES}/{chapterId}"
     )
+    val gson = Gson()
 
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
@@ -325,13 +327,14 @@ fun MainScreen(
                         type = NavType.StringType
                         defaultValue = ""
                     })
-                ) {
+                ) { entry ->
                     PlayingQuizScreen(
                         mainViewModel = viewModel,
-                        quizId = it.arguments?.getString("quizId").toString(),
-                        onNavigation = {
+                        quizId = entry.arguments?.getString("quizId").toString(),
+                        onNavigation = { finishedQuizResponse ->
+                            val finishedQuizResponseAsJson = gson.toJson(finishedQuizResponse)
                             navController.navigate(
-                                route = Route.QUIZ_FINISH,
+                                route = "${Route.QUIZ_FINISH}/${finishedQuizResponseAsJson}",
                                 navOptions = NavOptions.Builder()
                                     .setPopUpTo(
                                         route = Route.QUIZ_PLAY,
@@ -342,8 +345,15 @@ fun MainScreen(
                         }
                     )
                 }
-                composable(Route.QUIZ_FINISH) {
+                composable(
+                    route = "${Route.QUIZ_FINISH}/{finishedQuizResponseAsJson}",
+                    arguments = listOf(navArgument("finishedQuizResponseAsJson") {
+                        type = NavType.StringType
+                        defaultValue = ""
+                    })
+                ) { entry ->
                     FinishQuizScreen(
+                        finishedQuizResponseAsJson = entry.arguments?.getString("finishedQuizResponseAsJson"),
                         onNavigation = {
                             navController.navigate(
                                 route = Route.CHAPTERS,

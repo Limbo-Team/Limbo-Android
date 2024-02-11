@@ -3,24 +3,27 @@ package com.igorj.limboapp.repository.implementation
 import android.content.Context
 import android.util.Log
 import com.android.volley.Response
-import com.android.volley.toolbox.JsonArrayRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.igorj.limboapp.model.Chapter
+import com.igorj.limboapp.model.FinishedQuizResponse
 import com.igorj.limboapp.model.Question
 import com.igorj.limboapp.model.Quiz
 import com.igorj.limboapp.repository.interfaces.AuthAPI
 import com.igorj.limboapp.repository.interfaces.ChaptersRepository
-import kotlinx.coroutines.CompletableDeferred
+import com.igorj.limboapp.repository.interfaces.QuizApi
 import kotlinx.coroutines.suspendCancellableCoroutine
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.coroutines.resume
 
 class ChaptersRepositoryImpl(
     val authApi: AuthAPI,
+    val quizApi: QuizApi,
     val context: Context
 ): ChaptersRepository {
 
@@ -120,10 +123,7 @@ class ChaptersRepositoryImpl(
         }
     }
 
-    override suspend fun sendAnswers(quizId: String, answers: Map<String, String>): Result<Unit> {
-        val queue = Volley.newRequestQueue(context)
-        val url = "https://limbo-backend.onrender.com/user/quizzes/$quizId/answer"
-
+    override suspend fun sendAnswers(quizId: String, answers: Map<String, String>): Result<FinishedQuizResponse> {
         val jsonArray = JSONArray()
         answers.forEach { (questionId, answer) ->
             val answerObj = JSONObject()
@@ -131,31 +131,23 @@ class ChaptersRepositoryImpl(
             answerObj.put("answer", answer)
             jsonArray.put(answerObj)
         }
-        Log.d("LOGCAT", jsonArray.toString())
 
-        val promise = CompletableDeferred<Result<Unit>>()
+        val jsonString = jsonArray.toString()
+        val requestBody = jsonString.toRequestBody("application/json".toMediaTypeOrNull())
 
-        val jsonRequest = object : JsonArrayRequest(
-            Method.POST, url, jsonArray,
-            Response.Listener { response ->
-                Log.d("Response", response.toString())
-                promise.complete(Result.success(Unit))
-            },
-            Response.ErrorListener { error ->
-                Log.e("Error", error.toString())
-                promise.complete(Result.failure(error))
-            }) {
+        try {
+            val response = quizApi.sendAnswers(quizId, requestBody)
 
-            override fun getHeaders(): Map<String, String> {
-                val headers = HashMap<String, String>()
-                headers["Authorization"] = "Bearer ${authApi.getToken()}"
-                headers["Content-Type"] = "application/json"
-                return headers
+            if (response.isSuccessful) {
+                response.body()?.let { finishedQuizResponse ->
+                    return Result.success(finishedQuizResponse)
+                } ?: return Result.failure(Exception("Response body is null"))
+            } else {
+                return Result.failure(Exception("Error: ${response.code()} - ${response.errorBody()?.string()}"))
             }
+        } catch (e: Exception) {
+            return Result.failure(e)
         }
-
-        queue.add(jsonRequest)
-
-        return promise.await()
     }
+
 }

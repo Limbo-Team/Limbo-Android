@@ -1,6 +1,7 @@
 package com.igorj.limboapp.screen.finish_quiz
 
 import android.app.Activity
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,14 +33,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.gson.Gson
 import com.igorj.limboapp.ui.theme.DarkBackground
 import com.igorj.limboapp.ui.theme.DarkVerticalQuizBackgroundGradient
 import com.igorj.limboapp.R
 import com.igorj.limboapp.ui.theme.TextWhite
 import com.igorj.limboapp.components.GradientButton
-import com.igorj.limboapp.components.LimboLogo
 import com.igorj.limboapp.util.UiEvent
 import com.igorj.limboapp.components.QuizGainedPointsCircle
+import com.igorj.limboapp.model.FinishedQuizResponse
 import nl.dionsegijn.konfetti.compose.KonfettiView
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
@@ -48,6 +50,7 @@ import java.util.concurrent.TimeUnit
 
 @Composable
 fun FinishQuizScreen(
+    finishedQuizResponseAsJson: String?,
     onNavigation: () -> Unit,
     viewModel: FinishQuizViewModel = hiltViewModel()
 ) {
@@ -80,6 +83,15 @@ fun FinishQuizScreen(
             }
         }
     }
+
+    val gson = Gson()
+    val finishedQuizResponse: FinishedQuizResponse? = if (finishedQuizResponseAsJson == "null") {
+        null
+    } else {
+        gson.fromJson(finishedQuizResponseAsJson, FinishedQuizResponse::class.java)
+    }
+
+    Log.d("LOGCAT X", finishedQuizResponse.toString())
 
     Box(
         modifier = Modifier

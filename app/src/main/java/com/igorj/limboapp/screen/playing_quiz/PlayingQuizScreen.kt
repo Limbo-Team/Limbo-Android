@@ -40,9 +40,11 @@ import com.igorj.limboapp.components.GradientButton
 import com.igorj.limboapp.components.QuizAnswersSection
 import com.igorj.limboapp.components.QuizNumberOfQuestionsLeft
 import com.igorj.limboapp.components.QuizTimeLeftBar
+import com.igorj.limboapp.model.FinishedQuizResponse
 import com.igorj.limboapp.ui.theme.BrightOrange
 import com.igorj.limboapp.ui.theme.DarkVerticalQuizBackgroundGradient
 import com.igorj.limboapp.ui.theme.TextWhite
+import com.igorj.limboapp.util.PlayingQuizScreenChannelEvent
 import com.igorj.limboapp.util.UiEvent
 import kotlinx.coroutines.delay
 
@@ -50,7 +52,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun PlayingQuizScreen(
     quizId: String,
-    onNavigation: () -> Unit,
+    onNavigation: (FinishedQuizResponse?) -> Unit,
     viewModel: PlayingScreenViewModel = hiltViewModel(),
     mainViewModel: MainViewModel
 ) {
@@ -93,11 +95,11 @@ fun PlayingQuizScreen(
         }
 
         LaunchedEffect(key1 = true) {
-            viewModel.uiEvent.collect { event ->
+            viewModel.playingQuizChannel.collect { event ->
                 when (event) {
-                    is UiEvent.OnNavigate -> {
+                    is PlayingQuizScreenChannelEvent.OnNavigateWithResponseFromServer -> {
                         mainViewModel.updateTopBarInfo()
-                        onNavigation()
+                        onNavigation(event.response)
                     }
 
                     else -> Unit

@@ -12,5 +12,5 @@ data class PlayingQuizState(
     val timeLeft: Float = 10f,
     val maxTime: Int = 10,
     val isLoading: Boolean = false,
-    val answersChosenByUser: Map<String, String> = mapOf()
+    val answersChosenByUser: Map<String, String> = mapOf(),
 )

@@ -4,12 +4,11 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.igorj.limboapp.model.FinishedQuizResponse
 import com.igorj.limboapp.repository.interfaces.ChaptersRepository
-import com.igorj.limboapp.util.UiEvent
-import com.igorj.limboapp.repository.interfaces.QuestionsRepository
+import com.igorj.limboapp.util.PlayingQuizScreenChannelEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -24,8 +23,8 @@ class PlayingScreenViewModel @Inject constructor(
     var state by mutableStateOf(PlayingQuizState())
         private set
 
-    private val _uiEvent = Channel<UiEvent>()
-    val uiEvent = _uiEvent.receiveAsFlow()
+    private val _playingQuizChannel = Channel<PlayingQuizScreenChannelEvent>()
+    val playingQuizChannel = _playingQuizChannel.receiveAsFlow()
 
     suspend fun loadQuestions(quizId: String) {
         state = state.copy(
@@ -43,7 +42,7 @@ class PlayingScreenViewModel @Inject constructor(
         }
     }
 
-    private suspend fun sendAnswersToServer(quizId: String, answersChosenByUser: Map<String, String>): Result<Unit> {
+    private suspend fun sendAnswersToServer(quizId: String, answersChosenByUser: Map<String, String>): Result<FinishedQuizResponse> {
         return chaptersRepository.sendAnswers(quizId, answersChosenByUser)
     }
 
@@ -71,8 +70,8 @@ class PlayingScreenViewModel @Inject constructor(
                         event.lastAnswer)
                 )
                 viewModelScope.launch {
-                    sendAnswersToServer(event.quizId, state.answersChosenByUser)
-                    _uiEvent.send(UiEvent.OnNavigate)
+                    val response = sendAnswersToServer(event.quizId, state.answersChosenByUser).getOrNull()
+                    _playingQuizChannel.send(PlayingQuizScreenChannelEvent.OnNavigateWithResponseFromServer(response))
                 }
             }
             is PlayingQuizEvent.OnAnswerClick -> {
@@ -93,8 +92,8 @@ class PlayingScreenViewModel @Inject constructor(
                                 userAnswers = userAnswers + (question.questionId to "")
                             }
                         }
-                        sendAnswersToServer(event.quizId, userAnswers)
-                        _uiEvent.send(UiEvent.OnNavigate)
+                        val response = sendAnswersToServer(event.quizId, userAnswers).getOrNull()
+                        _playingQuizChannel.send(PlayingQuizScreenChannelEvent.OnNavigateWithResponseFromServer(response))
                     }
                 }
             }

@@ -10,6 +10,7 @@ import com.igorj.limboapp.repository.implementation.UserRepositoryImpl
 import com.igorj.limboapp.repository.interfaces.AuthAPI
 import com.igorj.limboapp.repository.interfaces.ChaptersRepository
 import com.igorj.limboapp.repository.interfaces.QuestionsRepository
+import com.igorj.limboapp.repository.interfaces.QuizApi
 import com.igorj.limboapp.repository.interfaces.StatsRepository
 import com.igorj.limboapp.repository.interfaces.UserRepository
 import com.igorj.limboapp.use_case.FilterOutStudentIdDigits
@@ -17,8 +18,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -54,8 +58,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideChaptersRepository(authApi: AuthAPI, @ApplicationContext appContext: Context): ChaptersRepository {
-        return ChaptersRepositoryImpl(authApi, appContext)
+    fun provideChaptersRepository(authApi: AuthAPI, quizApi: QuizApi, @ApplicationContext appContext: Context): ChaptersRepository {
+        return ChaptersRepositoryImpl(authApi, quizApi, appContext)
     }
 
     @Provides
@@ -68,5 +72,37 @@ object AppModule {
     @Singleton
     fun provideQuestionsRepository(): QuestionsRepository {
         return QuestionsRepositoryImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(okHttpClient: OkHttpClient) : Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://limbo-backend.onrender.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(authApi: AuthAPI): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+
+        return OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val request = chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer ${authApi.getToken()}")
+                    .build()
+                chain.proceed(request)
+            }
+            .addInterceptor(loggingInterceptor)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideQuizApi(retrofit: Retrofit): QuizApi {
+        return retrofit.create(QuizApi::class.java)
     }
 }
