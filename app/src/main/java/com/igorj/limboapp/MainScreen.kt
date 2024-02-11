@@ -209,7 +209,6 @@ fun MainScreen(
                     HomeScreen(
                         mainViewModel = viewModel,
                         onNavigation = { route ->
-                            Log.d("LOGCAT", "MainScreen: ${navController.currentDestination?.route}")
                             navController.navigate(
                                 route = route,
                                 navOptions = NavOptions.Builder()
@@ -222,13 +221,7 @@ fun MainScreen(
                         },
                         onMiniChapterNavigation = { chapterId ->
                             navController.navigate(
-                                route = "${Route.QUIZZES}/$chapterId",
-                                navOptions = NavOptions.Builder()
-                                    .setPopUpTo(
-                                        route = Route.HOME,
-                                        inclusive = true
-                                    )
-                                    .build()
+                                route = "${Route.QUIZZES}/$chapterId"
                             )
                         }
                     )
@@ -249,13 +242,7 @@ fun MainScreen(
                         },
                         onChapterNavigation = { chapterId ->
                             navController.navigate(
-                                route = "${Route.QUIZZES}/$chapterId",
-                                navOptions = NavOptions.Builder()
-                                    .setPopUpTo(
-                                        route = Route.CHAPTERS,
-                                        inclusive = true
-                                    )
-                                    .build()
+                                route = "${Route.QUIZZES}/$chapterId"
                             )
                         }
                     )
@@ -381,7 +368,7 @@ fun MainScreen(
             }
         },
         bottomBar = {
-            if (screensWithTopAndBottomBar.contains(currentRoute)) {
+            if (screensWithTopAndBottomBar.contains(currentRoute) && currentRoute != "${Route.QUIZZES}/{chapterId}") {
                 BottomNavBar(
                     items = bottomNavBarItems,
                     selectedItemRoute = currentRoute ?: "",
