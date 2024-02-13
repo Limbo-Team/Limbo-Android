@@ -54,7 +54,6 @@ fun MainScreen(
     val state = viewModel.state
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     val screensWithTopLogo = listOf(
-        Route.WELCOME,
         Route.LOGIN,
         Route.REGISTER,
         Route.FORGOT_PASSWORD,
