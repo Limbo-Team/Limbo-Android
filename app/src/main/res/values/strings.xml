@@ -50,4 +50,5 @@
     <string name="your_rewards">Your rewards</string>
     <string name="unfortunately_some_answers_were_incorrect">Unfortunately, some answers were incorrect!</string>
     <string name="go_back_to_try_again">Go back to try again</string>
+    <string name="back_to_chapters">Back to chapters</string>
 </resources>

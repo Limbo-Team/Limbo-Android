@@ -281,6 +281,9 @@ fun MainScreen(
                                     )
                                     .build()
                             )
+                        },
+                        onGoBackClick = {
+                            navController.popBackStack()
                         }
                     )
                 }

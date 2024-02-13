@@ -24,9 +24,11 @@ import com.igorj.limboapp.R
 import com.igorj.limboapp.components.BottomNavBar
 import com.igorj.limboapp.components.CircleImage
 import com.igorj.limboapp.components.Flickers
+import com.igorj.limboapp.components.GradientButton
 import com.igorj.limboapp.components.LimboLogo
 import com.igorj.limboapp.components.QuizCard
 import com.igorj.limboapp.components.bottomNavBarItems
+import com.igorj.limboapp.screen.playing_quiz.PlayingQuizEvent
 import com.igorj.limboapp.util.UiEvent
 
 @Composable
@@ -34,6 +36,7 @@ fun QuizzesScreen(
     chapterId: String,
     onNavigation: (String) -> Unit,
     onQuizClick: (String) -> Unit,
+    onGoBackClick: () -> Unit,
     viewModel: QuizzesViewModel = hiltViewModel()
 ) {
     BackHandler {
@@ -81,5 +84,20 @@ fun QuizzesScreen(
                 }
             }
         },
+        bottomBar = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 40.dp, top = 20.dp),
+                contentAlignment = Alignment.TopCenter
+            ) {
+                GradientButton(
+                    text = stringResource(id = R.string.back_to_chapters),
+                    onClick = {
+                        onGoBackClick()
+                    },
+                )
+            }
+        }
     )
 }
