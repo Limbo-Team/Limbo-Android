@@ -55,6 +55,10 @@ fun FinishQuizScreen(
     onNavigation: () -> Unit,
     viewModel: FinishQuizViewModel = hiltViewModel()
 ) {
+    BackHandler {
+        // do nothing
+    }
+
     val state = viewModel.state
 
     val activity = LocalContext.current as? Activity
@@ -67,10 +71,6 @@ fun FinishQuizScreen(
                 navigationBarColor = DarkBackground.toArgb()
             }
         }
-    }
-
-    BackHandler {
-        viewModel.onEvent(FinishQuizEvent.OnBackButtonClick)
     }
 
     LaunchedEffect(key1 = true) {
@@ -123,14 +123,25 @@ fun FinishQuizScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        QuizGainedPointsCircle(gainedPoints = state.finishedQuizResponse.earnedPoints)
+                        QuizGainedPointsCircle(
+                            gainedPoints = state.finishedQuizResponse.earnedPoints,
+                            alternativeText = if (state.finishedQuizResponse.earnedPoints == 0) {
+                                "${state.finishedQuizResponse.totalCorrectAnswers}/${state.finishedQuizResponse.totalQuestions}"
+                            } else {
+                                null
+                            }
+                        )
                         Spacer(modifier = Modifier.height(28.dp))
                         Column(
                             modifier = Modifier.padding(horizontal = 12.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                text = stringResource(id = R.string.you_are_amazing),
+                                text = stringResource(id = if (state.finishedQuizResponse.earnedPoints > 0) {
+                                    R.string.you_are_amazing
+                                } else {
+                                    R.string.unfortunately_some_answers_were_incorrect
+                                }),
                                 color = TextWhite,
                                 style = MaterialTheme.typography.h2,
                                 fontWeight = FontWeight.SemiBold,
@@ -139,7 +150,11 @@ fun FinishQuizScreen(
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                text = stringResource(id = R.string.congratulations_you_scored_required_points_in_this_chapter),
+                                text = stringResource(id = if (state.finishedQuizResponse.earnedPoints > 0) {
+                                    R.string.congratulations_you_scored_required_points_in_this_chapter
+                                } else {
+                                    R.string.go_back_to_try_again
+                                }),
                                 color = TextWhite,
                                 style = MaterialTheme.typography.body1,
                                 fontWeight = FontWeight.Light,

@@ -1,5 +1,6 @@
 package com.igorj.limboapp.screen.forgot_password.enter_verification_code
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -46,6 +47,10 @@ fun VerificationCodeScreen(
     onNavigation: () -> Unit,
     viewModel: VerificationCodeViewModel = hiltViewModel()
 ) {
+    BackHandler {
+        // do nothing
+    }
+
     val spacing = LocalSpacing.current
     val state = viewModel.state
     val context = LocalContext.current

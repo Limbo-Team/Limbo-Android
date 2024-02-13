@@ -1,5 +1,6 @@
 package com.igorj.limboapp.screen.welcome
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,6 +34,10 @@ fun WelcomeScreen(
     onNavigateToLogin: () -> Unit,
     onNavigateToRegister: () -> Unit
 ) {
+    BackHandler {
+        // do nothing
+    }
+
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
     val spacing = LocalSpacing.current
 

@@ -1,5 +1,6 @@
 package com.igorj.limboapp.screen.stats
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -54,6 +55,10 @@ fun StatsScreen(
     viewModel: StatsViewModel = hiltViewModel(),
     mainViewModel: MainViewModel
 ) {
+    BackHandler {
+        // do nothing
+    }
+
     val spacing = LocalSpacing.current
     val state = viewModel.state
     val context = LocalContext.current

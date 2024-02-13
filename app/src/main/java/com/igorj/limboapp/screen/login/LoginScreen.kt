@@ -1,5 +1,6 @@
 package com.igorj.limboapp.screen.login
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -54,6 +55,10 @@ fun LoginScreen(
     onForgotPasswordClick: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
+    BackHandler {
+        // do nothing
+    }
+
     val spacing = LocalSpacing.current
     val state = viewModel.state
     val context = LocalContext.current

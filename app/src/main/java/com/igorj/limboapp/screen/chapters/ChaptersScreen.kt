@@ -1,5 +1,6 @@
 package com.igorj.limboapp.screen.chapters
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,6 +37,10 @@ fun ChaptersScreen(
     viewModel: ChaptersViewModel = hiltViewModel(),
     mainViewModel: MainViewModel
 ) {
+    BackHandler {
+        // do nothing
+    }
+
     val state = viewModel.state
 
     LaunchedEffect(key1 = true) {

@@ -1,5 +1,6 @@
 package com.igorj.limboapp.screen.profile
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,6 +45,10 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel(),
     mainViewModel: MainViewModel
 ) {
+    BackHandler {
+        // do nothing
+    }
+
     val state = viewModel.state
 
     LaunchedEffect(key1 = true) {

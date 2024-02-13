@@ -56,6 +56,10 @@ fun PlayingQuizScreen(
     viewModel: PlayingScreenViewModel = hiltViewModel(),
     mainViewModel: MainViewModel
 ) {
+    BackHandler {
+        // do nothing
+    }
+
     LaunchedEffect(key1 = true) {
         viewModel.loadQuestions(quizId)
     }

@@ -1,5 +1,6 @@
 package com.igorj.limboapp.screen.register
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -55,6 +56,10 @@ fun RegisterScreen(
     onNavigation: () -> Unit,
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
+    BackHandler {
+        // do nothing
+    }
+
     val spacing = LocalSpacing.current
     val state = viewModel.state
     val context = LocalContext.current

@@ -1,6 +1,7 @@
 package com.igorj.limboapp
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -82,6 +83,10 @@ fun MainScreen(
                 }
             }
         }
+    }
+
+    BackHandler {
+        // do nothing
     }
 
     Scaffold(

@@ -35,7 +35,8 @@ import com.igorj.limboapp.ui.theme.CircleGray
 @Composable
 fun QuizGainedPointsCircle(
     modifier: Modifier = Modifier,
-    gainedPoints: Int = 1
+    gainedPoints: Int = 1,
+    alternativeText: String? = null
 ) {
     Box(modifier = modifier.size(220.5.dp)) {
         CircularGainedPointsIndicator(
@@ -44,7 +45,8 @@ fun QuizGainedPointsCircle(
             radius = 95.dp,
             innerCircleColor = Color.Transparent,
             strokeWidth = 15.dp,
-            gainedFlickers = gainedPoints
+            gainedFlickers = gainedPoints,
+            alternativeText = alternativeText
         )
         Image(
             modifier = Modifier
@@ -67,7 +69,8 @@ fun CircularGainedPointsIndicator(
     animDuration: Int = 1000,
     animDelay: Int = 0,
     initValue: Float = 0f,
-    gainedFlickers: Int = 1
+    gainedFlickers: Int = 1,
+    alternativeText: String? = null
 ) {
     var animationPlayed by remember {
         mutableStateOf(false)
@@ -114,9 +117,9 @@ fun CircularGainedPointsIndicator(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            val gainedFlickersTextSize = 18.sp * (radius / 30.dp)
+            val gainedFlickersTextSize = 14.sp * (radius / 30.dp)
             Text(
-                text = "+${curGainedPoints.value}",
+                text = alternativeText ?: "+${curGainedPoints.value}",
                 color = com.igorj.limboapp.ui.theme.TextWhite,
                 style = MaterialTheme.typography.body1,
                 fontWeight = FontWeight.SemiBold,

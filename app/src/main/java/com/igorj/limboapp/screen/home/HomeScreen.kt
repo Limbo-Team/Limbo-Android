@@ -1,5 +1,6 @@
 package com.igorj.limboapp.screen.home
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,6 +44,10 @@ fun HomeScreen(
     onMiniChapterNavigation: (String) -> Unit,
     mainViewModel: MainViewModel
 ) {
+    BackHandler {
+        // do nothing
+    }
+
     val spacing = LocalSpacing.current
     val state = viewModel.state
 

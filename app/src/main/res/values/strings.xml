@@ -48,4 +48,6 @@
     <string name="finish">Finish</string>
     <string name="finished_quizzes">Finished quizes</string>
     <string name="your_rewards">Your rewards</string>
+    <string name="unfortunately_some_answers_were_incorrect">Unfortunately, some answers were incorrect!</string>
+    <string name="go_back_to_try_again">Go back to try again</string>
 </resources>

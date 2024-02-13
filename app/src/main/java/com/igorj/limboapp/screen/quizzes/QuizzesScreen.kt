@@ -1,5 +1,6 @@
 package com.igorj.limboapp.screen.quizzes
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -35,6 +36,10 @@ fun QuizzesScreen(
     onQuizClick: (String) -> Unit,
     viewModel: QuizzesViewModel = hiltViewModel()
 ) {
+    BackHandler {
+        // do nothing
+    }
+
     val state = viewModel.state
 
     LaunchedEffect(key1 = true) {

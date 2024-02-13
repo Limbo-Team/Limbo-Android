@@ -1,5 +1,6 @@
 package com.igorj.limboapp.screen.forgot_password.change_password
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -45,6 +46,10 @@ fun ChangePasswordScreen(
     onNavigation: () -> Unit,
     viewModel: ChangePasswordViewModel = hiltViewModel()
 ) {
+    BackHandler {
+        // do nothing
+    }
+
     val spacing = LocalSpacing.current
     val state = viewModel.state
     val context = LocalContext.current
