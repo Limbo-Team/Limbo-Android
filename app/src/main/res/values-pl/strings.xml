@@ -48,4 +48,10 @@
     <string name="congratulations_you_scored_required_points_in_this_chapter">Gratulacje! Zdobyłeś wymaganą liczbę punktów w tym dziale!</string>
     <string name="finish">Zakończ</string>
     <string name="finished_quizzes">Ukończone quizy</string>
+    <string name="your_rewards">Twoje nagrody</string>
+    <string name="unfortunately_some_answers_were_incorrect">Niestety, niektóre odpowiedzi były nieprawidłowe!</string>
+    <string name="go_back_to_try_again">Wróć, aby spróbować ponownie</string>
+    <string name="back_to_chapters">Powrót do rozdziałów</string>
+    <string name="what_are_these_points">Co to za punkty?</string>
+    <string name="points_description">Punkty możesz wymieniać na nagrody, np. dodatkowe punkty na egzaminie lub w dziale. Dodatkowo dzięki tym punktom tworzymy ranking osób w twojej grupie.</string>
 </resources>

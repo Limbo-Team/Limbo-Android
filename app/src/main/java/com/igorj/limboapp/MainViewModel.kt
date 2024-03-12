@@ -44,7 +44,9 @@ class MainViewModel @Inject constructor(
     fun onEvent(event: MainEvent) {
         when (event) {
             is MainEvent.OnFlickersClick -> {
-                Log.d("LOGCAT", "${state.flickers}")
+                state = state.copy(
+                    isFlickersDialogVisible = true
+                )
             }
             is MainEvent.OnBottomNavBarClick -> {
 
@@ -57,6 +59,11 @@ class MainViewModel @Inject constructor(
                 viewModelScope.launch {
                     _uiEvent.send(UiEvent.OnNavigate)
                 }
+            }
+            is MainEvent.OnFlickersDialogDismiss -> {
+                state = state.copy(
+                    isFlickersDialogVisible = false
+                )
             }
         }
     }

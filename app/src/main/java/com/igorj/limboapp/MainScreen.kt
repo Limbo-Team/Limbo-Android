@@ -25,6 +25,7 @@ import androidx.navigation.navArgument
 import com.google.gson.Gson
 import com.igorj.limboapp.components.BottomNavBar
 import com.igorj.limboapp.components.CircleImage
+import com.igorj.limboapp.components.CustomAlertDialog
 import com.igorj.limboapp.components.Flickers
 import com.igorj.limboapp.components.LimboLogo
 import com.igorj.limboapp.components.LogoutButton
@@ -139,7 +140,12 @@ fun MainScreen(
                             contentDescription = stringResource(id = R.string.profile),
                             size = 40.dp,
                             onClick = {
-                                navController.navigate(Route.PROFILE)
+//                                navController.navigate(
+//                                    Route.PROFILE,
+//                                    navOptions = NavOptions.Builder()
+//                                        .setLaunchSingleTop(true)
+//                                        .build()
+//                                )
                             }
                         )
                     }
@@ -389,4 +395,18 @@ fun MainScreen(
             }
         }
     )
+
+    if (state.isFlickersDialogVisible) {
+        CustomAlertDialog(
+            onDismiss = {
+                viewModel.onEvent(MainEvent.OnFlickersDialogDismiss)
+            },
+            onConfirm = {
+                viewModel.onEvent(MainEvent.OnFlickersDialogDismiss)
+            },
+            title = stringResource(id = R.string.what_are_these_points),
+            description = stringResource(id = R.string.points_description),
+            confirmText = stringResource(id = R.string.ok)
+        )
+    }
 }

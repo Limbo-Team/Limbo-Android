@@ -11,17 +11,20 @@ class AuthSharedPreferences @Inject constructor(
 ) {
     private val AUTH_SHARED_PREFERENCES = "auth_shared_preferences"
 
-    private val masterKey = MasterKey.Builder(context, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
-        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-        .build()
+//    private val masterKey = MasterKey.Builder(context, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+//        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+//        .build()
 
-    private val encryptedSharedPreferences = EncryptedSharedPreferences.create(
-        context,
-        AUTH_SHARED_PREFERENCES,
-        masterKey,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
+//    private val encryptedSharedPreferences = EncryptedSharedPreferences.create(
+//        context,
+//        AUTH_SHARED_PREFERENCES,
+//        masterKey,
+//        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+//        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+//    )
+
+    // use normal shared preferences for now
+    private val encryptedSharedPreferences = context.getSharedPreferences(AUTH_SHARED_PREFERENCES, Context.MODE_PRIVATE)
 
     fun empty() {
         encryptedSharedPreferences.edit().clear().apply()

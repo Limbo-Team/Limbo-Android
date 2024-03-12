@@ -51,4 +51,7 @@
     <string name="unfortunately_some_answers_were_incorrect">Unfortunately, some answers were incorrect!</string>
     <string name="go_back_to_try_again">Go back to try again</string>
     <string name="back_to_chapters">Back to chapters</string>
+    <string name="what_are_these_points">What are these points?</string>
+    <string name="points_description">You can exchange points for rewards, for example, extra points on an exam or in the department. Additionally, thanks to these points, we create a ranking of individuals in your group.
+</string>
 </resources>
